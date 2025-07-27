@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import vardaanHero from "@/assets/vardaan-hero.jpg";
+const vardaanHero = "/lovable-uploads/a2ffcab2-90a2-40fa-9603-be9b2521dd14.png";
 
 const Hero = () => {
   const scrollToAbout = () => {
