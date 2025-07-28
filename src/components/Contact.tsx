@@ -36,7 +36,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('https://linkedin.com/in/vardaan-mehandiratta', '_blank')}
+            onClick={() => window.open('https://www.linkedin.com/in/vardaan-mehandiratta-926b382b4/', '_blank')}
           >
             <Linkedin className="w-5 h-5" />
           </Button>
