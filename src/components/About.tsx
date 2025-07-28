@@ -16,11 +16,7 @@ const About = () => {
           <div className="space-y-6">
             <p className="text-lg text-foreground leading-relaxed">As an incoming Computer Engineering student at the University of Waterloo (Class of 2030), I bring a strong academic foundation from Springdales School, New Delhi, where I graduated in the year 2025.</p>
             
-            <p className="text-lg text-foreground leading-relaxed">
-              My journey is driven by an insatiable curiosity for technology, particularly 
-              in computer hardware and software development. Beyond academics, I'm passionate 
-              about leadership, physics, coding, gaming, and singing.
-            </p>
+            <p className="text-lg text-foreground leading-relaxed">My journey is driven by an insatiable curiosity for technology, particularly in computer hardware and software development. Fueled by a deep passion for artificial intelligence, I constantly explore innovative ways to integrate AI into my studies, projects, presentations and overall personal growth. Beyond academics, I'm passionate about leadership, physics, coding, gaming, and singing.</p>
             
             <p className="text-lg text-foreground leading-relaxed">
               My ultimate aspiration is to become a software engineer who creates meaningful 
