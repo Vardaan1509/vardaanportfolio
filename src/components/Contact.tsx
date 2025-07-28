@@ -1,6 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Linkedin, Github } from "lucide-react";
+import { Mail, Github, Instagram, MessageCircle } from "lucide-react";
 
 const Contact = () => {
 
@@ -16,48 +15,19 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <Card className="bg-gradient-card shadow-card border-0">
-              <CardHeader>
-                <CardTitle className="text-xl text-foreground">Get in Touch</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-muted-foreground">vardaan.mehandiratta@example.com</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-muted-foreground">+1 (XXX) XXX-XXXX</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-muted-foreground">Waterloo, ON, Canada</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-card shadow-card border-0">
-              <CardHeader>
-                <CardTitle className="text-xl text-foreground">Follow Me</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-center space-x-4">
-                  <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5">
-                    <Linkedin className="w-4 h-4" />
-                  </Button>
-                  <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5">
-                    <Github className="w-4 h-4" />
-                  </Button>
-                  <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5">
-                    <Mail className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        <div className="flex justify-center space-x-6">
+          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+            <Instagram className="w-5 h-5" />
+          </Button>
+          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+            <Github className="w-5 h-5" />
+          </Button>
+          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+            <MessageCircle className="w-5 h-5" />
+          </Button>
+          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+            <Mail className="w-5 h-5" />
+          </Button>
         </div>
       </div>
     </section>
