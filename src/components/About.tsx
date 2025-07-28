@@ -1,10 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Trophy, Heart } from "lucide-react";
-
-
 const About = () => {
-  return (
-    <section id="about" className="py-20 bg-background">
+  return <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -17,11 +14,7 @@ const About = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div className="space-y-6">
-            <p className="text-lg text-foreground leading-relaxed">
-              As an incoming Computer Engineering student at the University of Waterloo 
-              (Class of 2030), I bring a strong academic foundation from Springdales School, 
-              New Delhi, where I graduated in 2025.
-            </p>
+            <p className="text-lg text-foreground leading-relaxed">As an incoming Computer Engineering student at the University of Waterloo (Class of 2030), I bring a strong academic foundation from Springdales School, New Delhi, where I graduated in the year 2025.</p>
             
             <p className="text-lg text-foreground leading-relaxed">
               My journey is driven by an insatiable curiosity for technology, particularly 
@@ -36,11 +29,7 @@ const About = () => {
           </div>
           
           <div className="relative">
-            <img
-              src="/lovable-uploads/aafe5eb9-c7a7-4c06-884b-08a58baafbe9.png"
-              alt="Modern University Building"
-              className="w-full rounded-2xl shadow-card"
-            />
+            <img src="/lovable-uploads/aafe5eb9-c7a7-4c06-884b-08a58baafbe9.png" alt="Modern University Building" className="w-full rounded-2xl shadow-card" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
           </div>
         </div>
@@ -84,8 +73,6 @@ const About = () => {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default About;
