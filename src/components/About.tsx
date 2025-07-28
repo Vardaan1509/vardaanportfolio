@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Trophy, Heart } from "lucide-react";
-import waterlooImage from "@/assets/waterloo-campus.jpg";
+
 
 const About = () => {
   return (
@@ -37,8 +37,8 @@ const About = () => {
           
           <div className="relative">
             <img
-              src={waterlooImage}
-              alt="University of Waterloo Campus"
+              src="/lovable-uploads/aafe5eb9-c7a7-4c06-884b-08a58baafbe9.png"
+              alt="Modern University Building"
               className="w-full rounded-2xl shadow-card"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
