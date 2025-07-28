@@ -54,7 +54,7 @@ const Hero = () => {
             </div>
             
             {/* Enhanced Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex justify-center lg:justify-start">
               <Button 
                 size="lg" 
                 className="group bg-gradient-primary hover:opacity-90 transition-all duration-300 shadow-elegant hover:shadow-glow hover:scale-105"
@@ -62,14 +62,6 @@ const Hero = () => {
               >
                 Learn More
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="group border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 backdrop-blur-sm"
-              >
-                <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
-                Download CV
               </Button>
             </div>
             

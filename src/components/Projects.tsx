@@ -96,14 +96,6 @@ const Projects = () => {
                     ))}
                   </div>
                   
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full border-primary/20 hover:bg-primary/5 group-hover:border-primary/40"
-                  >
-                    Learn More
-                    <ExternalLink className="ml-2 h-3 w-3" />
-                  </Button>
                 </CardContent>
               </Card>
             );
