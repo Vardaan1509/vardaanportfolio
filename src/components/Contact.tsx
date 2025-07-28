@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Github, Instagram, MessageCircle } from "lucide-react";
+import { Mail, Github, Instagram, MessageCircle, Linkedin } from "lucide-react";
 
 const Contact = () => {
 
@@ -31,6 +31,14 @@ const Contact = () => {
             onClick={() => window.open('https://github.com/yourusername', '_blank')}
           >
             <Github className="w-5 h-5" />
+          </Button>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-primary/20 hover:bg-primary/5 w-12 h-12"
+            onClick={() => window.open('https://linkedin.com/in/yourusername', '_blank')}
+          >
+            <Linkedin className="w-5 h-5" />
           </Button>
           <Button 
             variant="outline" 
