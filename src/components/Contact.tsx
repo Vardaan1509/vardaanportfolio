@@ -20,7 +20,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('https://instagram.com/yourusername', '_blank')}
+            onClick={() => window.open('https://instagram.com/verdy1509', '_blank')}
           >
             <Instagram className="w-5 h-5" />
           </Button>
@@ -28,7 +28,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('https://github.com/yourusername', '_blank')}
+            onClick={() => window.open('https://github.com/Vardaan1509', '_blank')}
           >
             <Github className="w-5 h-5" />
           </Button>
@@ -36,7 +36,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('https://linkedin.com/in/yourusername', '_blank')}
+            onClick={() => window.open('https://linkedin.com/in/vardaan-mehandiratta', '_blank')}
           >
             <Linkedin className="w-5 h-5" />
           </Button>
@@ -44,7 +44,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('https://discord.com/users/youruserid', '_blank')}
+            onClick={() => window.open('https://discord.com/users/verdy1509', '_blank')}
           >
             <MessageCircle className="w-5 h-5" />
           </Button>
@@ -52,7 +52,7 @@ const Contact = () => {
             variant="outline" 
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
-            onClick={() => window.open('mailto:your.email@gmail.com', '_blank')}
+            onClick={() => window.open('mailto:vardaanmehandiratta926@gmail.com', '_blank')}
           >
             <Mail className="w-5 h-5" />
           </Button>
