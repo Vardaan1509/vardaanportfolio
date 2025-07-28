@@ -16,16 +16,36 @@ const Contact = () => {
         </div>
 
         <div className="flex justify-center space-x-6">
-          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-primary/20 hover:bg-primary/5 w-12 h-12"
+            onClick={() => window.open('https://instagram.com/yourusername', '_blank')}
+          >
             <Instagram className="w-5 h-5" />
           </Button>
-          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-primary/20 hover:bg-primary/5 w-12 h-12"
+            onClick={() => window.open('https://github.com/yourusername', '_blank')}
+          >
             <Github className="w-5 h-5" />
           </Button>
-          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-primary/20 hover:bg-primary/5 w-12 h-12"
+            onClick={() => window.open('https://discord.com/users/youruserid', '_blank')}
+          >
             <MessageCircle className="w-5 h-5" />
           </Button>
-          <Button variant="outline" size="icon" className="border-primary/20 hover:bg-primary/5 w-12 h-12">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-primary/20 hover:bg-primary/5 w-12 h-12"
+            onClick={() => window.open('mailto:your.email@gmail.com', '_blank')}
+          >
             <Mail className="w-5 h-5" />
           </Button>
         </div>
