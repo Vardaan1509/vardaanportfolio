@@ -48,7 +48,7 @@ const Hero = () => {
               <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
                 Blending curiosity, creativity, and code to solve real-world problems. 
                 <br className="hidden sm:block" />
-                <span className="font-medium text-foreground">Incoming Computer Engineering student at University of Waterloo.</span>
+                <span className="font-medium text-foreground">Incoming Computer Engineering student at the University of Waterloo.</span>
               </p>
             </div>
             

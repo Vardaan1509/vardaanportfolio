@@ -51,7 +51,7 @@ const About = () => {
               <div className="space-y-2 text-muted-foreground">
                 <p>School Prefect (Grade 12)</p>
                 <p>Head of Physics Department</p>
-                <p>Major Pankaj Batra Trophy Winner</p>
+                <p>Major Pankaj Batra memorial Trophy Winner</p>
               </div>
             </CardContent>
           </Card>
