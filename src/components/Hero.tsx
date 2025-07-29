@@ -77,9 +77,7 @@ const Hero = () => {
               {/* Floating Elements */}
               
               
-              <div className="absolute -bottom-4 -left-4 px-4 py-2 bg-background/90 backdrop-blur-sm rounded-full border border-border shadow-lg">
-                
-              </div>
+              
             </div>
           </div>
         </div>
