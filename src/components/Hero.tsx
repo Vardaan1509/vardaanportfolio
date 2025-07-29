@@ -65,14 +65,14 @@ const Hero = () => {
           </div>
           
           {/* Enhanced Image Section */}
-          <div className="relative animate-fade-in animation-delay-300">
+          <div className="relative animate-fade-in animation-delay-300 flex justify-center">
             {/* Decorative Frame */}
             <div className="absolute -inset-4 bg-gradient-primary opacity-20 rounded-3xl blur-xl"></div>
             <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl"></div>
             
             {/* Main Image Container */}
-            <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-2 shadow-elegant">
-              <img src={vardaanHero} alt="Vardaan Mehandiratta" className="w-full max-w-md mx-auto rounded-xl hover-scale transition-transform duration-500" />
+            <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-3 shadow-elegant max-w-md w-full">
+              <img src={vardaanHero} alt="Vardaan Mehandiratta" className="w-full h-auto aspect-square object-cover rounded-xl hover-scale transition-transform duration-500" />
               
               {/* Floating Elements */}
               
@@ -84,7 +84,7 @@ const Hero = () => {
       </div>
       
       {/* Enhanced Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 -translate-x-16">
         <div className="flex flex-col items-center gap-2 animate-bounce">
           <span className="text-xs text-muted-foreground font-medium">Scroll to explore</span>
           <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
