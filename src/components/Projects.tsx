@@ -20,7 +20,7 @@ const Projects = () => {
       description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
       technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
       status: "Concept Stage",
-      image: techWorkspace
+      video: "/lovable-uploads/18429e23-906c-49a6-b0ca-4a8d19f8c736.png"
     },
     {
       icon: Globe,
@@ -59,11 +59,22 @@ const Projects = () => {
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {project.video ? (
+                    <video
+                      src={project.video}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   <div className="absolute top-4 left-4">
                     <div className="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
