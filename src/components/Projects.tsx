@@ -20,7 +20,7 @@ const Projects = () => {
       description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
       technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
       status: "Concept Stage",
-      video: "/lovable-uploads/18429e23-906c-49a6-b0ca-4a8d19f8c736.png"
+      youtubeId: "59pJQfIg8DA"
     },
     {
       icon: Globe,
@@ -59,14 +59,12 @@ const Projects = () => {
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
-                  {project.video ? (
-                    <video
-                      src={project.video}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
+                  {project.youtubeId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${project.youtubeId}`}
+                      className="w-full h-48 group-hover:scale-105 transition-transform duration-300"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
                     />
                   ) : (
                     <img
