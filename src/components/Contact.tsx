@@ -37,7 +37,7 @@ const Contact = () => {
             size="icon" 
             className="border-primary/20 hover:bg-primary/5 w-12 h-12"
             onClick={() => {
-              const linkedinUrl = 'https://www.linkedin.com/in/Vardaan-Mehandiratta-926b382b4';
+              const linkedinUrl = 'https://www.linkedin.com/in/vardaan-mehandiratta-446215377/';
               console.log('Attempting to open LinkedIn URL:', linkedinUrl);
               try {
                 window.open(linkedinUrl, '_blank');
