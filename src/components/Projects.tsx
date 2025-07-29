@@ -28,7 +28,7 @@ const Projects = () => {
       description: "Award-winning multimedia presentation analyzing urbanization patterns in Kigali, Casablanca, and Addis Ababa. Won first prize for comprehensive research and innovative presentation techniques.",
       technologies: ["Research", "Multimedia Design", "Data Analysis", "Presentation"],
       status: "Award Winner",
-      image: techWorkspace
+      image: "/lovable-uploads/dbb11cd3-0787-4e24-9cf0-a8c3c8a6767a.png"
     }
   ];
 
