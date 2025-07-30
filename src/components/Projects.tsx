@@ -61,10 +61,12 @@ const Projects = () => {
                 <div className="relative overflow-hidden">
                   {project.youtubeId ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${project.youtubeId}`}
+                      src={`https://www.youtube.com/embed/${project.youtubeId}?rel=0&modestbranding=1`}
+                      title={project.title}
                       className="w-full h-48 group-hover:scale-105 transition-transform duration-300"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
+                      frameBorder="0"
                     />
                   ) : (
                     <img
