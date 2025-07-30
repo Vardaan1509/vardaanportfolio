@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Download, ArrowRight, Sparkles } from "lucide-react";
+import Navigation from "./Navigation";
 const vardaanHero = "/lovable-uploads/56e098bc-8089-4283-a76a-66802b121efe.png";
 const Hero = () => {
   const scrollToAbout = () => {
@@ -8,6 +9,7 @@ const Hero = () => {
     });
   };
   return <section className="min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden">
+      <Navigation />
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/3 to-secondary/5" />
       
