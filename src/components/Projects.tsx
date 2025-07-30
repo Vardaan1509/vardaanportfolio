@@ -20,7 +20,7 @@ const Projects = () => {
       description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
       technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
       status: "Concept Stage",
-      videoUrl: "https://youtu.be/59pJQfIg8DA"
+      youtubeId: "59pJQfIg8DA"
     },
     {
       icon: Globe,
@@ -56,42 +56,26 @@ const Projects = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {projects.map((project, index) => {
             const IconComponent = project.icon;
-            console.log('Project:', project.title, 'has videoUrl:', !!project.videoUrl, 'has image:', !!project.image);
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
-                  {project.videoUrl ? (
-                    <a 
-                      href={project.videoUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="block"
-                      onClick={() => console.log('Clicking video link:', project.videoUrl)}
-                    >
-                      <div className="relative w-full h-48 bg-gray-900 rounded overflow-hidden group cursor-pointer">
-                        <img 
-                          src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=300&fit=crop" 
-                          alt="AI Medical Chatbot Concept" 
-                          className="w-full h-full object-cover opacity-80"
-                        />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <div className="w-0 h-0 border-l-[20px] border-l-white border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-1"></div>
-                          </div>
-                        </div>
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <p className="text-white text-sm font-medium">Watch Video Presentation</p>
-                          <p className="text-white/80 text-xs">Click to open in YouTube</p>
-                        </div>
-                      </div>
-                    </a>
-                  ) : project.image ? (
+                  {project.youtubeId ? (
+                    <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
+                      <iframe
+                        src={`https://www.youtube.com/embed/59pJQfIg8DA`}
+                        title="Medical AI Chatbot Concept"
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                  ) : null}
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   <div className="absolute top-4 left-4">
                     <div className="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
