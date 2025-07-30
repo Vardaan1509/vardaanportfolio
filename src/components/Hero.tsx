@@ -67,11 +67,11 @@ const Hero = () => {
           {/* Enhanced Image Section */}
           <div className="relative animate-fade-in animation-delay-300 flex justify-center">
             {/* Decorative Frame */}
-            <div className="absolute -inset-4 bg-gradient-primary opacity-20 rounded-3xl blur-xl"></div>
-            <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl"></div>
+            <div className="absolute -inset-4 bg-gradient-to-br from-orange-200/30 to-amber-200/30 rounded-3xl blur-xl"></div>
+            <div className="absolute -inset-2 bg-gradient-to-r from-orange-100/40 to-amber-100/40 rounded-2xl"></div>
             
             {/* Main Image Container */}
-            <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-3 shadow-elegant max-w-md w-full">
+            <div className="relative bg-background/90 backdrop-blur-sm rounded-2xl p-3 shadow-elegant max-w-md w-full border border-orange-100/30">
               <img src={vardaanHero} alt="Vardaan Mehandiratta" className="w-full h-auto aspect-square object-cover rounded-xl hover-scale transition-transform duration-500" />
               
               {/* Floating Elements */}
