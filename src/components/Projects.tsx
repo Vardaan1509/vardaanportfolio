@@ -2,9 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Database, Bot, Globe } from "lucide-react";
+import { useState } from "react";
 
 
 const Projects = () => {
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const projects = [
     {
       icon: Database,
@@ -60,15 +62,34 @@ const Projects = () => {
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
                   {project.youtubeId ? (
-                    <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
-                      <iframe
-                        src={`https://www.youtube.com/embed/59pJQfIg8DA`}
-                        title="Medical AI Chatbot Concept"
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
+                    playingIndex === index ? (
+                      <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+                          title={project.title}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="w-full h-48 bg-gray-100 rounded overflow-hidden cursor-pointer relative group"
+                        onClick={() => setPlayingIndex(index)}
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                          <svg className="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 84 84">
+                            <circle cx="42" cy="42" r="42" fill="currentColor" opacity="0.6" />
+                            <polygon points="34,28 62,42 34,56" fill="#fff" />
+                          </svg>
+                        </div>
+                      </div>
+                    )
                   ) : (
                     <img
                       src={project.image}
