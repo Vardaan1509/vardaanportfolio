@@ -60,14 +60,15 @@ const Projects = () => {
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
                   {project.youtubeId ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${project.youtubeId}?rel=0&modestbranding=1`}
-                      title={project.title}
-                      className="w-full h-48 group-hover:scale-105 transition-transform duration-300"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      frameBorder="0"
-                    />
+                    <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
+                      <iframe
+                        src={`https://www.youtube.com/embed/59pJQfIg8DA`}
+                        title="Medical AI Chatbot Concept"
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
                   ) : (
                     <img
                       src={project.image}
