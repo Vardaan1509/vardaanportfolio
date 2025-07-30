@@ -56,6 +56,7 @@ const Projects = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {projects.map((project, index) => {
             const IconComponent = project.icon;
+            console.log('Project:', project.title, 'has videoUrl:', !!project.videoUrl, 'has image:', !!project.image);
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
@@ -65,6 +66,7 @@ const Projects = () => {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="block"
+                      onClick={() => console.log('Clicking video link:', project.videoUrl)}
                     >
                       <div className="relative w-full h-48 bg-gray-900 rounded overflow-hidden group cursor-pointer">
                         <img 
@@ -83,13 +85,13 @@ const Projects = () => {
                         </div>
                       </div>
                     </a>
-                  ) : (
+                  ) : project.image ? (
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                  )}
+                  ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   <div className="absolute top-4 left-4">
                     <div className="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
