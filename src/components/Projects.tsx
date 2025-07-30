@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Database, Bot, Globe } from "lucide-react";
-import techWorkspace from "@/assets/tech-workspace.jpg";
+
 
 const Projects = () => {
   const projects = [
@@ -12,7 +12,7 @@ const Projects = () => {
       description: "A comprehensive inventory management system built with Python and SQL for tracking footwear inventory, sales, and stock management with real-time updates and reporting features.",
       technologies: ["Python", "SQL", "Database Design", "File Handling"],
       status: "Completed",
-      image: techWorkspace
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
     },
     {
       icon: Bot,
@@ -28,7 +28,7 @@ const Projects = () => {
       description: "Award-winning multimedia presentation analyzing urbanization patterns in Kigali, Casablanca, and Addis Ababa. Won first prize for comprehensive research and innovative presentation techniques.",
       technologies: ["Research", "Multimedia Design", "Data Analysis", "Presentation"],
       status: "Award Winner",
-      image: "/lovable-uploads/dbb11cd3-0787-4e24-9cf0-a8c3c8a6767a.png"
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=300&fit=crop"
     }
   ];
 

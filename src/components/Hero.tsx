@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Download, ArrowRight, Sparkles } from "lucide-react";
-const vardaanHero = "/lovable-uploads/a2ffcab2-90a2-40fa-9603-be9b2521dd14.png";
+const vardaanHero = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=face";
 const Hero = () => {
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({

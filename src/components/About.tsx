@@ -25,7 +25,7 @@ const About = () => {
           </div>
           
           <div className="relative">
-            <img src="/lovable-uploads/aafe5eb9-c7a7-4c06-884b-08a58baafbe9.png" alt="Modern University Building" className="w-full rounded-2xl shadow-card" />
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=400&fit=crop" alt="Modern University Building" className="w-full rounded-2xl shadow-card" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
           </div>
         </div>
