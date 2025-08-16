@@ -105,11 +105,11 @@ const Skills = () => {
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">3+</div>
+            <div className="text-3xl font-bold text-primary mb-2">4+</div>
             <div className="text-sm text-muted-foreground">Programming Languages</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">5+</div>
+            <div className="text-3xl font-bold text-primary mb-2">10+</div>
             <div className="text-sm text-muted-foreground">Leadership Roles</div>
           </div>
           <div className="text-center">
