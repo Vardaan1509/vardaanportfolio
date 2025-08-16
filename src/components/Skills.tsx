@@ -9,7 +9,7 @@ const Skills = () => {
       title: "Technical Skills",
       skills: [
         { name: "Python", level: 85, description: "DSA, File Handling, SQL Integration" },
-        { name: "C Programming", level: 65, description: "Basic programming concepts and syntax" },
+        { name: "C++", level: 70, description: "Basic programming concepts,data structres and syntax" },
         { name: "MySQL", level: 75, description: "Database design and query optimization" },
         { name: "Data Structures", level: 80, description: "Algorithms and problem solving" }
       ]
