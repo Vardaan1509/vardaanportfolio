@@ -22,7 +22,7 @@ const Projects = () => {
       description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
       technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
       status: "Concept Stage",
-      youtubeId: "59pJQfIg8DA"
+      youtubeId: "https://youtu.be/59pJQfIg8DA"
     },
     {
       icon: Globe,
@@ -42,7 +42,7 @@ const Projects = () => {
     },
     {
       icon: QrCode,
-      title: "Modern QR Code Generator App",
+      title: "QR Code Generator App",
       description: "A sleek desktop application built with Python and CustomTkinter that allows users to instantly generate QR codes from custom text or URLs in a single click. Features a clean, modern user interface with support for light and dark themes, real-time QR preview, and simple, intuitive controls for enhanced digital accessibility.",
       technologies: ["Python", "CustomTkinter", "PyQRCode", "Pillow"],
       status: "Completed",
