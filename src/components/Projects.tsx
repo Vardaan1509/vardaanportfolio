@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Database, Bot, Globe, Chrome } from "lucide-react";
+import { ExternalLink, Database, Bot, Globe, Chrome, QrCode } from "lucide-react";
 import { useState } from "react";
 
 
@@ -39,6 +39,14 @@ const Projects = () => {
       technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
       status: "Completed",
       image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
+    },
+    {
+      icon: QrCode,
+      title: "Modern QR Code Generator App",
+      description: "A sleek desktop application built with Python and CustomTkinter that allows users to instantly generate QR codes from custom text or URLs in a single click. Features a clean, modern user interface with support for light and dark themes, real-time QR preview, and simple, intuitive controls for enhanced digital accessibility.",
+      technologies: ["Python", "CustomTkinter", "PyQRCode", "Pillow"],
+      status: "Completed",
+      image: "https://images.unsplash.com/photo-1606166264723-b5b7b6b0e2d6?w=600&h=300&fit=crop"
     }
   ];
 
