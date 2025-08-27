@@ -46,7 +46,7 @@ const Projects = () => {
       description: "A sleek desktop application built with Python and CustomTkinter that allows users to instantly generate QR codes from custom text or URLs in a single click. Features a clean, modern user interface with support for light and dark themes, real-time QR preview, and simple, intuitive controls for enhanced digital accessibility.",
       technologies: ["Python", "CustomTkinter", "PyQRCode", "Pillow"],
       status: "Completed",
-      image: "https://images.unsplash.com/photo-1606166264723-b5b7b6b0e2d6?w=600&h=300&fit=crop"
+      image: "/lovable-uploads/b3e561c3-8b76-430d-a9ce-d1988191cc2a.png"
     }
   ];
 
@@ -71,7 +71,7 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => {
             const IconComponent = project.icon;
             return (
