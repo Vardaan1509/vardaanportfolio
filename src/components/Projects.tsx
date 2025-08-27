@@ -38,7 +38,7 @@ const Projects = () => {
       description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
       technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
       status: "Completed",
-      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=300&fit=crop"
+      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
     }
   ];
 
