@@ -8,12 +8,10 @@ import { useState, useEffect } from "react";
 const Projects = () => {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   
-  useEffect(() => {
-    console.log('PlayingIndex changed to:', playingIndex);
-    if (playingIndex !== null) {
-      console.log('Should show video for project:', projects[playingIndex]?.title);
-    }
-  }, [playingIndex]);
+  const handleVideoClick = (index: number) => {
+    console.log('Video clicked, index:', index);
+    setPlayingIndex(playingIndex === index ? null : index);
+  };
   
   const projects = [
     {
@@ -85,39 +83,31 @@ const Projects = () => {
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
-                {project.youtubeId ? (
+                  {project.youtubeId ? (
                     playingIndex === index ? (
-                      <div className="w-full h-48 bg-black rounded overflow-hidden">
+                      <div className="w-full h-48 bg-black">
                         <iframe
-                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0`}
+                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
                           title={project.title}
-                          className="w-full h-full border-0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          className="w-full h-full"
+                          allow="autoplay; encrypted-media"
                           allowFullScreen
                         />
                       </div>
                     ) : (
                       <div
-                        className="w-full h-48 bg-gray-900 rounded overflow-hidden cursor-pointer relative group"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          console.log('Video clicked! Index:', index, 'Video ID:', project.youtubeId);
-                          setPlayingIndex(index);
-                        }}
+                        className="w-full h-48 bg-gray-800 cursor-pointer relative"
+                        onClick={() => handleVideoClick(index)}
                       >
                         <img
-                          src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
-                          alt={`Play ${project.title} video`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          onError={(e) => {
-                            e.currentTarget.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
-                          }}
+                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/40 transition-colors">
-                          <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <polygon points="8,5 19,12 8,19" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <polygon points="9,5 20,12 9,19" />
                             </svg>
                           </div>
                         </div>
@@ -130,7 +120,9 @@ const Projects = () => {
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  {!project.youtubeId && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  )}
                   <div className="absolute top-4 left-4">
                     <div className="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
                       <IconComponent className="w-5 h-5 text-primary" />
