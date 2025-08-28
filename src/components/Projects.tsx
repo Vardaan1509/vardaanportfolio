@@ -85,36 +85,41 @@ const Projects = () => {
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
                 <div className="relative overflow-hidden">
-                  {project.youtubeId ? (
+                {project.youtubeId ? (
                     playingIndex === index ? (
-                      <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
+                      <div className="w-full h-48 bg-black rounded overflow-hidden">
                         <iframe
-                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0`}
                           title={project.title}
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          className="w-full h-full border-0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           allowFullScreen
                         />
                       </div>
                     ) : (
                       <div
-                        className="w-full h-48 bg-gray-100 rounded overflow-hidden cursor-pointer relative group"
-                        onClick={() => {
-                          console.log('Video clicked, setting playingIndex to:', index);
-                          console.log('Video ID:', project.youtubeId);
+                        className="w-full h-48 bg-gray-900 rounded overflow-hidden cursor-pointer relative group"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log('Video clicked! Index:', index, 'Video ID:', project.youtubeId);
                           setPlayingIndex(index);
                         }}
                       >
                         <img
-                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
-                          alt={project.title}
+                          src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                          alt={`Play ${project.title} video`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                          }}
                         />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                          <svg className="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 84 84">
-                            <circle cx="42" cy="42" r="42" fill="currentColor" opacity="0.6" />
-                            <polygon points="34,28 62,42 34,56" fill="#fff" />
-                          </svg>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/40 transition-colors">
+                          <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <polygon points="8,5 19,12 8,19" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     )
