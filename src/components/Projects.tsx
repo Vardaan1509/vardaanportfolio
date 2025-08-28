@@ -2,11 +2,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Database, Bot, Globe, Chrome, QrCode } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const Projects = () => {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  
+  useEffect(() => {
+    console.log('PlayingIndex changed to:', playingIndex);
+    if (playingIndex !== null) {
+      console.log('Should show video for project:', projects[playingIndex]?.title);
+    }
+  }, [playingIndex]);
+  
   const projects = [
     {
       icon: Database,
@@ -91,7 +99,11 @@ const Projects = () => {
                     ) : (
                       <div
                         className="w-full h-48 bg-gray-100 rounded overflow-hidden cursor-pointer relative group"
-                        onClick={() => setPlayingIndex(index)}
+                        onClick={() => {
+                          console.log('Video clicked, setting playingIndex to:', index);
+                          console.log('Video ID:', project.youtubeId);
+                          setPlayingIndex(index);
+                        }}
                       >
                         <img
                           src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
