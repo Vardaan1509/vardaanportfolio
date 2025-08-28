@@ -22,7 +22,7 @@ const Projects = () => {
       description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
       technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
       status: "Concept Stage",
-      youtubeId: "https://youtu.be/59pJQfIg8DA"
+      youtubeId: "59pJQfIg8DA"
     },
     {
       icon: Globe,
