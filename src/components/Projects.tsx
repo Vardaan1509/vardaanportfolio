@@ -78,10 +78,11 @@ const Projects = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {projects.map((project, index) => {
+          {projects.slice(0, 3).map((project, index) => {
             const IconComponent = project.icon;
             return (
               <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
+                {/* ... keep existing code for first 3 projects */}
                 <div className="relative overflow-hidden">
                   {project.youtubeId ? (
                     playingIndex === index ? (
@@ -98,6 +99,91 @@ const Projects = () => {
                       <div
                         className="w-full h-48 bg-gray-800 cursor-pointer relative"
                         onClick={() => handleVideoClick(index)}
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <polygon points="9,5 20,12 9,19" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
+                  {!project.youtubeId && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <div className="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-5 h-5 text-primary" />
+                    </div>
+                  </div>
+                  <div className="absolute top-4 right-4">
+                    <Badge className={getStatusColor(project.status)}>
+                      {project.status}
+                    </Badge>
+                  </div>
+                </div>
+                
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="pt-0">
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge key={techIndex} variant="secondary" className="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+        
+        {/* Bottom row - centered */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
+          {projects.slice(3).map((project, index) => {
+            const actualIndex = index + 3;
+            const IconComponent = project.icon;
+            return (
+              <Card key={actualIndex} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
+                <div className="relative overflow-hidden">
+                  {project.youtubeId ? (
+                    playingIndex === actualIndex ? (
+                      <div className="w-full h-48 bg-black">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+                          title={project.title}
+                          className="w-full h-full"
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="w-full h-48 bg-gray-800 cursor-pointer relative"
+                        onClick={() => handleVideoClick(actualIndex)}
                       >
                         <img
                           src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
