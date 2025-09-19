@@ -1,27 +1,37 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Code, Wrench, Users, Presentation } from "lucide-react";
+import { Code, Wrench, Users, Presentation, Database, Cpu } from "lucide-react";
 
 const Skills = () => {
   const skillCategories = [
     {
       icon: Code,
-      title: "Technical Skills",
+      title: "Programming Languages",
       skills: [
-        { name: "Python", level: 85, description: "DSA, File Handling, SQL Integration" },
-        { name: "C++", level: 70, description: "Basic programming concepts,data structres and syntax" },
-        { name: "MySQL", level: 75, description: "Database design and query optimization" },
-        { name: "Data Structures", level: 80, description: "Algorithms and problem solving" }
+        { name: "Python", level: 85, description: "Advanced proficiency in Python development" },
+        { name: "C++", level: 75, description: "Object-oriented programming and system development" },
+        { name: "C", level: 70, description: "System programming and memory management" },
+        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" }
       ]
     },
     {
       icon: Wrench,
-      title: "Development Tools",
+      title: "Tools & Technologies",
       skills: [
-        { name: "Database Design", level: 75, description: "Relational database modeling" },
-        { name: "Software Architecture", level: 70, description: "System design principles" },
-        { name: "Problem Solving", level: 90, description: "Analytical and creative thinking" },
-        { name: "Research & Analysis", level: 85, description: "Data analysis and presentation" }
+        { name: "GitHub", level: 85, description: "Version control and collaborative development" },
+        { name: "CustomTkinter", level: 75, description: "GUI development for Python applications" },
+        { name: "PyQRCode", level: 70, description: "QR code generation and integration" },
+        { name: "Development Tools", level: 80, description: "IDE setup and debugging tools" }
+      ]
+    },
+    {
+      icon: Cpu,
+      title: "Core Concepts",
+      skills: [
+        { name: "Data Structures & Algorithms", level: 85, description: "Problem solving and optimization" },
+        { name: "System Design", level: 75, description: "Architecture and scalability planning" },
+        { name: "GUI Development", level: 80, description: "User interface design and implementation" },
+        { name: "File Handling", level: 85, description: "Data persistence and file operations" }
       ]
     },
     {
