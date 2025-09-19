@@ -91,7 +91,7 @@ const Contact = () => {
             
             <div className="text-center mt-8 pt-6 border-t border-border">
               <p className="text-sm text-muted-foreground">
-                Based in New Delhi, India • Available for remote opportunities
+                
               </p>
             </div>
           </div>
