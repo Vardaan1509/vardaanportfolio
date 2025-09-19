@@ -66,14 +66,14 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-background">
+    <section id="projects" className="py-16 bg-muted/30">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
             Featured Projects
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Innovative solutions showcasing technical skills and creative problem-solving
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            A showcase of my technical projects demonstrating programming skills and innovative problem-solving
           </p>
         </div>
 

@@ -121,14 +121,14 @@ const Experience = () => {
   };
 
   return (
-    <section id="experience" className="py-20 bg-muted/30">
+    <section id="experience" className="py-16 bg-muted/30">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Experience & Achievements
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
+            Professional Experience & Achievements
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A track record of leadership, academic excellence, and community involvement
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            A comprehensive overview of my academic excellence, leadership roles, and professional development
           </p>
         </div>
 

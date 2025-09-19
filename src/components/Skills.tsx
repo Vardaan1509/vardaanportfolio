@@ -47,14 +47,14 @@ const Skills = () => {
   ];
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Skills & Expertise
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
+            Technical Skills & Expertise
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A diverse skill set spanning technical development, leadership, and creative expression
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Comprehensive skill set spanning programming languages, development tools, and core computer science concepts
           </p>
         </div>
 
