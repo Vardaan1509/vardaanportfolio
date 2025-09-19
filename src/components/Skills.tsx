@@ -38,20 +38,10 @@ const Skills = () => {
       icon: Users,
       title: "Leadership & Soft Skills",
       skills: [
-        { name: "Team Leadership", level: 90, description: "Leading school initiatives and projects" },
-        { name: "Public Speaking", level: 85, description: "Presentations and choir performances" },
-        { name: "Project Management", level: 80, description: "Organizing and executing initiatives" },
-        { name: "Mentoring", level: 75, description: "Guiding peers and junior students" }
-      ]
-    },
-    {
-      icon: Presentation,
-      title: "Creative & Performance",
-      skills: [
-        { name: "Multimedia Design", level: 80, description: "Award-winning presentation design" },
-        { name: "Vocal Performance", level: 85, description: "Lead singer in school choir" },
+        { name: "Team Leadership", level: 90, description: "Leading school initiatives and student body" },
+        { name: "Public Speaking", level: 85, description: "Presentations and performance experience" },
         { name: "Creative Problem Solving", level: 85, description: "Innovative approach to challenges" },
-        { name: "Content Creation", level: 75, description: "Video production and storytelling" }
+        { name: "Project Management", level: 80, description: "Organizing and executing initiatives" }
       ]
     }
   ];
@@ -115,7 +105,7 @@ const Skills = () => {
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">4+</div>
+            <div className="text-3xl font-bold text-primary mb-2">5+</div>
             <div className="text-sm text-muted-foreground">Programming Languages</div>
           </div>
           <div className="text-center">
