@@ -9,11 +9,35 @@ import {
   TrendingUp, 
   Heart,
   Film,
-  Star
+  Star,
+  Code,
+  GraduationCap
 } from "lucide-react";
 
 const Experience = () => {
   const experiences = [
+    {
+      icon: Code,
+      title: "Software Intern",
+      period: "Jul 2025",
+      description: "Contributed to development and enhancement of inventory management software using Python and SQL. Assisted in design, implementation, and optimization to streamline inventory workflows. Collaborated with the technical team, improving system efficiency and data accuracy.",
+      type: "Professional Experience",
+      company: "Bharat Denim, Ahmedabad, Gujarat, India"
+    },
+    {
+      icon: GraduationCap,
+      title: "David Johnston International Student Entrance Scholarship",
+      period: "2025",
+      description: "Received prestigious entrance scholarship from University of Waterloo recognizing academic excellence and international student achievement.",
+      type: "Scholarship"
+    },
+    {
+      icon: Award,
+      title: "President's Scholarship of Distinction",
+      period: "2025",
+      description: "Awarded University of Waterloo's President's Scholarship of Distinction for outstanding academic performance and leadership potential.",
+      type: "Scholarship"
+    },
     {
       icon: Users,
       title: "School Prefect",
@@ -81,6 +105,8 @@ const Experience = () => {
 
   const getTypeColor = (type: string) => {
     const colors = {
+      "Professional Experience": "bg-primary/10 text-primary",
+      "Scholarship": "bg-accent/10 text-accent",
       "Leadership": "bg-primary/10 text-primary",
       "Academic Leadership": "bg-accent/10 text-accent",
       "Arts & Performance": "bg-pink-100 text-pink-700",
@@ -130,6 +156,11 @@ const Experience = () => {
                       <p className="text-sm text-muted-foreground mb-2">
                         {experience.period}
                       </p>
+                      {experience.company && (
+                        <p className="text-xs text-muted-foreground mb-2 font-medium">
+                          {experience.company}
+                        </p>
+                      )}
                       <p className="text-sm text-foreground leading-relaxed">
                         {experience.description}
                       </p>
