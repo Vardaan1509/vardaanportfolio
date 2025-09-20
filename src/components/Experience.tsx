@@ -121,13 +121,17 @@ const Experience = () => {
   };
 
   return (
-    <section id="experience" className="py-16 bg-muted/30">
+    <section id="experience" className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
+        <div className="text-center mb-16 animate-slide-up">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            <Award className="w-4 h-4" />
+            Professional Journey
+          </div>
+          <h2 className="text-4xl font-bold text-foreground mb-6 font-serif">
             Professional Experience & Achievements
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A comprehensive overview of my academic excellence, leadership roles, and professional development
           </p>
         </div>

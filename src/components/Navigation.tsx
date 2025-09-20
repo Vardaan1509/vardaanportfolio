@@ -21,26 +21,26 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-nav">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass shadow-nav">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo/Name */}
+          {/* Logo/Name with modern styling */}
           <div className="flex items-center">
-            <h1 className="text-xl font-semibold text-foreground font-serif">
+            <h1 className="text-xl font-semibold text-foreground font-serif hover-lift cursor-pointer">
               Vardaan Mehandiratta
             </h1>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with modern styling */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group px-3 py-2 rounded-lg hover:bg-accent/50"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-8 rounded-full"></span>
               </button>
             ))}
             
@@ -57,15 +57,15 @@ const Navigation = () => {
           </Button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation with modern glass effect */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="md:hidden py-6 border-t border-border/50">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-left text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="text-left text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-3 rounded-lg hover:bg-accent/50 hover-lift"
                 >
                   {item.name}
                 </button>
@@ -73,7 +73,7 @@ const Navigation = () => {
               <Button
                 onClick={() => scrollToSection('contact')}
                 size="sm"
-                className="bg-primary hover:bg-primary-light text-primary-foreground w-fit"
+                className="bg-primary hover:bg-primary-light text-primary-foreground w-fit shadow-elegant hover-lift"
               >
                 <Mail className="w-4 h-4 mr-2" />
                 Get In Touch

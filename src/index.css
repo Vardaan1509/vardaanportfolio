@@ -2,57 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional Design System 
-All colors MUST be HSL. Focused on corporate/professional aesthetics.
+/* Modern Professional Design System 
+All colors MUST be HSL. Contemporary aesthetics with subtle depth.
 */
 
 @layer base {
   :root {
-    /* Professional Color Palette - Neutral Grays with Navy Accent */
-    --background: 0 0% 98%;
-    --foreground: 222 15% 10%;
+    /* Modern Color Palette - Warm grays with contemporary accents */
+    --background: 0 0% 99%;
+    --foreground: 217 19% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 15% 10%;
+    --card-foreground: 217 19% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 15% 10%;
+    --popover-foreground: 217 19% 12%;
 
-    /* Professional Navy Primary */
-    --primary: 222 47% 11%;
+    /* Modern Primary - Deep slate with subtle warmth */
+    --primary: 217 19% 18%;
     --primary-foreground: 0 0% 98%;
-    --primary-light: 222 35% 25%;
+    --primary-light: 217 15% 32%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 15% 10%;
+    --secondary: 210 17% 96%;
+    --secondary-foreground: 217 19% 12%;
 
-    --muted: 220 13% 95%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 16% 95%;
+    --muted-foreground: 217 13% 45%;
 
-    /* Professional Accent - Subtle Blue */
-    --accent: 214 32% 91%;
-    --accent-foreground: 222 15% 10%;
+    /* Modern Accent - Sophisticated blue-gray */
+    --accent: 210 25% 92%;
+    --accent-foreground: 217 19% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 222 47% 11%;
+    --border: 210 18% 89%;
+    --input: 210 18% 89%;
+    --ring: 217 19% 18%;
 
-    /* Professional Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(222 47% 11%), hsl(222 35% 25%));
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 98%), hsl(220 14% 96%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 98%));
-    --gradient-subtle: linear-gradient(180deg, hsl(220 14% 96%), hsl(220 13% 95%));
+    /* Modern Design Tokens with depth */
+    --gradient-primary: linear-gradient(135deg, hsl(217 19% 18%), hsl(217 15% 32%));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(210 17% 97%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 17% 98%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 17% 96%), hsl(210 16% 94%));
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.7), hsl(210 17% 98% / 0.3));
     
-    /* Professional Shadows */
-    --shadow-elegant: 0 4px 6px -1px hsl(222 47% 11% / 0.1), 0 2px 4px -1px hsl(222 47% 11% / 0.06);
-    --shadow-card: 0 1px 3px 0 hsl(222 47% 11% / 0.1), 0 1px 2px 0 hsl(222 47% 11% / 0.06);
-    --shadow-nav: 0 1px 3px 0 hsl(222 47% 11% / 0.12), 0 1px 2px 0 hsl(222 47% 11% / 0.08);
+    /* Modern Shadows with depth and subtlety */
+    --shadow-elegant: 0 8px 32px -8px hsl(217 19% 18% / 0.12), 0 0 0 1px hsl(217 19% 18% / 0.05);
+    --shadow-card: 0 4px 16px -4px hsl(217 19% 18% / 0.08), 0 0 0 1px hsl(217 19% 18% / 0.04);
+    --shadow-nav: 0 4px 20px -4px hsl(217 19% 18% / 0.15), 0 0 0 1px hsl(217 19% 18% / 0.06);
+    --shadow-glow: 0 0 40px hsl(217 19% 18% / 0.1);
     
-    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --radius: 0.375rem;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 222 15% 10%;
@@ -112,5 +115,42 @@ All colors MUST be HSL. Focused on corporate/professional aesthetics.
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    scroll-behavior: smooth;
+  }
+
+  /* Modern scroll styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* Modern glass effect utility */
+  .glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+
+  /* Modern hover effects */
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elegant);
   }
 }

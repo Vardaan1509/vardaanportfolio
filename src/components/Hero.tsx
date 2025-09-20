@@ -15,11 +15,15 @@ const Hero = () => {
     <section className="min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden pt-16">
       <Navigation />
       
-      {/* Subtle Professional Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/5" />
+      {/* Modern Background with Depth */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/3 to-transparent" />
       
-      {/* Minimal Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-40" />
+      {/* Modern Grid Pattern with Blur */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.015)_1px,transparent_1px)] bg-[size:60px_60px] opacity-60" />
+      
+      {/* Floating Elements for Modern Touch */}
+      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl opacity-30 animate-pulse" />
+      <div className="absolute bottom-32 left-16 w-96 h-96 bg-gradient-to-tr from-accent/8 to-primary/8 rounded-full blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '2s' }} />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -73,24 +77,32 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Professional Image Section */}
+          {/* Modern Image Section with Glass Effect */}
           <div className="relative animate-fade-in flex justify-center">
-            <div className="relative bg-card rounded-2xl p-6 shadow-elegant max-w-md w-full border border-border">
-              <img 
-                src={vardaanHero} 
-                alt="Vardaan Mehandiratta - Computer Engineering Student" 
-                className="w-full h-auto aspect-square object-cover rounded-xl transition-transform duration-300 hover:scale-[1.02]" 
-              />
+            <div className="relative glass rounded-3xl p-8 shadow-elegant max-w-md w-full hover-lift">
+              <div className="relative overflow-hidden rounded-2xl">
+                <img 
+                  src={vardaanHero} 
+                  alt="Vardaan Mehandiratta - Computer Engineering Student" 
+                  className="w-full h-auto aspect-square object-cover transition-all duration-500 hover:scale-105" 
+                />
+                {/* Modern overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Professional Scroll Indicator */}
+      {/* Modern Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-xs text-muted-foreground font-medium">Scroll to explore</span>
-          <ChevronDown className="w-5 h-5 text-muted-foreground" />
+        <div className="flex flex-col items-center gap-3 animate-bounce">
+          <div className="glass px-4 py-2 rounded-full">
+            <span className="text-xs text-muted-foreground font-medium">Scroll to explore</span>
+          </div>
+          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-muted-foreground/50 rounded-full mt-2 animate-pulse" />
+          </div>
         </div>
       </div>
     </section>
