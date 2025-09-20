@@ -61,14 +61,15 @@ const Hero = () => {
                 View Experience
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download Resume
-              </Button>
+              <a
+  href="/resume.pdf"
+  download
+  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-4 py-2 rounded shadow transition flex items-center"
+>
+  <Download className="mr-2 h-4 w-4" />
+  Download Resume
+</a>
+
             </div>
           </div>
           
