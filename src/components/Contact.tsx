@@ -1,12 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Instagram, MessageCircle, Linkedin } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Contact = () => {
-  return (
+  const [sectionRef, isSectionVisible] = useScrollAnimation();
+  const [titleRef, isTitleVisible] = useScrollAnimation({ threshold: 0.3 });
+  const [contentRef, isContentVisible] = useScrollAnimation({ threshold: 0.2 });
 
-    <section id="contact" className="py-16 bg-muted/30">
+  return (
+    <section 
+      id="contact" 
+      ref={sectionRef}
+      className={`py-16 bg-muted/30 transition-all duration-1000 ${
+        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      }`}
+    >
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
+            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
             Let's Connect
           </h2>
@@ -15,7 +30,12 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
+        <div 
+          ref={contentRef}
+          className={`max-w-2xl mx-auto transition-all duration-1000 delay-400 ${
+            isContentVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
+        >
           <div className="bg-card rounded-lg shadow-card border border-border p-8">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-foreground mb-2">Ready to Connect?</h3>

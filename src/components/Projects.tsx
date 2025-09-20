@@ -3,10 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Database, Bot, Globe, Chrome, QrCode } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 
 const Projects = () => {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [sectionRef, isSectionVisible] = useScrollAnimation();
+  const [titleRef, isTitleVisible] = useScrollAnimation({ threshold: 0.3 });
+  const [projectsRef, isProjectsVisible] = useScrollAnimation({ threshold: 0.2 });
   
   const handleVideoClick = (index: number) => {
     console.log('Video clicked, index:', index);
@@ -66,9 +70,20 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-16 bg-muted/30">
+    <section 
+      id="projects" 
+      ref={sectionRef}
+      className={`py-16 bg-muted/30 transition-all duration-1000 ${
+        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      }`}
+    >
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
+            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
             Featured Projects
           </h2>
@@ -77,11 +92,25 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div 
+          ref={projectsRef}
+          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto transition-all duration-1000 delay-400 ${
+            isProjectsVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
+        >
           {projects.slice(0, 3).map((project, index) => {
             const IconComponent = project.icon;
             return (
-              <Card key={index} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden">
+              <Card 
+                key={index} 
+                className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden ${
+                  isProjectsVisible ? `animate-fade-in` : 'opacity-0'
+                }`}
+                style={{ 
+                  animationDelay: isProjectsVisible ? `${600 + index * 150}ms` : '0ms',
+                  animationFillMode: 'forwards'
+                }}
+              >
                 {/* ... keep existing code for first 3 projects */}
                 <div className="relative overflow-hidden">
                   {project.youtubeId ? (

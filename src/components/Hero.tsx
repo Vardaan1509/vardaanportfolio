@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Download, ArrowRight, Briefcase } from "lucide-react";
 import Navigation from "./Navigation";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const vardaanHero = "/lovable-uploads/56e098bc-8089-4283-a76a-66802b121efe.png";
 
 const Hero = () => {
+  const [heroRef, isHeroVisible] = useScrollAnimation();
+  const [contentRef, isContentVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [imageRef, isImageVisible] = useScrollAnimation({ threshold: 0.3 });
+
   const scrollToExperience = () => {
     document.getElementById('experience')?.scrollIntoView({
       behavior: 'smooth'
@@ -12,7 +17,12 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden pt-16">
+    <section 
+      ref={heroRef}
+      className={`min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden pt-16 transition-all duration-1000 ${
+        isHeroVisible ? 'animate-fade-in' : 'opacity-0'
+      }`}
+    >
       <Navigation />
       
       {/* Modern Background with Depth */}
@@ -28,7 +38,12 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Professional Content */}
-          <div className="text-center lg:text-left space-y-8 animate-fade-in">
+          <div 
+            ref={contentRef}
+            className={`text-center lg:text-left space-y-8 transition-all duration-1000 delay-300 ${
+              isContentVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
             <div className="space-y-6">
               {/* Professional Status Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary border border-border text-foreground rounded-full text-sm font-medium">
@@ -78,7 +93,12 @@ const Hero = () => {
           </div>
           
           {/* Modern Image Section with Glass Effect */}
-          <div className="relative animate-fade-in flex justify-center">
+          <div 
+            ref={imageRef}
+            className={`relative flex justify-center transition-all duration-1000 delay-500 ${
+              isImageVisible ? 'animate-fade-in scale-100' : 'opacity-0 scale-95'
+            }`}
+          >
             <div className="relative glass rounded-3xl p-8 shadow-elegant max-w-md w-full hover-lift">
               <div className="relative overflow-hidden rounded-2xl">
                 <img 

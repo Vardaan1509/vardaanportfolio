@@ -1,8 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Code, Wrench, Users, Presentation, Database, Cpu } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Skills = () => {
+  const [sectionRef, isSectionVisible] = useScrollAnimation();
+  const [titleRef, isTitleVisible] = useScrollAnimation({ threshold: 0.3 });
+  const [skillsRef, isSkillsVisible] = useScrollAnimation({ threshold: 0.2 });
+
   const skillCategories = [
     {
       icon: Code,
@@ -47,9 +52,20 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-16 bg-background">
+    <section 
+      id="skills" 
+      ref={sectionRef}
+      className={`py-16 bg-background transition-all duration-1000 ${
+        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      }`}
+    >
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
+            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
             Technical Skills & Expertise
           </h2>
@@ -58,11 +74,25 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div 
+          ref={skillsRef}
+          className={`grid lg:grid-cols-2 gap-8 transition-all duration-1000 delay-400 ${
+            isSkillsVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
+        >
           {skillCategories.map((category, categoryIndex) => {
             const IconComponent = category.icon;
             return (
-              <Card key={categoryIndex} className="bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300">
+              <Card 
+                key={categoryIndex} 
+                className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 ${
+                  isSkillsVisible ? `animate-fade-in` : 'opacity-0'
+                }`}
+                style={{ 
+                  animationDelay: isSkillsVisible ? `${600 + categoryIndex * 150}ms` : '0ms',
+                  animationFillMode: 'forwards'
+                }}
+              >
                 <CardHeader className="pb-6">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -103,7 +133,11 @@ const Skills = () => {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+        <div 
+          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 transition-all duration-1000 delay-600 ${
+            isSkillsVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
+        >
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">5+</div>
             <div className="text-sm text-muted-foreground">Programming Languages</div>
