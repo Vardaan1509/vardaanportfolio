@@ -43,14 +43,7 @@ const Navigation = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
               </button>
             ))}
-            <Button
-              onClick={() => scrollToSection('contact')}
-              size="sm"
-              className="bg-primary hover:bg-primary-light text-primary-foreground ml-4"
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              Get In Touch
-            </Button>
+            
           </div>
 
           {/* Mobile Menu Button */}
