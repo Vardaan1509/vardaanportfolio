@@ -55,8 +55,8 @@ const Skills = () => {
     <section 
       id="skills" 
       ref={sectionRef}
-      className={`py-16 bg-background transition-all duration-1000 ${
-        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      className={`py-16 bg-background transition-opacity duration-700 ${
+        isSectionVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <div className="container mx-auto px-6">
@@ -76,8 +76,8 @@ const Skills = () => {
 
         <div 
           ref={skillsRef}
-          className={`grid lg:grid-cols-2 gap-8 transition-all duration-1000 delay-400 ${
-            isSkillsVisible ? 'animate-fade-in' : 'opacity-0'
+          className={`grid lg:grid-cols-2 gap-8 transition-all duration-700 delay-200 ${
+            isSkillsVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
           {skillCategories.map((category, categoryIndex) => {
@@ -86,17 +86,13 @@ const Skills = () => {
               <Card 
                 key={categoryIndex} 
                 className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 ${
-                  isSkillsVisible ? `animate-fade-in` : 'opacity-0'
+                  isSkillsVisible ? 'opacity-100' : 'opacity-0'
                 }`}
-                style={{ 
-                  animationDelay: isSkillsVisible ? `${600 + categoryIndex * 150}ms` : '0ms',
-                  animationFillMode: 'forwards'
-                }}
               >
                 <CardHeader className="pb-6">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-5 h-5 text-primary-foreground" />
                     </div>
                     <CardTitle className="text-xl text-foreground">
                       {category.title}
@@ -134,8 +130,8 @@ const Skills = () => {
 
         {/* Quick Stats */}
         <div 
-          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 transition-all duration-1000 delay-600 ${
-            isSkillsVisible ? 'animate-fade-in' : 'opacity-0'
+          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 transition-all duration-700 delay-300 ${
+            isSkillsVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <div className="text-center">
