@@ -11,15 +11,15 @@ const Contact = () => {
     <section 
       id="contact" 
       ref={sectionRef}
-      className={`py-16 bg-muted/30 transition-all duration-1000 ${
-        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      className={`py-16 bg-muted/30 transition-opacity duration-700 ${
+        isSectionVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <div className="container mx-auto px-6">
         <div 
           ref={titleRef}
-          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
-            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          className={`text-center mb-12 transition-all duration-700 delay-100 ${
+            isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
@@ -32,8 +32,8 @@ const Contact = () => {
 
         <div 
           ref={contentRef}
-          className={`max-w-2xl mx-auto transition-all duration-1000 delay-400 ${
-            isContentVisible ? 'animate-fade-in' : 'opacity-0'
+          className={`max-w-2xl mx-auto transition-all duration-700 delay-200 ${
+            isContentVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <div className="bg-card rounded-lg shadow-card border border-border p-8">

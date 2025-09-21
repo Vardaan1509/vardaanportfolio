@@ -62,8 +62,8 @@ const Skills = () => {
       <div className="container mx-auto px-6">
         <div 
           ref={titleRef}
-          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
-            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          className={`text-center mb-12 transition-all duration-700 delay-100 ${
+            isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">

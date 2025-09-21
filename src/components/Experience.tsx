@@ -129,15 +129,15 @@ const Experience = () => {
     <section 
       id="experience" 
       ref={sectionRef}
-      className={`py-20 bg-gradient-subtle transition-all duration-1000 ${
-        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      className={`py-20 bg-gradient-subtle transition-opacity duration-700 ${
+        isSectionVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <div className="container mx-auto px-6">
         <div 
           ref={titleRef}
-          className={`text-center mb-16 transition-all duration-1000 delay-200 ${
-            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          className={`text-center mb-16 transition-all duration-700 delay-100 ${
+            isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
@@ -154,8 +154,8 @@ const Experience = () => {
 
         <div 
           ref={cardsRef}
-          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 delay-400 ${
-            isCardsVisible ? 'animate-fade-in' : 'opacity-0'
+          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-700 delay-200 ${
+            isCardsVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
           {experiences.map((experience, index) => {
@@ -164,12 +164,8 @@ const Experience = () => {
               <Card 
                 key={index} 
                 className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group ${
-                  isCardsVisible ? `animate-fade-in` : 'opacity-0'
+                  isCardsVisible ? 'opacity-100' : 'opacity-0'
                 }`}
-                style={{ 
-                  animationDelay: isCardsVisible ? `${600 + index * 100}ms` : '0ms',
-                  animationFillMode: 'forwards'
-                }}
               >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">

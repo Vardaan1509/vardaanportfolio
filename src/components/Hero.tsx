@@ -19,8 +19,8 @@ const Hero = () => {
   return (
     <section 
       ref={heroRef}
-      className={`min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden pt-16 transition-all duration-1000 ${
-        isHeroVisible ? 'animate-fade-in' : 'opacity-0'
+      className={`min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden pt-16 transition-opacity duration-700 ${
+        isHeroVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <Navigation />
@@ -40,8 +40,8 @@ const Hero = () => {
           {/* Professional Content */}
           <div 
             ref={contentRef}
-            className={`text-center lg:text-left space-y-8 transition-all duration-1000 delay-300 ${
-              isContentVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+            className={`text-center lg:text-left space-y-8 transition-all duration-700 ${
+              isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
             <div className="space-y-6">
@@ -95,8 +95,8 @@ const Hero = () => {
           {/* Modern Image Section with Glass Effect */}
           <div 
             ref={imageRef}
-            className={`relative flex justify-center transition-all duration-1000 delay-500 ${
-              isImageVisible ? 'animate-fade-in scale-100' : 'opacity-0 scale-95'
+            className={`relative flex justify-center transition-all duration-700 ${
+              isImageVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
           >
             <div className="relative glass rounded-3xl p-8 shadow-elegant max-w-md w-full hover-lift">

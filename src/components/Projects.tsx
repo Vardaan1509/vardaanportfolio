@@ -73,15 +73,15 @@ const Projects = () => {
     <section 
       id="projects" 
       ref={sectionRef}
-      className={`py-16 bg-muted/30 transition-all duration-1000 ${
-        isSectionVisible ? 'animate-fade-in' : 'opacity-0'
+      className={`py-16 bg-muted/30 transition-opacity duration-700 ${
+        isSectionVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <div className="container mx-auto px-6">
         <div 
           ref={titleRef}
-          className={`text-center mb-12 transition-all duration-1000 delay-200 ${
-            isTitleVisible ? 'animate-fade-in translate-y-0' : 'opacity-0 translate-y-10'
+          className={`text-center mb-12 transition-all duration-700 delay-100 ${
+            isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
@@ -94,8 +94,8 @@ const Projects = () => {
 
         <div 
           ref={projectsRef}
-          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto transition-all duration-1000 delay-400 ${
-            isProjectsVisible ? 'animate-fade-in' : 'opacity-0'
+          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto transition-all duration-700 delay-200 ${
+            isProjectsVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
           {projects.slice(0, 3).map((project, index) => {
@@ -104,12 +104,8 @@ const Projects = () => {
               <Card 
                 key={index} 
                 className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 group overflow-hidden ${
-                  isProjectsVisible ? `animate-fade-in` : 'opacity-0'
+                  isProjectsVisible ? 'opacity-100' : 'opacity-0'
                 }`}
-                style={{ 
-                  animationDelay: isProjectsVisible ? `${600 + index * 150}ms` : '0ms',
-                  animationFillMode: 'forwards'
-                }}
               >
                 {/* ... keep existing code for first 3 projects */}
                 <div className="relative overflow-hidden">

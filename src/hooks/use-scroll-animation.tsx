@@ -2,38 +2,32 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useScrollAnimation = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const current = ref.current;
+    if (!current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
+        if (entry.isIntersecting) {
           setIsVisible(true);
-          setHasAnimated(true);
-          // Once visible, stop observing to prevent flickering
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
+          observer.disconnect(); // Stop observing completely
         }
       },
       {
-        threshold: 0.05,
-        rootMargin: '10px',
+        threshold: 0.1,
+        rootMargin: '20px',
         ...options,
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(current);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.disconnect();
     };
-  }, [hasAnimated]);
+  }, []);
 
   return [ref, isVisible] as const;
 };
