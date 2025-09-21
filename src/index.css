@@ -79,6 +79,7 @@ All colors MUST be HSL. Contemporary aesthetics with subtle depth.
 
     --primary: 210 40% 98%;
     --primary-foreground: 222 47% 11%;
+    --primary-light: 210 35% 85%;
 
     --secondary: 222 35% 20%;
     --secondary-foreground: 210 40% 98%;
@@ -95,6 +96,19 @@ All colors MUST be HSL. Contemporary aesthetics with subtle depth.
     --border: 222 35% 20%;
     --input: 222 35% 20%;
     --ring: 212 27% 84%;
+
+    /* Dark Mode Design Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(210 40% 98%), hsl(210 35% 85%));
+    --gradient-hero: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(222 42% 15%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(222 47% 11%), hsl(222 42% 13%));
+    --gradient-subtle: linear-gradient(180deg, hsl(222 35% 20%), hsl(222 30% 18%));
+    --gradient-glass: linear-gradient(135deg, hsl(222 47% 11% / 0.7), hsl(222 35% 20% / 0.3));
+    
+    /* Dark Mode Shadows */
+    --shadow-elegant: 0 8px 32px -8px hsl(0 0% 0% / 0.3), 0 0 0 1px hsl(210 40% 98% / 0.1);
+    --shadow-card: 0 4px 16px -4px hsl(0 0% 0% / 0.2), 0 0 0 1px hsl(210 40% 98% / 0.05);
+    --shadow-nav: 0 4px 20px -4px hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(210 40% 98% / 0.1);
+    --shadow-glow: 0 0 40px hsl(210 40% 98% / 0.15);
     
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 98%;
