@@ -114,15 +114,10 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Modern Scroll Indicator */}
+      {/* Professional Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="flex flex-col items-center gap-3 animate-bounce">
-          <div className="glass px-4 py-2 rounded-full">
-            <span className="text-xs text-muted-foreground font-medium">Scroll to explore</span>
-          </div>
-          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-muted-foreground/50 rounded-full mt-2 animate-pulse" />
-          </div>
+        <div className="flex flex-col items-center gap-2">
+          <ChevronDown className="w-6 h-6 text-muted-foreground/60 animate-bounce" />
         </div>
       </div>
     </section>
