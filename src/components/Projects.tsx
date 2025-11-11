@@ -35,6 +35,14 @@ const Projects = () => {
       youtubeId: "59pJQfIg8DA"
     },
     {
+      icon: Bot,
+      title: "AI-Powered Netflix Recommendation Engine",
+      description: "Intelligent questionnaire application leveraging AI-driven conversation flow to generate personalized Netflix recommendations based on user mood, preferences, and viewing context. Features context-aware AI with custom prompt engineering and confidence thresholds for highly personalized content suggestions.",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Lovable AI"],
+      status: "Completed",
+      image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&h=300&fit=crop"
+    },
+    {
       icon: Globe,
       title: "Rapid Urbanization in African Cities",
       description: "Award-winning multimedia presentation analyzing urbanization patterns in Kigali, Casablanca, and Addis Ababa. Won first prize for comprehensive research and innovative presentation techniques.",
