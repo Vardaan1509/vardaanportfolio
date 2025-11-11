@@ -111,7 +111,7 @@ const Experience = () => {
   const getTypeColor = (type: string) => {
     const colors = {
       "Professional Experience": "bg-primary/10 text-primary",
-      "Scholarship": "bg-accent/10 text-accent",
+      "Scholarship": "bg-green-100 text-green-700",
       "Leadership": "bg-primary/10 text-primary",
       "Academic Leadership": "bg-accent/10 text-accent",
       "Arts & Performance": "bg-pink-100 text-pink-700",

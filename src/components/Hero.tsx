@@ -65,8 +65,10 @@ const Hero = () => {
               </h2>
               
               <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                Passionate about technology and innovation with a strong foundation in software development. 
-                Seeking internship opportunities to apply technical skills and contribute to meaningful projects.
+                Passionate about technology and innovation with a strong foundation in software development.
+                Actively seeking summer 2026 internship opportunities to apply and grow my technical skills while contributing to impactful projects.
+
+
               </p>
             </div>
             
