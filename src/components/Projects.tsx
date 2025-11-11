@@ -19,20 +19,12 @@ const Projects = () => {
   
   const projects = [
     {
-      icon: Database,
-      title: "Shoe Management System",
-      description: "A comprehensive inventory management system built with Python and SQL for tracking footwear inventory, sales, and stock management with real-time updates and reporting features.",
-      technologies: ["Python", "SQL", "Database Design", "File Handling"],
+      icon: Chrome,
+      title: "UW Login Helper",
+      description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
+      technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
       status: "Completed",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
-    },
-    {
-      icon: Bot,
-      title: "Medical AI Chatbot Concept",
-      description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
-      technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
-      status: "Concept Stage",
-      youtubeId: "59pJQfIg8DA"
+      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
     },
     {
       icon: Bot,
@@ -43,20 +35,28 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&h=300&fit=crop"
     },
     {
+      icon: Bot,
+      title: "Medical AI Chatbot Concept",
+      description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
+      technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
+      status: "Concept Stage",
+      youtubeId: "59pJQfIg8DA"
+    },
+    {
+      icon: Database,
+      title: "Shoe Management System",
+      description: "A comprehensive inventory management system built with Python and SQL for tracking footwear inventory, sales, and stock management with real-time updates and reporting features.",
+      technologies: ["Python", "SQL", "Database Design", "File Handling"],
+      status: "Completed",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
+    },
+    {
       icon: Globe,
       title: "Rapid Urbanization in African Cities",
       description: "Award-winning multimedia presentation analyzing urbanization patterns in Kigali, Casablanca, and Addis Ababa. Won first prize for comprehensive research and innovative presentation techniques.",
       technologies: ["Research", "Multimedia Design", "Data Analysis", "Presentation"],
       status: "Award Winner",
       image: "/lovable-uploads/63bac133-3ff4-43a1-ac86-2a60cbe6be68.png"
-    },
-    {
-      icon: Chrome,
-      title: "UW Login Helper",
-      description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
-      technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
-      status: "Completed",
-      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
     },
     {
       icon: QrCode,
