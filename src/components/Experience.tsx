@@ -113,7 +113,7 @@ const Experience = () => {
       "Professional Experience": "bg-primary/10 text-primary",
       "Scholarship": "bg-green-100 text-green-700",
       "Leadership": "bg-primary/10 text-primary",
-      "Academic Leadership": "bg-accent/10 text-accent",
+      "Academic Leadership": "bg-green-100 text-green-700",
       "Arts & Performance": "bg-pink-100 text-pink-700",
       "Award": "bg-yellow-100 text-yellow-700",
       "Academic Excellence": "bg-green-100 text-green-700",
