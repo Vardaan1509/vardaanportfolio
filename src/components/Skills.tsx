@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Code, Wrench, Users, Presentation, Database, Cpu } from "lucide-react";
+import { Code, Wrench, Users, Layers, Package } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Skills = () => {
@@ -13,40 +13,42 @@ const Skills = () => {
       icon: Code,
       title: "Programming Languages",
       skills: [
-        { name: "Python", level: 85, description: "Advanced proficiency in Python development" },
-        { name: "C++", level: 75, description: "Object-oriented programming and system development" },
-        { name: "C", level: 70, description: "System programming and memory management" },
-        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" }
+        { name: "Python", level: 90, description: "Advanced proficiency in Python development" },
+        { name: "C++", level: 85, description: "Object-oriented programming and system development" },
+        { name: "JavaScript", level: 85, description: "Modern web development and ES6+" },
+        { name: "TypeScript", level: 80, description: "Type-safe JavaScript development" },
+        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" },
+        { name: "HTML/CSS", level: 85, description: "Responsive web design and styling" }
+      ]
+    },
+    {
+      icon: Layers,
+      title: "Frameworks",
+      skills: [
+        { name: "React", level: 85, description: "Component-based UI development" },
+        { name: "Node.js", level: 80, description: "Server-side JavaScript runtime" },
+        { name: "Vue.js", level: 75, description: "Progressive JavaScript framework" }
       ]
     },
     {
       icon: Wrench,
-      title: "Tools & Technologies",
+      title: "Developer Tools",
       skills: [
-        { name: "GitHub", level: 85, description: "Version control and collaborative development" },
-        { name: "CustomTkinter", level: 75, description: "GUI development for Python applications" },
-        { name: "PyQRCode", level: 70, description: "QR code generation and integration" },
-        { name: "Development Tools", level: 80, description: "IDE setup and debugging tools" }
+        { name: "Git", level: 90, description: "Version control and collaboration" },
+        { name: "GitHub", level: 90, description: "Code hosting and team collaboration" },
+        { name: "VS Code", level: 85, description: "Primary code editor and extensions" },
+        { name: "Visual Studio", level: 80, description: "Integrated development environment" },
+        { name: "PyCharm", level: 85, description: "Python IDE for complex projects" },
+        { name: "Microsoft PowerPoint", level: 85, description: "Professional presentations and design" }
       ]
     },
     {
-      icon: Cpu,
-      title: "Core Concepts",
+      icon: Package,
+      title: "Libraries",
       skills: [
-        { name: "Data Structures & Algorithms", level: 85, description: "Problem solving and optimization" },
-        { name: "System Design", level: 75, description: "Architecture and scalability planning" },
-        { name: "GUI Development", level: 80, description: "User interface design and implementation" },
-        { name: "File Handling", level: 85, description: "Data persistence and file operations" }
-      ]
-    },
-    {
-      icon: Users,
-      title: "Leadership & Soft Skills",
-      skills: [
-        { name: "Team Leadership", level: 90, description: "Leading school initiatives and student body" },
-        { name: "Public Speaking", level: 85, description: "Presentations and performance experience" },
-        { name: "Creative Problem Solving", level: 85, description: "Innovative approach to challenges" },
-        { name: "Project Management", level: 80, description: "Organizing and executing initiatives" }
+        { name: "pandas", level: 80, description: "Data manipulation and analysis" },
+        { name: "NumPy", level: 80, description: "Numerical computing and arrays" },
+        { name: "Tkinter", level: 85, description: "GUI development for Python applications" }
       ]
     }
   ];
@@ -135,20 +137,20 @@ const Skills = () => {
           }`}
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">5+</div>
+            <div className="text-3xl font-bold text-primary mb-2">6+</div>
             <div className="text-sm text-muted-foreground">Programming Languages</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">10+</div>
-            <div className="text-sm text-muted-foreground">Leadership Roles</div>
+            <div className="text-3xl font-bold text-primary mb-2">3+</div>
+            <div className="text-sm text-muted-foreground">Frameworks</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">10+</div>
-            <div className="text-sm text-muted-foreground">Awards & Recognitions</div>
+            <div className="text-3xl font-bold text-primary mb-2">6+</div>
+            <div className="text-sm text-muted-foreground">Developer Tools</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">97%</div>
-            <div className="text-sm text-muted-foreground">Academic Performance</div>
+            <div className="text-3xl font-bold text-primary mb-2">3+</div>
+            <div className="text-sm text-muted-foreground">Libraries</div>
           </div>
         </div>
       </div>
