@@ -38,10 +38,8 @@ const Contact = () => {
         >
           <div className="bg-card rounded-lg shadow-card border border-border p-8">
             <div className="text-center mb-8">
-              <h3 className="text-xl font-semibold text-foreground mb-2">Ready to Connect?</h3>
-              <p className="text-muted-foreground">
-                Feel free to reach out through any of these professional channels:
-              </p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Feel free to reach out through any of these professional channels:</h3>
+              
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 justify-items-center">
