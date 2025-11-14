@@ -78,8 +78,7 @@ const Navigation = () => {
                 size="sm"
                 className="bg-primary hover:bg-primary-light text-primary-foreground w-fit shadow-elegant hover-lift"
               >
-                <Mail className="w-4 h-4 mr-2" />
-                Get In Touch
+                
               </Button>
             </div>
           </div>
