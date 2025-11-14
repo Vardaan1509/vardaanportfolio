@@ -73,14 +73,7 @@ const Navigation = () => {
                   {item.name}
                 </button>
               ))}
-              <Button
-                onClick={() => scrollToSection('contact')}
-                size="sm"
-                className="bg-primary hover:bg-primary-light text-primary-foreground w-fit shadow-elegant hover-lift"
-              >
-                Contact
-                
-              </Button>
+              
             </div>
           </div>
         )}
