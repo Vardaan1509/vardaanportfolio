@@ -66,7 +66,7 @@ const Hero = () => {
               
               <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
                 Passionate about technology and innovation with a strong foundation in software development.
-                Actively seeking summer 2026 internship opportunities to apply and grow my technical skills while contributing to impactful projects.
+                <strong>Actively seeking summer 2026 internship opportunities</strong> to apply and grow my technical skills while contributing to impactful projects.
 
 
               </p>
