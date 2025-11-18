@@ -83,7 +83,7 @@ const Hero = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <a
-  href="Resume_VardaanMehandiratta.pdf"
+  href="Resume_VardaanMehandiratta (4).pdf"
   download
   className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-4 py-2 rounded shadow transition flex items-center"
 >
