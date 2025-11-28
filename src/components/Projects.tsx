@@ -35,12 +35,12 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&h=300&fit=crop"
     },
     {
-      icon: Bot,
-      title: "Medical AI Chatbot Concept",
-      description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
-      technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
-      status: "Concept Stage",
-      youtubeId: "59pJQfIg8DA"
+      icon: Activity,
+      title: "Hospital-Induced Delirium Detection & Prevention System",
+      description: "Engineered a delirium prevention ecosystem utilizing Arduino telemetry and custom gamified assessments tailored across 4 age demographics. Validated by medical professionals to reduce manual cognitive screening time by 40%, streamlining ICU workflows. Built a secure, scalable backend to archive patient telemetry, powering individualized dashboards for 25+ user profiles tracking long-term cognitive scores.",
+      technologies: ["Arduino", "Sensors", "C++", "TypeScript", "HTML", "CSS"],
+      status: "Completed",
+      image: "/lovable-uploads/delirium-prevention.png"
     },
     {
       icon: Database,
@@ -51,12 +51,12 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
     },
     {
-      icon: Activity,
-      title: "Hospital-Induced Delirium Detection & Prevention System",
-      description: "Engineered a delirium prevention ecosystem utilizing Arduino telemetry and custom gamified assessments tailored across 4 age demographics. Validated by medical professionals to reduce manual cognitive screening time by 40%, streamlining ICU workflows. Built a secure, scalable backend to archive patient telemetry, powering individualized dashboards for 25+ user profiles tracking long-term cognitive scores.",
-      technologies: ["Arduino", "Sensors", "C++", "TypeScript", "HTML", "CSS"],
-      status: "Completed",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=300&fit=crop"
+      icon: Bot,
+      title: "Medical AI Chatbot Concept",
+      description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
+      technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
+      status: "Concept Stage",
+      youtubeId: "59pJQfIg8DA"
     },
     {
       icon: QrCode,
