@@ -32,7 +32,7 @@ const Projects = () => {
       description: "Intelligent questionnaire application leveraging AI-driven conversation flow to generate personalized Netflix recommendations based on user mood, preferences, and viewing context. Features context-aware AI with custom prompt engineering and confidence thresholds for highly personalized content suggestions.",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Lovable AI"],
       status: "Completed",
-      image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&h=300&fit=crop"
+      image: "/lovable-uploads/netflix-recommendation.png"
     },
     {
       icon: Activity,
@@ -62,7 +62,7 @@ const Projects = () => {
       icon: QrCode,
       title: "QR Code Generator App",
       description: "A sleek desktop application built with Python and CustomTkinter that allows users to instantly generate QR codes from custom text or URLs in a single click. Features a clean, modern user interface with support for light and dark themes, real-time QR preview, and simple, intuitive controls for enhanced digital accessibility.",
-      technologies: ["Python", "CustomTkinter", "PyQRCode", "Pillow"],
+      technologies: ["Python", "CustomTkinter", "PyQRCode"],
       status: "Completed",
       image: "/lovable-uploads/b3e561c3-8b76-430d-a9ce-d1988191cc2a.png"
     }
