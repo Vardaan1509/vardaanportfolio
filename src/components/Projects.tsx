@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Database, Bot, Globe, Chrome, QrCode } from "lucide-react";
+import { ExternalLink, Database, Bot, Globe, Chrome, QrCode, Activity } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
@@ -51,12 +51,12 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
     },
     {
-      icon: Globe,
-      title: "Rapid Urbanization in African Cities",
-      description: "Award-winning multimedia presentation analyzing urbanization patterns in Kigali, Casablanca, and Addis Ababa. Won first prize for comprehensive research and innovative presentation techniques.",
-      technologies: ["Research", "Multimedia Design", "Data Analysis", "Presentation"],
-      status: "Award Winner",
-      image: "/lovable-uploads/63bac133-3ff4-43a1-ac86-2a60cbe6be68.png"
+      icon: Activity,
+      title: "Hospital-Induced Delirium Detection & Prevention System",
+      description: "Engineered a delirium prevention ecosystem utilizing Arduino telemetry and custom gamified assessments tailored across 4 age demographics. Validated by medical professionals to reduce manual cognitive screening time by 40%, streamlining ICU workflows. Built a secure, scalable backend to archive patient telemetry, powering individualized dashboards for 25+ user profiles tracking long-term cognitive scores.",
+      technologies: ["Arduino", "Sensors", "C++", "TypeScript", "HTML", "CSS"],
+      status: "Completed",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=300&fit=crop"
     },
     {
       icon: QrCode,
