@@ -23,7 +23,7 @@ const Projects = () => {
       title: "AInterview (McHacks 13)",
       description: "Architected a high-fidelity React and TypeScript frontend featuring a dynamic interview interface and real-time dashboard tracking 10+ performance metrics. Integrated Gemini 2.5 Flash and ElevenLabs APIs to deliver automated technical assessments, achieving a 98% successful response rate for voice-to-text processing. Leveraged Supabase for secure, low-latency data persistence of interview transcripts and analytics.",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Gemini API", "ElevenLabs", "Supabase"],
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=300&fit=crop"
+      image: "/lovable-uploads/ainterview.png"
     },
     {
       icon: Chrome,
