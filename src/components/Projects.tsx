@@ -26,12 +26,11 @@ const Projects = () => {
       image: "/lovable-uploads/ainterview.png"
     },
     {
-      icon: Chrome,
-      title: "UW Login Helper",
-      description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
-      technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
-      status: "Completed",
-      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
+      icon: Activity,
+      title: "CXR Triage",
+      description: "An AI-powered chest X-ray triage system for emergency departments. A ResNet50 model screens for pneumothorax, pneumonia, and lung nodules, flagging cases as URGENT, REVIEW, or ROUTINE. Gemini 2.5 Flash generates structured clinical reports, while a clinically-weighted similarity algorithm matches new cases against resolved ones to build institutional knowledge. Includes OCR-powered patient intake, full audit trail, and Supabase-backed persistent storage.",
+      technologies: ["Next.js", "React", "TypeScript", "PyTorch", "FastAPI", "Gemini API", "Supabase"],
+      image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=300&fit=crop"
     },
     {
       icon: Bot,
@@ -48,6 +47,14 @@ const Projects = () => {
       technologies: ["Arduino", "Sensors", "C++", "TypeScript", "HTML", "CSS"],
       status: "Completed",
       image: "/lovable-uploads/delirium-prevention.png"
+    },
+    {
+      icon: Chrome,
+      title: "UW Login Helper",
+      description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
+      technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
+      status: "Completed",
+      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
     },
     {
       icon: Database,
