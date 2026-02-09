@@ -30,7 +30,7 @@ const Projects = () => {
       title: "CXR Triage (CXC AI Hackathon)",
       description: "An AI-powered chest X-ray triage system for emergency departments. A ResNet50 model screens for pneumothorax, pneumonia, and lung nodules, flagging cases as URGENT, REVIEW, or ROUTINE. Gemini 2.5 Flash generates structured clinical reports, while a clinically-weighted similarity algorithm matches new cases against resolved ones to build institutional knowledge. Includes OCR-powered patient intake, full audit trail, and Supabase-backed persistent storage.",
       technologies: ["Next.js", "React", "TypeScript", "PyTorch", "FastAPI", "Gemini API", "Supabase"],
-      image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=300&fit=crop"
+      image: "/lovable-uploads/cxr-triage.png"
     },
     {
       icon: Bot,
