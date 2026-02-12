@@ -19,8 +19,7 @@ const Skills = () => {
         { name: "Python", level: 85, description: "Scripting, automation, and ML" },
         { name: "C++", level: 80, description: "Systems programming and OOP" },
         { name: "C", level: 75, description: "Low-level systems programming" },
-        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" },
-        { name: "Java", level: 75, description: "Object-oriented application development" }
+        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" }
       ]
     },
     {
@@ -41,7 +40,6 @@ const Skills = () => {
       skills: [
         { name: "Git", level: 90, description: "Version control and collaboration" },
         { name: "GitHub", level: 90, description: "Code hosting and CI/CD workflows" },
-        { name: "CI/CD", level: 80, description: "Continuous integration and deployment" },
         { name: "VS Code", level: 90, description: "Primary code editor and extensions" },
         { name: "Supabase", level: 85, description: "Backend-as-a-service platform" },
         { name: "Vercel", level: 85, description: "Frontend deployment and hosting" },
@@ -147,7 +145,7 @@ const Skills = () => {
           }`}
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">8</div>
+            <div className="text-3xl font-bold text-primary mb-2">7</div>
             <div className="text-sm text-muted-foreground">Languages</div>
           </div>
           <div className="text-center">
@@ -155,7 +153,7 @@ const Skills = () => {
             <div className="text-sm text-muted-foreground">Frameworks</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">10</div>
+            <div className="text-3xl font-bold text-primary mb-2">9</div>
             <div className="text-sm text-muted-foreground">DevOps / Tools</div>
           </div>
           <div className="text-center">
