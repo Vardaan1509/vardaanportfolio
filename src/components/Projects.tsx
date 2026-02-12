@@ -1,21 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Database, Bot, Globe, Chrome, QrCode, Activity } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Bot, Activity } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 
 const Projects = () => {
-  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [sectionRef, isSectionVisible] = useScrollAnimation();
   const [titleRef, isTitleVisible] = useScrollAnimation({ threshold: 0.3 });
   const [projectsRef, isProjectsVisible] = useScrollAnimation({ threshold: 0.2 });
-  
-  const handleVideoClick = (index: number) => {
-    console.log('Video clicked, index:', index);
-    setPlayingIndex(playingIndex === index ? null : index);
-  };
   
   const projects = [
     {
@@ -37,48 +29,7 @@ const Projects = () => {
       title: "AI-Powered Netflix Recommendation Engine",
       description: "Intelligent questionnaire application leveraging AI-driven conversation flow to generate personalized Netflix recommendations based on user mood, preferences, and viewing context. Features context-aware AI with custom prompt engineering and confidence thresholds for highly personalized content suggestions.",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Lovable AI"],
-      status: "Completed",
       image: "/lovable-uploads/netflix-recommendation.png"
-    },
-    {
-      icon: Activity,
-      title: "Hospital-Induced Delirium Detection & Prevention System",
-      description: "Engineered a delirium prevention ecosystem utilizing Arduino telemetry and custom gamified assessments tailored across 4 age demographics. Validated by medical professionals to reduce manual cognitive screening time by 40%, streamlining ICU workflows. Built a secure, scalable backend to archive patient telemetry, powering individualized dashboards for 25+ user profiles tracking long-term cognitive scores.",
-      technologies: ["Arduino", "Sensors", "C++", "TypeScript", "HTML", "CSS"],
-      status: "Completed",
-      image: "/lovable-uploads/delirium-prevention.png"
-    },
-    {
-      icon: Chrome,
-      title: "UW Login Helper",
-      description: "A sleek Chrome extension that automates University of Waterloo portal login, securely saving credentials locally and auto-filling the login form in one click. Built with modern web technologies, it enhances student productivity by eliminating repetitive login processes while ensuring complete privacy.",
-      technologies: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
-      status: "Completed",
-      image: "/lovable-uploads/f829901a-efdf-456b-97aa-045a062bbe93.png"
-    },
-    {
-      icon: Database,
-      title: "Shoe Management System",
-      description: "A comprehensive inventory management system built with Python and SQL for tracking footwear inventory, sales, and stock management with real-time updates and reporting features.",
-      technologies: ["Python", "SQL", "Database Design", "File Handling"],
-      status: "Completed",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=300&fit=crop"
-    },
-    {
-      icon: Bot,
-      title: "Medical AI Chatbot Concept",
-      description: "Conceptual design for a scalable, hardware-deployable healthcare AI system targeting rural India. Features include disease tracking, prediction algorithms, and medical advice delivery through accessible interfaces.",
-      technologies: ["AI/ML", "Healthcare Tech", "Scalable Architecture", "Rural Technology"],
-      status: "Concept Stage",
-      youtubeId: "59pJQfIg8DA"
-    },
-    {
-      icon: QrCode,
-      title: "QR Code Generator App",
-      description: "A sleek desktop application built with Python and CustomTkinter that allows users to instantly generate QR codes from custom text or URLs in a single click. Features a clean, modern user interface with support for light and dark themes, real-time QR preview, and simple, intuitive controls for enhanced digital accessibility.",
-      technologies: ["Python", "CustomTkinter", "PyQRCode"],
-      status: "Completed",
-      image: "/lovable-uploads/b3e561c3-8b76-430d-a9ce-d1988191cc2a.png"
     }
   ];
 
@@ -130,46 +81,12 @@ const Projects = () => {
                 }`}
               >
                 <div className="relative overflow-hidden">
-                  {project.youtubeId ? (
-                    playingIndex === index ? (
-                      <div className="w-full h-48 bg-black">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
-                          title={project.title}
-                          className="w-full h-full"
-                          allow="autoplay; encrypted-media"
-                          allowFullScreen
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className="w-full h-48 bg-gray-800 cursor-pointer relative"
-                        onClick={() => handleVideoClick(index)}
-                      >
-                        <img
-                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
-                          alt={project.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <polygon points="9,5 20,12 9,19" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  ) : (
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                  )}
-                  {!project.youtubeId && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent" />
                 </div>
                 
                 <CardHeader className="pb-4">
