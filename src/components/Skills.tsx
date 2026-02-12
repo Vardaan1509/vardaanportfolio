@@ -11,35 +11,44 @@ const Skills = () => {
   const skillCategories = [
     {
       icon: Code,
-      title: "Programming Languages",
+      title: "Languages",
       skills: [
-        { name: "Python", level: 90, description: "Advanced proficiency in Python development" },
-        { name: "C++", level: 85, description: "Object-oriented programming and system development" },
-        { name: "JavaScript", level: 85, description: "Modern web development and ES6+" },
-        { name: "TypeScript", level: 80, description: "Type-safe JavaScript development" },
+        { name: "JavaScript", level: 90, description: "Modern web development and ES6+" },
+        { name: "HTML/CSS", level: 90, description: "Responsive web design and styling" },
+        { name: "TypeScript", level: 85, description: "Type-safe JavaScript development" },
+        { name: "Python", level: 85, description: "Scripting, automation, and ML" },
+        { name: "C++", level: 80, description: "Systems programming and OOP" },
+        { name: "C", level: 75, description: "Low-level systems programming" },
         { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" },
-        { name: "HTML/CSS", level: 85, description: "Responsive web design and styling" }
+        { name: "Java", level: 75, description: "Object-oriented application development" }
       ]
     },
     {
       icon: Layers,
       title: "Frameworks",
       skills: [
-        { name: "React", level: 85, description: "Component-based UI development" },
-        { name: "Node.js", level: 80, description: "Server-side JavaScript runtime" },
-        { name: "Vue.js", level: 75, description: "Progressive JavaScript framework" }
+        { name: "React", level: 90, description: "Component-based UI development" },
+        { name: "Next.js", level: 85, description: "Full-stack React framework" },
+        { name: "Node.js", level: 85, description: "Server-side JavaScript runtime" },
+        { name: "Express.js", level: 80, description: "Minimal Node.js web framework" },
+        { name: "Deno.js", level: 75, description: "Modern JavaScript/TypeScript runtime" },
+        { name: "Tailwind CSS", level: 90, description: "Utility-first CSS framework" }
       ]
     },
     {
       icon: Wrench,
-      title: "Developer Tools",
+      title: "DevOps / Tools",
       skills: [
         { name: "Git", level: 90, description: "Version control and collaboration" },
-        { name: "GitHub", level: 90, description: "Code hosting and team collaboration" },
-        { name: "VS Code", level: 85, description: "Primary code editor and extensions" },
-        { name: "Visual Studio", level: 80, description: "Integrated development environment" },
-        { name: "PyCharm", level: 85, description: "Python IDE for complex projects" },
-        { name: "Microsoft PowerPoint", level: 85, description: "Professional presentations and design" }
+        { name: "GitHub", level: 90, description: "Code hosting and CI/CD workflows" },
+        { name: "CI/CD", level: 80, description: "Continuous integration and deployment" },
+        { name: "VS Code", level: 90, description: "Primary code editor and extensions" },
+        { name: "Supabase", level: 85, description: "Backend-as-a-service platform" },
+        { name: "Vercel", level: 85, description: "Frontend deployment and hosting" },
+        { name: "DigitalOcean", level: 75, description: "Cloud infrastructure and hosting" },
+        { name: "Postman", level: 80, description: "API testing and documentation" },
+        { name: "MongoDB", level: 75, description: "NoSQL document database" },
+        { name: "Cloudinary", level: 75, description: "Media management and optimization" }
       ]
     },
     {
@@ -48,7 +57,8 @@ const Skills = () => {
       skills: [
         { name: "pandas", level: 80, description: "Data manipulation and analysis" },
         { name: "NumPy", level: 80, description: "Numerical computing and arrays" },
-        { name: "Tkinter", level: 85, description: "GUI development for Python applications" }
+        { name: "Tkinter", level: 80, description: "GUI development for Python applications" },
+        { name: "PyTorch", level: 75, description: "Deep learning and neural networks" }
       ]
     }
   ];
@@ -137,19 +147,19 @@ const Skills = () => {
           }`}
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">6+</div>
-            <div className="text-sm text-muted-foreground">Programming Languages</div>
+            <div className="text-3xl font-bold text-primary mb-2">8</div>
+            <div className="text-sm text-muted-foreground">Languages</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">3+</div>
+            <div className="text-3xl font-bold text-primary mb-2">6</div>
             <div className="text-sm text-muted-foreground">Frameworks</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">6+</div>
-            <div className="text-sm text-muted-foreground">Developer Tools</div>
+            <div className="text-3xl font-bold text-primary mb-2">10</div>
+            <div className="text-sm text-muted-foreground">DevOps / Tools</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">3+</div>
+            <div className="text-3xl font-bold text-primary mb-2">4</div>
             <div className="text-sm text-muted-foreground">Libraries</div>
           </div>
         </div>
