@@ -103,7 +103,7 @@ const ProjectRoadmap = () => {
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-3 text-center font-mono tracking-wide">
-            What's next?
+            More coming soon...
           </p>
         </div>
       </div>
