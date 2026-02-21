@@ -4,6 +4,7 @@ import Projects from "@/components/Projects";
 import ProjectRoadmap from "@/components/ProjectRoadmap";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
+import RobotMascot from "@/components/RobotMascot";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <ProjectRoadmap />
       <Skills />
       <Contact />
+      <RobotMascot />
     </div>
   );
 };
