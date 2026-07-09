@@ -83,37 +83,44 @@ const BattleScreen = ({ team, wild, onEnd }: BattleScreenProps) => {
     sounds.pokemonCry(active.species.id, active.species.shape);
     setTimeout(() => {
       setAttackShake(false);
-      const r = resolveBattle(active, wild);
-      if (r === "win") {
-        setPhase("victory");
-        setWildDefeated(true);
-        setMessage(
-          wild.species.isLegendary
-            ? `You defeated a legendary ${wild.species.name}! Caught!`
-            : `You won! ${wild.species.name} was caught!`
-        );
-        sounds.victory();
-        setTimeout(() => sounds.catchSound(), 700);
-        setTimeout(() => onEnd("win"), 2400);
-      } else {
-        setPhase("faint");
-        setActiveFainted(true);
-        setMessage(`${active.species.name} fainted!`);
-        sounds.faint();
-        setTimeout(() => {
-          setActiveFainted(false);
-          if (idx + 1 < selected.length) {
-            setPhase("sendNext");
-            setMessage(`Go, ${selected[idx + 1].species.name}!`);
-            setTimeout(() => runAttack(idx + 1), 900);
-          } else {
-            setPhase("defeat");
-            setMessage(`You have no more Pokemon! You lost!`);
-            sounds.defeat();
-            setTimeout(() => onEnd("lose"), 1800);
-          }
-        }, 1200);
-      }
+      const result = resolveBattle(active, wild);
+      // If there's type-matchup context, show it before the outcome.
+      const showExplanation = result.explanation.length > 0;
+      if (showExplanation) setMessage(result.explanation);
+      const outcomeDelay = showExplanation ? 1500 : 0;
+
+      setTimeout(() => {
+        if (result.outcome === "win") {
+          setPhase("victory");
+          setWildDefeated(true);
+          setMessage(
+            wild.species.isLegendary
+              ? `You defeated a legendary ${wild.species.name}! Caught!`
+              : `You won! ${wild.species.name} was caught!`
+          );
+          sounds.victory();
+          setTimeout(() => sounds.catchSound(), 700);
+          setTimeout(() => onEnd("win"), 2400);
+        } else {
+          setPhase("faint");
+          setActiveFainted(true);
+          setMessage(`${active.species.name} fainted!`);
+          sounds.faint();
+          setTimeout(() => {
+            setActiveFainted(false);
+            if (idx + 1 < selected.length) {
+              setPhase("sendNext");
+              setMessage(`Go, ${selected[idx + 1].species.name}!`);
+              setTimeout(() => runAttack(idx + 1), 900);
+            } else {
+              setPhase("defeat");
+              setMessage(`You have no more Pokemon! You lost!`);
+              sounds.defeat();
+              setTimeout(() => onEnd("lose"), 1800);
+            }
+          }, 1200);
+        }
+      }, outcomeDelay);
     }, 900);
   };
 

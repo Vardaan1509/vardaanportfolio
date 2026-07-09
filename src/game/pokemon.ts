@@ -205,13 +205,69 @@ export const rollWildEncounter = (): Pokemon => {
   return makePokemon(id);
 };
 
-// Battle rule: higher level wins. Ties go to the player.
+// ============ TYPE MATCHUPS ============
+// Classic-Pokemon-inspired rock/paper/scissors relationships between types.
+// If yours has advantage vs the wild's type, yours gets a +5 effective-level boost.
+// Legendary overwhelms everything except another legendary.
+export const TYPE_ADVANTAGE: Record<PokemonType, PokemonType[]> = {
+  fire: ["grass"],
+  water: ["fire", "rock"],
+  grass: ["water", "rock"],
+  rock: ["fire", "flying"],
+  flying: ["grass"],
+  electric: ["water", "flying"],
+  tech: [], // neutral against everything
+  legendary: ["electric", "fire", "water", "grass", "rock", "flying", "tech"],
+};
+
+const TYPE_BOOST = 5;
+const LEGENDARY_BOOST = 10;
+
+const prettyType = (t: PokemonType): string =>
+  t.charAt(0).toUpperCase() + t.slice(1);
+
+export interface BattleOutcome {
+  outcome: "win" | "lose";
+  advantage: "strong" | "weak" | "neutral";
+  explanation: string; // shown to the player in battle when non-empty
+  yourEffective: number;
+  wildEffective: number;
+}
+
+// Battle rule:
+//   effective = level + type-matchup boost
+//   higher effective level wins; ties go to the player.
 export const resolveBattle = (
   yours: Pokemon,
   wild: Pokemon
-): "win" | "lose" => {
-  if (yours.level >= wild.level) return "win";
-  return "lose";
+): BattleOutcome => {
+  const yourType = yours.species.type;
+  const wildType = wild.species.type;
+  let yourBoost = 0;
+  let wildBoost = 0;
+  let advantage: "strong" | "weak" | "neutral" = "neutral";
+  let explanation = "";
+
+  if (TYPE_ADVANTAGE[yourType]?.includes(wildType)) {
+    advantage = "strong";
+    yourBoost = yourType === "legendary" ? LEGENDARY_BOOST : TYPE_BOOST;
+    explanation =
+      yourType === "legendary"
+        ? `${yours.species.name} is a legendary. Its power overwhelms ${wild.species.name}.`
+        : `${prettyType(yourType)} is strong against ${prettyType(wildType)}. ${yours.species.name} hits harder!`;
+  } else if (TYPE_ADVANTAGE[wildType]?.includes(yourType)) {
+    advantage = "weak";
+    wildBoost = wildType === "legendary" ? LEGENDARY_BOOST : TYPE_BOOST;
+    explanation =
+      wildType === "legendary"
+        ? `${wild.species.name} is a legendary. It'll take everything to bring it down.`
+        : `${prettyType(wildType)} is strong against ${prettyType(yourType)}. ${yours.species.name} struggles!`;
+  }
+
+  const yourEffective = yours.level + yourBoost;
+  const wildEffective = wild.level + wildBoost;
+  const outcome = yourEffective >= wildEffective ? "win" : "lose";
+  return { outcome, advantage, explanation, yourEffective, wildEffective };
 };
 
 // Adds a caught pokemon to the team. If a same-species pokemon already exists,

@@ -48,8 +48,8 @@ export const npcs: NPC[] = [
       "Kid ships. Take Deploybug, he built it for you.",
     ],
     dialogueRepeat: [
-      "You're back.",
-      "Tell Vardaan his ticket queue is looking healthy.",
+      "Oh, hey.",
+      "Coffee's fresh in the kitchen if you want some.",
     ],
   },
   {
@@ -71,8 +71,8 @@ export const npcs: NPC[] = [
       "Every developer starts with one. Choose the one that speaks to you.",
     ],
     dialogueRepeat: [
-      "Ah, back again.",
-      "Vardaan's still doing well. As expected.",
+      "Back again? Good.",
+      "Take your time exploring.",
     ],
     legendaryReview: [
       "Wait a moment.",
@@ -132,8 +132,8 @@ export const npcs: NPC[] = [
       "Solid engineer. Solid kid. Take Datamouse. It handles data like Vardaan does.",
     ],
     dialogueRepeat: [
-      "Hey, still exploring?",
-      "Proud of that kid. He's doing big things now.",
+      "Hey, welcome back.",
+      "Watch out for the tall grass down south. It gets rough.",
     ],
   },
   {
@@ -156,8 +156,8 @@ export const npcs: NPC[] = [
       "Kid ships constantly. Reach him at vmehandi@uwaterloo.ca. Take Buildo, he'll help you make things.",
     ],
     dialogueRepeat: [
-      "You back for more war stories?",
-      "Vardaan's got more projects cooking. Keep an eye out.",
+      "Oh, hi again.",
+      "The wild ones out south get tough. Bring a solid team.",
     ],
   },
   {
@@ -183,8 +183,8 @@ export const npcs: NPC[] = [
       "Since you found this place, take Bytebit. Fair reward for the curiosity.",
     ],
     dialogueRepeat: [
-      "Welcome back to the dev room.",
-      "Vardaan's still shipping. He'll always be shipping.",
+      "Hey, welcome back.",
+      "The dev room's always open. Come by anytime.",
     ],
   },
   {
@@ -203,7 +203,7 @@ export const npcs: NPC[] = [
     ],
     dialogueRepeat: [
       "Hey again.",
-      "Anything else you want to know? Explore the map, talk to my crew, catch some Pokemon in the tall grass.",
+      "Have a look around. Talk to people, catch some Pokemon.",
     ],
     choice: {
       question: "Take resume?",
