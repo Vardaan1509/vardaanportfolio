@@ -351,6 +351,8 @@ export const drawTile = (
 };
 
 // ============ CHARACTER ============
+// Detailed RSE-style character drawn on a 20x20 sub-pixel grid (half-PIX cells)
+// with saturated palette, multi-tone shading, and centered single-color eyes.
 
 export const drawCharacter = (
   ctx: CanvasRenderingContext2D,
@@ -364,54 +366,80 @@ export const drawCharacter = (
 ) => {
   const bob = walkFrame === 1 ? PIX / 2 : 0;
   const cy = y + bob;
+  const p = PIX / 2; // 2px sub-cell (20x20 grid)
 
+  // Derived palette
+  const skin = "#f8d0a8";
+  const skinShadow = "#c48868";
+  const skinLight = "#ffe4c0";
+  const outline = "#1a1008";
+  const hair = hairColor;
+  const hairDark = shade(hairColor, -32);
+  const shirt = shirtColor;
+  const shirtDark = shade(shirtColor, -32);
+  const shirtLight = shade(shirtColor, 18);
+  const pants = "#385878";
+  const pantsDark = "#1e3450";
+  const shoe = "#1a1008";
+
+  const Q = (gx: number, gy: number, w: number, h: number, c: string) => {
+    ctx.fillStyle = c;
+    ctx.fillRect(x + gx * p, cy + gy * p, w * p, h * p);
+  };
+
+  // Ground shadow (unbobbed)
   ctx.fillStyle = "rgba(0,0,0,0.28)";
-  ctx.fillRect(x + 2 * PIX, y + 9 * PIX, 6 * PIX, PIX / 2);
+  ctx.beginPath();
+  ctx.ellipse(x + 10 * p, y + 19 * p, 6 * p, 1.2 * p, 0, 0, Math.PI * 2);
+  ctx.fill();
 
-  // Head
-  P(ctx, x, cy, 3, 1, 4, 4, "#f4c9a3");
-
-  // Hair
-  ctx.fillStyle = hairColor;
-  if (direction === 1) {
-    ctx.fillRect(x + 3 * PIX, cy + PIX, 4 * PIX, 3 * PIX);
+  if (direction === 0) {
+    drawCharFront(Q, {
+      skin,
+      skinShadow,
+      skinLight,
+      outline,
+      hair,
+      hairDark,
+      shirt,
+      shirtDark,
+      shirtLight,
+      pants,
+      pantsDark,
+      shoe,
+      walkFrame,
+    });
+  } else if (direction === 1) {
+    drawCharBack(Q, {
+      skin,
+      skinShadow,
+      outline,
+      hair,
+      hairDark,
+      shirt,
+      shirtDark,
+      shirtLight,
+      pants,
+      pantsDark,
+      shoe,
+      walkFrame,
+    });
   } else {
-    ctx.fillRect(x + 3 * PIX, cy + PIX, 4 * PIX, 2 * PIX);
-    if (direction === 2) ctx.fillRect(x + 3 * PIX, cy + PIX, PIX, 3 * PIX);
-    if (direction === 3) ctx.fillRect(x + 6 * PIX, cy + PIX, PIX, 3 * PIX);
-  }
-
-  if (direction !== 1) {
-    ctx.fillStyle = "#1e293b";
-    if (direction === 0) {
-      ctx.fillRect(x + 4 * PIX, cy + 3 * PIX, PIX / 2, PIX / 2);
-      ctx.fillRect(x + 5.5 * PIX, cy + 3 * PIX, PIX / 2, PIX / 2);
-    } else if (direction === 2) {
-      ctx.fillRect(x + 4 * PIX, cy + 3 * PIX, PIX / 2, PIX / 2);
-    } else if (direction === 3) {
-      ctx.fillRect(x + 5.5 * PIX, cy + 3 * PIX, PIX / 2, PIX / 2);
-    }
-  }
-
-  // Shirt
-  ctx.fillStyle = shirtColor;
-  ctx.fillRect(x + 2.5 * PIX, cy + 5 * PIX, 5 * PIX, 3 * PIX);
-  ctx.fillStyle = shade(shirtColor, -25);
-  ctx.fillRect(x + 2.5 * PIX, cy + 7 * PIX, 5 * PIX, PIX);
-
-  // Arms
-  ctx.fillStyle = "#f4c9a3";
-  ctx.fillRect(x + 2 * PIX, cy + 5 * PIX, PIX, 2 * PIX);
-  ctx.fillRect(x + 7 * PIX, cy + 5 * PIX, PIX, 2 * PIX);
-
-  // Legs
-  ctx.fillStyle = "#1e3a5f";
-  if (walkFrame === 0) {
-    ctx.fillRect(x + 3 * PIX, cy + 8 * PIX, PIX, 2 * PIX);
-    ctx.fillRect(x + 6 * PIX, cy + 8 * PIX, PIX, 2 * PIX);
-  } else {
-    ctx.fillRect(x + 2.5 * PIX, cy + 8 * PIX, PIX, 2 * PIX);
-    ctx.fillRect(x + 6.5 * PIX, cy + 8 * PIX, PIX, 2 * PIX);
+    drawCharSide(Q, direction === 3, {
+      skin,
+      skinShadow,
+      skinLight,
+      outline,
+      hair,
+      hairDark,
+      shirt,
+      shirtDark,
+      shirtLight,
+      pants,
+      pantsDark,
+      shoe,
+      walkFrame,
+    });
   }
 
   if (accessory === "resume") {
@@ -424,6 +452,231 @@ export const drawCharacter = (
     ctx.fillRect(x + 4.5 * PIX, y + PIX + bobOffset, PIX, PIX / 2);
   }
 };
+
+type CharPalette = {
+  skin: string;
+  skinShadow: string;
+  skinLight?: string;
+  outline: string;
+  hair: string;
+  hairDark: string;
+  shirt: string;
+  shirtDark: string;
+  shirtLight: string;
+  pants: string;
+  pantsDark: string;
+  shoe: string;
+  walkFrame: number;
+};
+
+// FRONT-FACING VIEW
+function drawCharFront(
+  Q: (gx: number, gy: number, w: number, h: number, c: string) => void,
+  P: CharPalette
+) {
+  // Head hair block (rows 3-7, cols 6-13)
+  Q(6, 3, 8, 1, P.outline);
+  Q(5, 4, 10, 1, P.hairDark);
+  Q(5, 5, 10, 1, P.hair);
+  Q(5, 6, 10, 1, P.hair);
+  // Hair highlight strip
+  Q(7, 4, 2, 1, P.hair);
+  Q(11, 4, 2, 1, P.hair);
+  // Hair outline sides
+  Q(5, 4, 1, 3, P.outline);
+  Q(14, 4, 1, 3, P.outline);
+
+  // Face skin (rows 7-10)
+  Q(6, 7, 8, 1, P.outline); // hair fringe bottom outline
+  Q(6, 7, 1, 3, P.outline);
+  Q(13, 7, 1, 3, P.outline);
+  // Skin fill
+  Q(7, 7, 6, 1, P.hair); // last row of fringe over forehead
+  Q(7, 8, 6, 2, P.skin);
+  // Skin shadow on sides
+  Q(7, 8, 1, 2, P.skinShadow);
+  Q(12, 8, 1, 2, P.skinShadow);
+  // Face bottom outline
+  Q(7, 10, 6, 1, P.outline);
+
+  // Eyes — single dark color, centered
+  Q(8, 8, 1, 1, P.outline);
+  Q(11, 8, 1, 1, P.outline);
+  // Small mouth hint (chin dimple)
+  Q(9, 9, 2, 1, P.skinShadow);
+
+  // Neck
+  Q(9, 10, 2, 1, P.skinShadow);
+
+  // Shirt (rows 11-14)
+  // Collar row
+  Q(6, 11, 8, 1, P.outline);
+  Q(7, 11, 6, 1, P.shirtDark);
+  // Main shirt body
+  Q(6, 12, 1, 3, P.outline);
+  Q(13, 12, 1, 3, P.outline);
+  Q(7, 12, 6, 3, P.shirt);
+  Q(7, 12, 6, 1, P.shirtLight);
+  Q(7, 14, 6, 1, P.shirtDark);
+  // Arms (skin) on outside
+  Q(5, 12, 1, 3, P.outline);
+  Q(6, 12, 0.5, 3, P.skinShadow);
+  Q(14, 12, 1, 3, P.outline);
+  Q(13.5, 12, 0.5, 3, P.skinShadow);
+
+  // Pants / legs (rows 15-17)
+  Q(6, 15, 8, 1, P.outline);
+  Q(7, 15, 6, 2, P.pants);
+  Q(7, 15, 6, 1, P.pantsDark); // waistband
+  // Leg separation
+  Q(9, 15, 2, 2, P.pantsDark);
+
+  // Walking animation — leg positions shift
+  if (P.walkFrame === 0) {
+    Q(7, 17, 2, 1, P.pants);
+    Q(11, 17, 2, 1, P.pants);
+    // Shoes
+    Q(6, 18, 3, 1, P.shoe);
+    Q(11, 18, 3, 1, P.shoe);
+  } else {
+    Q(7, 17, 2, 1, P.pants);
+    Q(11, 17, 2, 1, P.pants);
+    // Shoes shifted
+    Q(6, 18, 3, 1, P.shoe);
+    Q(11, 18, 3, 1, P.shoe);
+    // One shoe raised slightly (bob effect handled via cy)
+  }
+
+  // Full body outline touch-ups
+  Q(6, 17, 1, 2, P.outline);
+  Q(13, 17, 1, 2, P.outline);
+}
+
+// BACK VIEW
+function drawCharBack(
+  Q: (gx: number, gy: number, w: number, h: number, c: string) => void,
+  P: CharPalette
+) {
+  // Full hair back
+  Q(6, 3, 8, 1, P.outline);
+  Q(5, 4, 10, 6, P.hair);
+  Q(5, 4, 10, 1, P.hairDark);
+  // Hair highlights
+  Q(7, 5, 2, 1, shade(P.hair, 15));
+  Q(11, 5, 2, 1, shade(P.hair, 15));
+  Q(5, 4, 1, 6, P.outline);
+  Q(14, 4, 1, 6, P.outline);
+  Q(5, 9, 10, 1, P.hairDark);
+
+  // Neck strip
+  Q(9, 10, 2, 1, P.skinShadow);
+
+  // Shirt back
+  Q(6, 11, 8, 1, P.outline);
+  Q(7, 11, 6, 1, P.shirtDark);
+  Q(6, 12, 1, 3, P.outline);
+  Q(13, 12, 1, 3, P.outline);
+  Q(7, 12, 6, 3, P.shirt);
+  Q(7, 12, 6, 1, P.shirtLight);
+  Q(7, 14, 6, 1, P.shirtDark);
+
+  // Arms
+  Q(5, 12, 1, 3, P.outline);
+  Q(14, 12, 1, 3, P.outline);
+  Q(6, 12, 0.5, 3, P.shirtDark);
+  Q(13.5, 12, 0.5, 3, P.shirtDark);
+
+  // Pants + shoes (same as front)
+  Q(6, 15, 8, 1, P.outline);
+  Q(7, 15, 6, 2, P.pants);
+  Q(7, 15, 6, 1, P.pantsDark);
+  Q(9, 15, 2, 2, P.pantsDark);
+  Q(7, 17, 2, 1, P.pants);
+  Q(11, 17, 2, 1, P.pants);
+  Q(6, 18, 3, 1, P.shoe);
+  Q(11, 18, 3, 1, P.shoe);
+  Q(6, 17, 1, 2, P.outline);
+  Q(13, 17, 1, 2, P.outline);
+}
+
+// SIDE VIEW (left = false means facing left, true = facing right; drawn as left then mirrored)
+function drawCharSide(
+  Q: (gx: number, gy: number, w: number, h: number, c: string) => void,
+  facingRight: boolean,
+  P: CharPalette
+) {
+  // We draw a leftward-facing profile using cols 6-13 and let the caller flip via facingRight
+  // by swapping x offsets. Simpler: draw the same profile but "eye" position + hair sweep
+  // reflect based on facingRight.
+  const eyeCol = facingRight ? 11 : 8;
+  const fringeSide = facingRight ? 6 : 13;
+  const backSide = facingRight ? 13 : 6;
+
+  // Hair block
+  Q(6, 3, 8, 1, P.outline);
+  Q(5, 4, 10, 1, P.hairDark);
+  Q(5, 5, 10, 2, P.hair);
+  Q(5, 4, 1, 3, P.outline);
+  Q(14, 4, 1, 3, P.outline);
+  // Highlight
+  Q(facingRight ? 9 : 7, 4, 2, 1, shade(P.hair, 15));
+
+  // Head skin
+  Q(6, 7, 8, 1, P.outline);
+  Q(6, 7, 1, 3, P.outline);
+  Q(13, 7, 1, 3, P.outline);
+  Q(7, 7, 6, 1, P.hair);
+  Q(7, 8, 6, 2, P.skin);
+  // Nose hint on facing side
+  Q(facingRight ? 13 : 6, 8, 1, 1, P.skinShadow);
+  // Fringe sweep on back side
+  Q(backSide, 6, 1, 2, P.hair);
+  // Ear on non-facing side
+  Q(fringeSide, 8, 1, 1, P.hair);
+  // Eye
+  Q(eyeCol, 8, 1, 1, P.outline);
+  // Chin
+  Q(7, 10, 6, 1, P.outline);
+  Q(8, 9, 4, 1, P.skinShadow);
+
+  // Neck
+  Q(9, 10, 2, 1, P.skinShadow);
+
+  // Shirt
+  Q(6, 11, 8, 1, P.outline);
+  Q(7, 11, 6, 1, P.shirtDark);
+  Q(6, 12, 1, 3, P.outline);
+  Q(13, 12, 1, 3, P.outline);
+  Q(7, 12, 6, 3, P.shirt);
+  Q(7, 12, 6, 1, P.shirtLight);
+  Q(7, 14, 6, 1, P.shirtDark);
+
+  // Walking arm swing
+  const armFrontCol = facingRight ? 13 : 6;
+  const armBackCol = facingRight ? 6 : 13;
+  const armSwing = P.walkFrame === 1 ? 1 : 0;
+  Q(armFrontCol, 12 + armSwing, 1, 2, P.shirt);
+  Q(armBackCol, 12 - armSwing, 1, 2, P.shirtDark);
+
+  // Pants + shoes with walking split
+  Q(6, 15, 8, 1, P.outline);
+  Q(7, 15, 6, 2, P.pants);
+  Q(7, 15, 6, 1, P.pantsDark);
+  if (P.walkFrame === 0) {
+    Q(8, 17, 1, 1, P.pants);
+    Q(11, 17, 1, 1, P.pants);
+    Q(7, 18, 3, 1, P.shoe);
+    Q(10, 18, 3, 1, P.shoe);
+  } else {
+    // Slight step shift
+    Q(7, 17, 2, 1, P.pants);
+    Q(10, 17, 2, 1, P.pants);
+    Q(6, 18, 3, 1, P.shoe);
+    Q(11, 18, 3, 1, P.shoe);
+  }
+  Q(6, 17, 1, 2, P.outline);
+  Q(13, 17, 1, 2, P.outline);
+}
 
 // ============ POKEMON ============
 
