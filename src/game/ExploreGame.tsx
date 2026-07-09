@@ -14,11 +14,20 @@ import {
 } from "./world";
 import { drawTile, drawCharacter, drawBuildingLabel } from "./sprites";
 import { npcs, findNPCAt, type NPC } from "./npcs";
+// per-NPC outfit lookup (drawn on top of the base body)
+const NPC_OUTFITS: Record<string, OutfitStyle> = {
+  apiGroup: "officeCoat",
+  waterloo: "labCoat",
+  bharatDenim: "officeCoat",
+  hackathon: "casual",
+  resumeGuy: "trainer",
+};
 import {
   makePokemon,
   rollWildEncounter,
   type Pokemon,
 } from "./pokemon";
+import type { OutfitStyle } from "./sprites";
 import { sounds } from "./sounds";
 import BattleScreen from "./BattleScreen";
 import PokemonHUD from "./PokemonHUD";
@@ -58,7 +67,8 @@ const ExploreGame = () => {
   const [muted, setMuted] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [fainted, setFainted] = useState(false);
-  const talkedTo = useRef<Set<string>>(new Set());
+  const talkedTo = useRef<Set<string>>(new Set()); // NPCs whose full dialogue has completed at least once
+  const giftGiven = useRef<Set<string>>(new Set()); // NPCs whose gift pokemon has been awarded
 
   const playerRef = useRef({
     tileX: SPAWN.x,
@@ -157,10 +167,10 @@ const ExploreGame = () => {
     []
   );
 
-  // Give the player their gift pokemon after finishing an NPC's dialogue
+  // Give the player their gift pokemon after finishing an NPC's dialogue for the first time
   const finishDialogueWithNPC = useCallback((npc: NPC) => {
-    if (npc.givesPokemon && !talkedTo.current.has(npc.id)) {
-      talkedTo.current.add(npc.id);
+    if (npc.givesPokemon && !giftGiven.current.has(npc.id)) {
+      giftGiven.current.add(npc.id);
       const pk = makePokemon(npc.givesPokemon);
       setTeam((prev) => [...prev, pk]);
       sounds.give();
@@ -204,6 +214,7 @@ const ExploreGame = () => {
     // Otherwise close the dialogue.
     const finishingNPC = state.npc;
     setDialogue(null);
+    talkedTo.current.add(finishingNPC.id); // remember completed conversation for repeat dialogue
     // Grant pokemon if applicable (only for NPCs without a choice, since resume NPC handles its own end).
     if (!finishingNPC.choice) {
       finishDialogueWithNPC(finishingNPC);
@@ -241,10 +252,12 @@ const ExploreGame = () => {
     const npc = findNPCAt(nx, ny);
     if (npc) {
       sounds.talk();
+      const useRepeat =
+        talkedTo.current.has(npc.id) && !!npc.dialogueRepeat;
       setDialogue({
         npc,
         line: 0,
-        extraLines: null,
+        extraLines: useRepeat ? npc.dialogueRepeat! : null,
         choiceShown: false,
         finished: false,
       });
@@ -413,7 +426,17 @@ const ExploreGame = () => {
           continue;
         const npx = npc.x * TILE_SIZE - camPxX;
         const npy = npc.y * TILE_SIZE - camPxY;
-        drawCharacter(ctx, npx, npy, npc.color, npc.hair, 0, 0, npc.accessory);
+        drawCharacter(
+          ctx,
+          npx,
+          npy,
+          npc.color,
+          npc.hair,
+          0,
+          0,
+          npc.accessory,
+          NPC_OUTFITS[npc.id] ?? "casual"
+        );
         if (!blocked) {
           const dx = npc.x - p.tileX;
           const dy = npc.y - p.tileY;
@@ -441,7 +464,9 @@ const ExploreGame = () => {
         "#0891b2", // cyan shirt for the player
         "#0f172a",
         p.facing,
-        p.moving ? p.walkFrame : 0
+        p.moving ? p.walkFrame : 0,
+        null,
+        "trainer" // Player is a Pokemon trainer
       );
 
       raf = requestAnimationFrame(loop);

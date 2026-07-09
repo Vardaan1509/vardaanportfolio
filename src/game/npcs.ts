@@ -17,94 +17,125 @@ export interface NPC {
   role: string;
   x: number;
   y: number;
-  color: string; // shirt
+  color: string;
   hair: string;
   dialogue: string[];
-  choice?: NPCChoice; // presented after dialogue lines
-  givesPokemon?: string; // species id, granted once when dialogue completes
+  dialogueRepeat?: string[]; // shorter dialogue shown after the first full conversation
+  choice?: NPCChoice;
+  givesPokemon?: string;
   accessory?: "resume" | null;
 }
 
 export const npcs: NPC[] = [
   {
     id: "apiGroup",
-    name: "Priya",
-    role: "APi Group Teammate",
-    x: 6, // near APi Group HQ (bldg at x=4..8)
+    name: "Mike",
+    role: "Senior Dev, APi Group",
+    x: 6,
     y: 8,
     color: "#3b82f6",
-    hair: "#1e293b",
+    hair: "#2a1810",
     givesPokemon: "deploybug",
     dialogue: [
-      "Hey! Looking for Vardaan? He's a Full Stack Dev here at APi Group in Mississauga.",
-      "He built our field reporting platform with Next.js, C#, .NET, AWS, and DynamoDB. Streamlined inspections across 1,000+ site assets and cut manual coordination by 90%.",
-      "Also architected our company-wide payroll system for 500+ employees. Multi-stage approvals, Azure auth, batch processing. Replaced years of spreadsheets.",
-      "And he wrote an AI documentation tool using Claude API that dropped manual docs effort by 75% after every release.",
-      "Take Deploybug with you. He's earned it.",
+      "Hey. You looking for Vardaan?",
+      "He's our Full Stack Dev. Started April 2026 and hit the ground running.",
+      "First project was our field reporting platform. Next.js, C#, .NET, AWS, DynamoDB. Tracks over 1,000 site assets across the country now.",
+      "Cut manual coordination by 90 percent. Field ops actually likes engineering now, which never happens.",
+      "Then he architected our whole payroll system. 500 employees, multi-stage approvals, Azure auth, batch processing. Replaced years of spreadsheets.",
+      "Oh, and there's the AI docs tool. Claude API, web scraping, auto screenshots. Cut our release documentation effort by 75 percent.",
+      "Kid ships. Take Deploybug, he built it for you.",
+    ],
+    dialogueRepeat: [
+      "You're back.",
+      "Tell Vardaan his ticket queue is looking healthy.",
     ],
   },
   {
     id: "waterloo",
     name: "Prof. Chen",
-    role: "Waterloo Computer Engineering",
-    x: 20, // near Waterloo Hall (bldg at x=17..22)
+    role: "University of Waterloo",
+    x: 20,
     y: 8,
     color: "#eab308",
     hair: "#78350f",
     givesPokemon: "codeling",
     dialogue: [
-      "Ah, Vardaan Mehandiratta. Computer Engineering, class of 2030.",
-      "Won the President's Scholarship of Distinction and the David Johnston International Student Entrance Scholarship.",
-      "Sharp student. Data structures, algorithms, digital systems. Already shipping production code in his first year.",
-      "Here, take a Codeling. Every good engineer starts with one.",
+      "Vardaan Mehandiratta. Computer Engineering, class of 2030.",
+      "He received three scholarships coming in.",
+      "The President's Scholarship of Distinction, the David Johnston International Student Entrance Scholarship, and the International Student Entrance Scholarship.",
+      "Bright student. Data structures, algorithms, digital systems, linear algebra.",
+      "First year and he's already shipping production code at APi Group.",
+      "Most students take a term to find their footing. Vardaan was ready on day one.",
+      "Take a Codeling. Every engineer starts with one.",
+    ],
+    dialogueRepeat: [
+      "Ah, back again.",
+      "Vardaan's still doing well. As expected.",
     ],
   },
   {
     id: "bharatDenim",
     name: "Rahul",
-    role: "Bharat Denim Backend Dev",
-    x: 33, // near Bharat Denim (bldg at x=31..35)
+    role: "Bharat Denim Backend Lead",
+    x: 33,
     y: 8,
     color: "#a855f7",
     hair: "#0f172a",
     givesPokemon: "datamouse",
     dialogue: [
-      "Vardaan? Yeah, worked with him summer 2025. SWE Intern.",
-      "Built backend features for our inventory system serving 10,000+ customers. Optimized a bunch of SQL queries.",
-      "Refactored MySQL and PostgreSQL schemas — 15% reduction in daily processing time. Not bad for an intern.",
-      "Also drove Git workflows for our backend team of 5. Branching strategy, PR reviews, merge conflicts. Solid engineer.",
-      "Datamouse is yours. It handles data like he does.",
+      "Vardaan? Yeah, worked with him last summer. May through August 2025.",
+      "First real internship. Kid walked in green, walked out with commit access to production.",
+      "Built backend features for our inventory system. 10,000 customers hit that thing every day.",
+      "Refactored our MySQL and PostgreSQL schemas. Normalized tables, added indexes, tightened constraints. 15 percent faster processing after his changes shipped.",
+      "Also drove Git workflow for a backend team of five. Kept us out of merge hell all summer.",
+      "Solid engineer. Solid kid. Take Datamouse. It handles data like Vardaan does.",
+    ],
+    dialogueRepeat: [
+      "Hey, still exploring?",
+      "Proud of that kid. He's doing big things now.",
     ],
   },
   {
     id: "hackathon",
     name: "Sam",
     role: "Hackathon Judge",
-    x: 20, // near Hackathon Arena (bldg at x=17..22, y=16..19)
+    x: 20,
     y: 20,
     color: "#ef4444",
     hair: "#1c1917",
     givesPokemon: "buildo",
     dialogue: [
-      "Oh you're asking about his projects? Buckle up.",
-      "CXR-Triage at CXC AI Hackathon — full-stack medical triage system, custom CNN with 80% classification accuracy on chest X-rays. 36 hours flat.",
-      "AInterview at McHacks 13 — interview sim with Gemini Pro and ElevenLabs. Real-time dashboard, 88% speech-to-text success.",
-      "AI Netflix Recommendation Engine at 92% recommendation accuracy. And a UW Login Helper Chrome extension for daily student productivity.",
-      "Kid ships. Reach him at vmehandi@uwaterloo.ca. Also, take Buildo — he'll help you build stuff too.",
+      "Oh you're here about his projects. Buckle in.",
+      "CXR-Triage at CXC AI Hackathon. Full-stack medical triage system built in 36 hours.",
+      "Custom CNN in PyTorch, 80 percent classification accuracy on chest X-rays. Row-level auth in Postgres for patient data. Nuts.",
+      "AInterview at McHacks 13. AI-driven interview simulator with Gemini Pro and ElevenLabs.",
+      "Real-time dashboard tracking 11 performance metrics. 88 percent speech-to-text success. Built in 24 hours flat.",
+      "AI Netflix Recommendation Engine at 92 percent accuracy on personalized picks. Not a hackathon. Just a weekend.",
+      "UW Login Helper Chrome extension for daily student productivity. Small ship, still ships.",
+      "Kid ships constantly. Reach him at vmehandi@uwaterloo.ca. Take Buildo, he'll help you make things.",
+    ],
+    dialogueRepeat: [
+      "You back for more war stories?",
+      "Vardaan's got more projects cooking. Keep an eye out.",
     ],
   },
   {
     id: "resumeGuy",
-    name: "Vardaan (the guy himself)",
-    role: "Has his resume ready",
+    name: "Vardaan",
+    role: "The guy himself",
     x: 22,
-    y: 14, // stands on the main path near spawn
+    y: 14,
     color: "#e11d48",
     hair: "#0f172a",
     accessory: "resume",
     dialogue: [
-      "Hey! I'm Vardaan.",
-      "Wanna grab a copy of my resume? Fresh off the printer.",
+      "Hey! Vardaan here.",
+      "Welcome to my little world.",
+      "Want a copy of my resume? Fresh off the printer.",
+    ],
+    dialogueRepeat: [
+      "Hey again.",
+      "Anything else you want to know? Explore the map, talk to my crew, catch some Pokemon in the tall grass.",
     ],
     choice: {
       question: "Take resume?",
@@ -113,13 +144,14 @@ export const npcs: NPC[] = [
           label: "Yes",
           action: "giveResume",
           responseLines: [
-            "Here you go — thanks for stopping by!",
-            "Let's build something together.",
+            "Awesome. Downloading now.",
+            "Everything's in there. Experience, projects, contact info.",
+            "Reach out anytime. Let's build something together.",
           ],
         },
         {
           label: "No",
-          responseLines: ["No worries — come back anytime."],
+          responseLines: ["No worries. Come back if you change your mind."],
         },
       ],
     },

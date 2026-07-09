@@ -52,7 +52,7 @@ export const buildings: Building[] = [
     y: 3,
     w: 6,
     h: 4,
-    label: "Waterloo Hall",
+    label: "University of Waterloo",
     roofColor: "#c86868",
     roofShadow: "#803838",
     wallColor: "#e8dcc4",

@@ -354,6 +354,8 @@ export const drawTile = (
 // Detailed RSE-style character drawn on a 20x20 sub-pixel grid (half-PIX cells)
 // with saturated palette, multi-tone shading, and centered single-color eyes.
 
+export type OutfitStyle = "casual" | "trainer" | "labCoat" | "officeCoat";
+
 export const drawCharacter = (
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -362,7 +364,8 @@ export const drawCharacter = (
   hairColor: string,
   direction: number,
   walkFrame: number,
-  accessory?: "resume" | null
+  accessory?: "resume" | null,
+  outfit: OutfitStyle = "casual"
 ) => {
   const bob = walkFrame === 1 ? PIX / 2 : 0;
   const cy = y + bob;
@@ -393,54 +396,26 @@ export const drawCharacter = (
   ctx.ellipse(x + 10 * p, y + 19 * p, 6 * p, 1.2 * p, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  if (direction === 0) {
-    drawCharFront(Q, {
-      skin,
-      skinShadow,
-      skinLight,
-      outline,
-      hair,
-      hairDark,
-      shirt,
-      shirtDark,
-      shirtLight,
-      pants,
-      pantsDark,
-      shoe,
-      walkFrame,
-    });
-  } else if (direction === 1) {
-    drawCharBack(Q, {
-      skin,
-      skinShadow,
-      outline,
-      hair,
-      hairDark,
-      shirt,
-      shirtDark,
-      shirtLight,
-      pants,
-      pantsDark,
-      shoe,
-      walkFrame,
-    });
-  } else {
-    drawCharSide(Q, direction === 3, {
-      skin,
-      skinShadow,
-      skinLight,
-      outline,
-      hair,
-      hairDark,
-      shirt,
-      shirtDark,
-      shirtLight,
-      pants,
-      pantsDark,
-      shoe,
-      walkFrame,
-    });
-  }
+  const palette: CharPalette = {
+    skin,
+    skinShadow,
+    skinLight,
+    outline,
+    hair,
+    hairDark,
+    shirt,
+    shirtDark,
+    shirtLight,
+    pants,
+    pantsDark,
+    shoe,
+    walkFrame,
+    outfit,
+  };
+
+  if (direction === 0) drawCharFront(Q, palette);
+  else if (direction === 1) drawCharBack(Q, palette);
+  else drawCharSide(Q, direction === 3, palette);
 
   if (accessory === "resume") {
     const bobOffset = Math.sin(Date.now() / 300) * 1;
@@ -467,7 +442,188 @@ type CharPalette = {
   pantsDark: string;
   shoe: string;
   walkFrame: number;
+  outfit: OutfitStyle;
 };
+
+// ==== outfit overlays ====
+
+type Q = (gx: number, gy: number, w: number, h: number, c: string) => void;
+
+// Trainer cap covering the top of the head (rows 4-6).
+// Uses the character's shirt color as the cap fabric.
+function drawTrainerCapFront(q: Q, P: CharPalette) {
+  const cap = P.shirt;
+  const capDark = P.shirtDark;
+  const capLight = P.shirtLight;
+  // Cap fabric (rows 4-6)
+  q(5, 4, 10, 1, cap);
+  q(5, 5, 10, 2, cap);
+  // Highlight on top
+  q(7, 4, 3, 1, capLight);
+  // Cap logo — small white square
+  q(9, 5, 2, 1, "#ffffff");
+  // Cap outlines
+  q(5, 4, 1, 3, P.outline);
+  q(14, 4, 1, 3, P.outline);
+  q(5, 3, 10, 1, P.outline);
+  // Brim shadow strip
+  q(5, 7, 10, 1, capDark);
+  // Brim outline at row 7
+  q(5, 7, 10, 1, capDark);
+  q(4, 7, 12, 1, P.outline);
+  q(4, 7, 1, 1, capDark);
+  q(15, 7, 1, 1, capDark);
+}
+
+function drawTrainerCapBack(q: Q, P: CharPalette) {
+  const cap = P.shirt;
+  const capDark = P.shirtDark;
+  const capLight = P.shirtLight;
+  q(5, 4, 10, 1, cap);
+  q(5, 5, 10, 2, cap);
+  q(7, 5, 3, 1, capLight);
+  // Snapback band at back
+  q(6, 6, 8, 1, capDark);
+  q(9, 6, 2, 1, "#ffffff");
+  q(5, 4, 1, 3, P.outline);
+  q(14, 4, 1, 3, P.outline);
+  q(5, 3, 10, 1, P.outline);
+  q(5, 7, 10, 1, P.outline);
+}
+
+function drawTrainerCapSide(q: Q, facingRight: boolean, P: CharPalette) {
+  const cap = P.shirt;
+  const capLight = P.shirtLight;
+  const capDark = P.shirtDark;
+  q(5, 4, 10, 1, cap);
+  q(5, 5, 10, 2, cap);
+  q(facingRight ? 6 : 10, 4, 3, 1, capLight);
+  q(9, 5, 2, 1, "#ffffff");
+  q(5, 3, 10, 1, P.outline);
+  q(5, 4, 1, 3, P.outline);
+  q(14, 4, 1, 3, P.outline);
+  // Brim projects out in the facing direction
+  if (facingRight) {
+    q(14, 6, 3, 1, capDark);
+    q(14, 7, 3, 1, P.outline);
+  } else {
+    q(3, 6, 3, 1, capDark);
+    q(3, 7, 3, 1, P.outline);
+  }
+  q(5, 7, 10, 1, capDark);
+}
+
+// Lab coat: off-white overlay with a V-neck opening showing the inner shirt,
+// coat sleeves covering the arms, a chest pocket with a pen, and buttons.
+function drawLabCoatFront(q: Q, P: CharPalette) {
+  const coat = "#f6f6ee";
+  const coatShade = "#d0d0c4";
+  const coatDark = "#4a4a3e";
+  const buttonColor = "#6a6a5c";
+  const penBody = "#c83030";
+  const penCap = "#ffe28a";
+
+  // Sleeves covering the arms
+  q(5, 12, 1.5, 3, coat);
+  q(13.5, 12, 1.5, 3, coat);
+  q(5, 12, 0.5, 3, P.outline);
+  q(14.5, 12, 0.5, 3, P.outline);
+  q(5.5, 14, 1, 0.5, coatShade);
+  q(13.5, 14, 1, 0.5, coatShade);
+  // Sleeve cuffs
+  q(5, 14.5, 1.5, 0.5, coatDark);
+  q(13.5, 14.5, 1.5, 0.5, coatDark);
+
+  // Coat body outline + fill
+  q(6, 11, 8, 1, P.outline);
+  q(6, 12, 1, 3, P.outline);
+  q(13, 12, 1, 3, P.outline);
+  q(7, 11, 6, 4, coat);
+  // Right-side subtle shading
+  q(12, 12, 1, 3, coatShade);
+  q(7, 14, 6, 1, coatShade);
+
+  // V-neck opening — inner shirt visible, narrowing downward
+  q(8, 11, 4, 0.5, P.shirtDark);
+  q(8, 11.5, 4, 0.5, P.shirt);
+  q(8.5, 12, 3, 0.5, P.shirt);
+  q(9, 12.5, 2, 0.5, P.shirt);
+  q(9.5, 13, 1, 0.5, P.shirt);
+
+  // Lapel dark edges lining the V
+  q(7.5, 11.5, 0.5, 1, coatDark);
+  q(11.5, 11.5, 0.5, 1, coatDark);
+  q(8, 12.5, 0.5, 0.5, coatDark);
+  q(11, 12.5, 0.5, 0.5, coatDark);
+  q(8.5, 13, 0.5, 0.5, coatDark);
+  q(10.5, 13, 0.5, 0.5, coatDark);
+
+  // Chest pocket on the left
+  q(7, 13.5, 2, 1, coat);
+  q(7, 13.5, 2, 0.5, coatDark); // top flap
+  q(7, 13.5, 0.5, 1, coatDark); // left edge
+  q(8.5, 13.5, 0.5, 1, coatDark); // right edge
+
+  // Pen sticking out of the pocket
+  q(7.5, 13, 0.5, 1, penBody);
+  q(7.5, 13, 0.5, 0.5, penCap);
+
+  // Two buttons on the right side
+  q(11.5, 13.5, 0.5, 0.5, buttonColor);
+  q(11.5, 14.5, 0.5, 0.5, buttonColor);
+}
+
+// Professor glasses — solid dark round-ish frames sitting over the eye row.
+function drawGlassesFront(q: Q, P: CharPalette) {
+  const frame = P.outline;
+  const lens = "#5aa0d8";
+  const shine = "#ffffff";
+
+  // Left lens
+  q(7.5, 7.5, 1.5, 1.5, frame);
+  q(8, 8, 0.5, 0.5, lens);
+  q(8, 7.5, 0.5, 0.5, shine);
+  // Right lens
+  q(10.5, 7.5, 1.5, 1.5, frame);
+  q(11, 8, 0.5, 0.5, lens);
+  q(11, 7.5, 0.5, 0.5, shine);
+  // Bridge over the nose
+  q(9, 8, 1.5, 0.5, frame);
+  // Small temple arms extending outward
+  q(7, 8, 0.5, 0.5, frame);
+  q(12.5, 8, 0.5, 0.5, frame);
+}
+
+// Office blazer over shirt: dark jacket sides, inner white shirt, colored tie.
+function drawOfficeCoatFront(q: Q, P: CharPalette) {
+  const jacket = "#2a2a3a";
+  const jacketShade = "#404055";
+  const inner = "#f0f0f0";
+  const tie = P.shirt;
+  const tieDark = P.shirtDark;
+  // Collar row
+  q(6, 11, 8, 1, P.outline);
+  q(7, 11, 6, 1, jacket);
+  // Body
+  q(6, 12, 1, 3, P.outline);
+  q(13, 12, 1, 3, P.outline);
+  q(7, 12, 6, 3, jacket);
+  // Right side highlight (subtle)
+  q(7, 12, 1, 3, jacketShade);
+  // Inner shirt (white strip in center)
+  q(9, 11, 2, 1, P.outline);
+  q(9, 12, 2, 3, inner);
+  // Lapels
+  q(8, 11, 1, 1, jacketShade);
+  q(11, 11, 1, 1, jacketShade);
+  q(8.5, 12, 0.5, 1, jacketShade);
+  q(11, 12, 0.5, 1, jacketShade);
+  // Tie down the middle
+  q(9.5, 12, 1, 2, tie);
+  q(9.5, 14, 1, 1, tieDark);
+  // Tie knot
+  q(9.5, 12, 1, 1, tieDark);
+}
 
 // FRONT-FACING VIEW
 function drawCharFront(
@@ -550,6 +706,13 @@ function drawCharFront(
   // Full body outline touch-ups
   Q(6, 17, 1, 2, P.outline);
   Q(13, 17, 1, 2, P.outline);
+
+  // Outfit overlays
+  if (P.outfit === "trainer") drawTrainerCapFront(Q, P);
+  else if (P.outfit === "labCoat") {
+    drawLabCoatFront(Q, P);
+    drawGlassesFront(Q, P);
+  } else if (P.outfit === "officeCoat") drawOfficeCoatFront(Q, P);
 }
 
 // BACK VIEW
@@ -597,6 +760,8 @@ function drawCharBack(
   Q(11, 18, 3, 1, P.shoe);
   Q(6, 17, 1, 2, P.outline);
   Q(13, 17, 1, 2, P.outline);
+
+  if (P.outfit === "trainer") drawTrainerCapBack(Q, P);
 }
 
 // SIDE VIEW (left = false means facing left, true = facing right; drawn as left then mirrored)
@@ -676,6 +841,8 @@ function drawCharSide(
   }
   Q(6, 17, 1, 2, P.outline);
   Q(13, 17, 1, 2, P.outline);
+
+  if (P.outfit === "trainer") drawTrainerCapSide(Q, facingRight, P);
 }
 
 // ============ POKEMON ============
