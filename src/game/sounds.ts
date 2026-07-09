@@ -123,6 +123,61 @@ class SoundEngine {
     seq.forEach((n, i) => this.beep(n, 90, "square", 0.05, i * 0.08));
     this.beep(1319, 300, "triangle", 0.04, 0.34);
   }
+
+  // Pokemon cry — a per-species tone pattern based on shape + name hash.
+  // Legendary pokemon get a distinct majestic multi-note fanfare.
+  pokemonCry(speciesId: string, shape: string, isLegendary?: boolean) {
+    if (isLegendary) {
+      // Grand descending-then-rising fanfare
+      this.beep(880, 140, "square", 0.06);
+      this.beep(1100, 140, "square", 0.06, 0.14);
+      this.beep(1320, 220, "square", 0.06, 0.28);
+      this.beep(1760, 320, "triangle", 0.05, 0.5);
+      this.beep(2200, 320, "triangle", 0.04, 0.62);
+      return;
+    }
+    // Derive a deterministic base pitch from the species id
+    let hash = 0;
+    for (let i = 0; i < speciesId.length; i++) hash = (hash * 31 + speciesId.charCodeAt(i)) >>> 0;
+    const base = 260 + (hash % 320);
+    switch (shape) {
+      case "blob": {
+        this.beep(base, 100, "sine", 0.05, 0, base * 1.3);
+        this.beep(base * 0.9, 80, "sine", 0.04, 0.1);
+        break;
+      }
+      case "bug": {
+        this.beep(base + 150, 60, "sawtooth", 0.045);
+        this.beep(base + 250, 60, "sawtooth", 0.045, 0.06);
+        this.beep(base + 200, 90, "sawtooth", 0.04, 0.13);
+        break;
+      }
+      case "sparky": {
+        this.beep(base + 200, 60, "square", 0.05);
+        this.beep(base + 400, 60, "square", 0.05, 0.06);
+        this.beep(base + 300, 80, "square", 0.04, 0.13);
+        break;
+      }
+      case "aqua": {
+        this.beep(base, 130, "sine", 0.05, 0, base * 0.7);
+        this.beep(base * 0.8, 100, "sine", 0.04, 0.14);
+        break;
+      }
+      case "brick": {
+        this.beep(base * 0.6, 140, "triangle", 0.06);
+        this.beep(base * 0.5, 180, "sawtooth", 0.05, 0.14);
+        break;
+      }
+      case "leaf": {
+        this.beep(base + 100, 90, "triangle", 0.05);
+        this.beep(base + 200, 60, "sine", 0.04, 0.09);
+        this.beep(base + 150, 80, "triangle", 0.04, 0.16);
+        break;
+      }
+      default:
+        this.beep(base, 100, "square", 0.05);
+    }
+  }
 }
 
 export const sounds = new SoundEngine();

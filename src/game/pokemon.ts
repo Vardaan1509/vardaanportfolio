@@ -1,19 +1,26 @@
-// Pokemon data: species definitions + wild encounter helpers.
+// Pokemon data: species definitions, encounters, battles, team management.
 
-export type PokemonType = "electric" | "fire" | "water" | "grass" | "rock" | "tech";
+export type PokemonType =
+  | "electric"
+  | "fire"
+  | "water"
+  | "grass"
+  | "rock"
+  | "flying"
+  | "tech"
+  | "legendary";
 
 export interface PokemonSpecies {
   id: string;
   name: string;
   type: PokemonType;
-  // Two body colors used by the sprite renderer.
   primary: string;
   secondary: string;
-  // "shape" hint drives which sprite variant is drawn.
   shape: "blob" | "bug" | "sparky" | "aqua" | "brick" | "leaf";
+  // Used to color the pokemon frame; overrides shape color when set.
+  isLegendary?: boolean;
 }
 
-// A caught / owned pokemon: species + rolled level.
 export interface Pokemon {
   species: PokemonSpecies;
   level: number;
@@ -21,7 +28,7 @@ export interface Pokemon {
 }
 
 export const SPECIES: Record<string, PokemonSpecies> = {
-  // Starters offered by Prof. Chen — pick one when you meet her
+  // Starters offered by Prof. Chen
   reactle: {
     id: "reactle",
     name: "Reactle",
@@ -47,7 +54,7 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     shape: "aqua",
   },
 
-  // NPC-gift pokemon — themed to each contact
+  // NPC-gift pokemon
   codeling: {
     id: "codeling",
     name: "Codeling",
@@ -89,7 +96,7 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     shape: "brick",
   },
 
-  // Wild pokemon — found in tall grass
+  // Wild-only pokemon
   leafling: {
     id: "leafling",
     name: "Leafling",
@@ -130,6 +137,35 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     secondary: "#365314",
     shape: "leaf",
   },
+  // Flying-type wild
+  skyling: {
+    id: "skyling",
+    name: "Skyling",
+    type: "flying",
+    primary: "#a5f3fc",
+    secondary: "#0e7490",
+    shape: "bug",
+  },
+  // Rock-type wild
+  rockjaw: {
+    id: "rockjaw",
+    name: "Rockjaw",
+    type: "rock",
+    primary: "#a8a29e",
+    secondary: "#44403c",
+    shape: "brick",
+  },
+
+  // LEGENDARY — 1 in 30 wild encounter, always high-level
+  compileon: {
+    id: "compileon",
+    name: "Compileon",
+    type: "legendary",
+    primary: "#fde047", // brilliant gold
+    secondary: "#78350f",
+    shape: "sparky",
+    isLegendary: true,
+  },
 };
 
 export const WILD_POOL: string[] = [
@@ -138,8 +174,13 @@ export const WILD_POOL: string[] = [
   "aquapaw",
   "sparkbee",
   "weedie",
-  "codeling", // now a wild-only species since Prof. Chen offers a starter choice
+  "codeling",
+  "skyling",
+  "rockjaw",
 ];
+
+export const LEGENDARY_POOL: string[] = ["compileon"];
+export const LEGENDARY_CHANCE = 1 / 30;
 
 let uidCounter = 1;
 export const makePokemon = (
@@ -151,9 +192,15 @@ export const makePokemon = (
   return { species, level, uid: `${species.id}-${uidCounter++}` };
 };
 
-export const randomLevel = (): number => 1 + Math.floor(Math.random() * 10); // 1..10
+export const randomLevel = (): number => 1 + Math.floor(Math.random() * 10);
 
 export const rollWildEncounter = (): Pokemon => {
+  const isLegendary = Math.random() < LEGENDARY_CHANCE;
+  if (isLegendary) {
+    const id = LEGENDARY_POOL[Math.floor(Math.random() * LEGENDARY_POOL.length)];
+    const level = 12 + Math.floor(Math.random() * 8); // 12..19
+    return makePokemon(id, level);
+  }
   const id = WILD_POOL[Math.floor(Math.random() * WILD_POOL.length)];
   return makePokemon(id);
 };
@@ -166,3 +213,16 @@ export const resolveBattle = (
   if (yours.level >= wild.level) return "win";
   return "lose";
 };
+
+// Adds a caught pokemon to the team. If a same-species pokemon already exists,
+// their levels stack (up to a soft cap of 99 so numbers stay readable).
+export const addToTeam = (team: Pokemon[], caught: Pokemon): Pokemon[] => {
+  const existingIdx = team.findIndex((p) => p.species.id === caught.species.id);
+  if (existingIdx === -1) return [...team, caught];
+  return team.map((p, i) =>
+    i === existingIdx ? { ...p, level: Math.min(99, p.level + caught.level) } : p
+  );
+};
+
+export const hasLegendary = (team: Pokemon[]): boolean =>
+  team.some((p) => p.species.isLegendary);

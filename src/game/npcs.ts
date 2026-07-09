@@ -22,6 +22,7 @@ export interface NPC {
   hair: string;
   dialogue: string[];
   dialogueRepeat?: string[]; // shorter dialogue shown after the first full conversation
+  legendaryReview?: string[]; // special path when player brings a legendary
   choice?: NPCChoice;
   givesPokemon?: string;
   accessory?: "resume" | null;
@@ -72,6 +73,13 @@ export const npcs: NPC[] = [
     dialogueRepeat: [
       "Ah, back again.",
       "Vardaan's still doing well. As expected.",
+    ],
+    legendaryReview: [
+      "Wait a moment.",
+      "Is that... a Compileon in your team?",
+      "I've been studying these for years and never seen one caught. Not once.",
+      "Let me record this properly. I'll need to add you to the trainer registry.",
+      "What's your name, trainer?",
     ],
     choice: {
       question: "Pick your starter",
