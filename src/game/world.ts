@@ -1,7 +1,7 @@
 // Tile-based world for the explore game.
-// Larger map with buildings, tall-grass encounter zones, water, and paths.
+// Gen 3 Pokemon-inspired styling: 5-tile-wide houses with 2-row tiled roofs.
 
-export const TILE_SIZE = 40; // pixels per tile in the logical canvas
+export const TILE_SIZE = 40;
 export const MAP_WIDTH = 40;
 export const MAP_HEIGHT = 30;
 
@@ -15,10 +15,12 @@ export type TileType =
   | "sand"
   | "sign"
   | "tallGrass"
-  | "buildingRoof"
+  | "buildingRoofTop"
+  | "buildingRoofBase"
   | "buildingWall"
   | "buildingWindow"
-  | "buildingDoor";
+  | "buildingDoor"
+  | "doorStep";
 
 export interface Building {
   x: number;
@@ -27,10 +29,12 @@ export interface Building {
   h: number;
   label: string;
   roofColor: string;
+  roofShadow: string;
   wallColor: string;
-  accentColor: string;
+  wallShadow: string;
 }
 
+// Ruby/Sapphire-style palette per building
 export const buildings: Building[] = [
   {
     x: 4,
@@ -38,9 +42,10 @@ export const buildings: Building[] = [
     w: 5,
     h: 4,
     label: "APi Group HQ",
-    roofColor: "#8b3a3a",
-    wallColor: "#e6d3b3",
-    accentColor: "#5b2323",
+    roofColor: "#e88a4a",
+    roofShadow: "#a85220",
+    wallColor: "#f0dcb4",
+    wallShadow: "#a88860",
   },
   {
     x: 17,
@@ -48,9 +53,10 @@ export const buildings: Building[] = [
     w: 6,
     h: 4,
     label: "Waterloo Hall",
-    roofColor: "#324b6b",
-    wallColor: "#d1dae5",
-    accentColor: "#1f2f45",
+    roofColor: "#c86868",
+    roofShadow: "#803838",
+    wallColor: "#e8dcc4",
+    wallShadow: "#907864",
   },
   {
     x: 31,
@@ -58,9 +64,10 @@ export const buildings: Building[] = [
     w: 5,
     h: 4,
     label: "Bharat Denim",
-    roofColor: "#5b3a80",
-    wallColor: "#e8ddf0",
-    accentColor: "#3a2154",
+    roofColor: "#8878b8",
+    roofShadow: "#504878",
+    wallColor: "#eee0e8",
+    wallShadow: "#8878a0",
   },
   {
     x: 17,
@@ -68,19 +75,18 @@ export const buildings: Building[] = [
     w: 6,
     h: 4,
     label: "Hackathon Arena",
-    roofColor: "#a4571c",
-    wallColor: "#f0dfc4",
-    accentColor: "#6b3811",
+    roofColor: "#e8a860",
+    roofShadow: "#a06830",
+    wallColor: "#f0d8a8",
+    wallShadow: "#a88060",
   },
 ];
 
-// Build the base tile grid procedurally so we don't have to hand-draw 1200 chars.
 function generate(): TileType[][] {
   const map: TileType[][] = [];
   for (let y = 0; y < MAP_HEIGHT; y++) {
     const row: TileType[] = [];
     for (let x = 0; x < MAP_WIDTH; x++) {
-      // Tree border
       if (x === 0 || y === 0 || x === MAP_WIDTH - 1 || y === MAP_HEIGHT - 1) {
         row.push("tree");
       } else {
@@ -114,66 +120,82 @@ function generate(): TileType[][] {
   // Main horizontal path across the middle
   fillRect(1, 13, MAP_WIDTH - 2, 2, "path");
 
-  // Vertical paths connecting each building's door to the main path
+  // Vertical paths connecting each building's door
   for (const b of buildings) {
     const doorX = b.x + Math.floor(b.w / 2);
-    // Path from below the building down to the main path (or up from it for south building)
-    const doorY = b.y + b.h - 1; // door row
+    const doorY = b.y + b.h - 1;
     if (b.y < 13) {
       fillRect(doorX, doorY + 1, 1, 13 - (doorY + 1), "path");
     } else {
-      // south building: path goes from y=15 (below main path) down to building top
       fillRect(doorX, 15, 1, b.y - 15, "path");
     }
   }
 
-  // Water pond (northeast of center)
+  // Water pond
   fillRect(24, 8, 4, 3, "water");
 
-  // Tall-grass encounter zones (south of main path — the "wild area")
+  // Tall grass encounter zones
   fillRect(3, 21, 10, 6, "tallGrass");
   fillRect(27, 21, 10, 6, "tallGrass");
-
-  // Smaller intro grass patch just south of the main path — easier to stumble into
   fillRect(15, 21, 8, 3, "tallGrass");
 
-  // Sprinkle grass tufts and flowers
-  const scatter: [number, number, TileType][] = [
-    [2, 10, "flower"],
-    [10, 11, "grassTuft"],
-    [14, 10, "flower"],
-    [22, 5, "grassTuft"],
-    [29, 11, "flower"],
-    [35, 10, "grassTuft"],
-    [2, 17, "grassTuft"],
-    [12, 18, "flower"],
-    [24, 17, "grassTuft"],
-    [37, 18, "flower"],
-    [5, 28, "flower"],
-    [35, 28, "flower"],
+  // Flowers in patches (like the screenshot)
+  const flowerPatches: [number, number][] = [
+    [2, 10], [3, 10], [2, 11],
+    [10, 11], [11, 11],
+    [14, 10], [15, 10],
+    [29, 11], [30, 11],
+    [35, 10], [36, 10], [35, 11],
+    [2, 17], [3, 17], [2, 18],
+    [12, 18], [13, 18],
+    [24, 17], [25, 17],
+    [37, 18], [36, 18],
+    [5, 28], [6, 28],
+    [34, 28], [35, 28],
   ];
-  for (const [x, y, t] of scatter) {
-    if (map[y]?.[x] === "grass") map[y][x] = t;
+  const tufts: [number, number][] = [
+    [10, 5], [22, 5], [14, 12], [26, 12], [4, 19], [33, 19], [8, 25], [30, 25],
+  ];
+  for (const [x, y] of flowerPatches) {
+    if (map[y]?.[x] === "grass") map[y][x] = "flower";
+  }
+  for (const [x, y] of tufts) {
+    if (map[y]?.[x] === "grass") map[y][x] = "grassTuft";
   }
 
-  // A wooden sign near spawn
-  if (map[12][21] === "grass") map[12][21] = "sign";
-
-  // Paint building tiles into the grid
+  // Paint building tiles
   for (const b of buildings) {
     for (let dy = 0; dy < b.h; dy++) {
       for (let dx = 0; dx < b.w; dx++) {
         const x = b.x + dx;
         const y = b.y + dy;
-        if (dy === 0) map[y][x] = "buildingRoof";
+        if (dy === 0) map[y][x] = "buildingRoofTop";
+        else if (dy === 1) map[y][x] = "buildingRoofBase";
         else if (dy === b.h - 1 && dx === Math.floor(b.w / 2))
           map[y][x] = "buildingDoor";
-        else if (dy === 1 && (dx === 1 || dx === b.w - 2))
+        else if (
+          dy === b.h - 2 &&
+          (dx === 1 || dx === b.w - 2)
+        )
           map[y][x] = "buildingWindow";
         else map[y][x] = "buildingWall";
       }
     }
+    // Doorstep tile directly in front of the door
+    const doorX = b.x + Math.floor(b.w / 2);
+    const stepY = b.y + b.h;
+    if (stepY < MAP_HEIGHT - 1 && map[stepY][doorX] !== "path") {
+      map[stepY][doorX] = "doorStep";
+    }
   }
+
+  // A mailbox-style sign near spawn
+  if (map[12][21] === "grass") map[12][21] = "sign";
+  if (map[15][6] === "path") {
+    // small sign placed on grass instead
+  }
+  if (map[15][10] === "grass") map[15][10] = "sign";
+  if (map[15][30] === "grass") map[15][30] = "sign";
 
   return map;
 }
@@ -184,14 +206,11 @@ export const isSolid = (tile: TileType): boolean =>
   tile === "tree" ||
   tile === "water" ||
   tile === "sign" ||
-  tile === "buildingRoof" ||
+  tile === "buildingRoofTop" ||
+  tile === "buildingRoofBase" ||
   tile === "buildingWall" ||
   tile === "buildingWindow";
 
-// Doors are technically solid for movement (no interiors yet) but rendered differently.
-// Adjust here if you later add interiors.
-
 export const isTallGrass = (tile: TileType): boolean => tile === "tallGrass";
 
-// Player spawn — on the main path near the center
 export const SPAWN = { x: 20, y: 14 };

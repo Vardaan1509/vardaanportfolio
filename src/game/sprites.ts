@@ -1,70 +1,92 @@
-// Procedurally-drawn sprites: tiles, characters, and pokemon.
-// Everything is drawn with a tiny "pixel grid" per tile so it stays retro.
+// Procedurally-drawn sprites in a bright GBA-era overworld style.
+// All art is drawn from scratch in code — no external assets.
 
 import { TILE_SIZE, TileType, Building } from "./world";
 import { PokemonSpecies } from "./pokemon";
 
-const PIX = TILE_SIZE / 10; // 10x10 pixel grid per tile => 4px per mini-cell at TILE_SIZE=40
+const PIX = TILE_SIZE / 10;
 
-const rect = (
+const P = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  color: string,
   gx: number,
   gy: number,
-  w = 1,
-  h = 1
+  w: number,
+  h: number,
+  color: string
 ) => {
   ctx.fillStyle = color;
   ctx.fillRect(x + gx * PIX, y + gy * PIX, w * PIX, h * PIX);
 };
 
-// ============ TILES ============
+// ============ GRASS FAMILY ============
 
 const drawGrass = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
-  ctx.fillStyle = "#5eb85e";
+  // Bright saturated GBA-style green base
+  ctx.fillStyle = "#78c850";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  ctx.fillStyle = "#4ca44c";
-  ctx.fillRect(x + 2 * PIX, y + 3 * PIX, PIX, PIX);
-  ctx.fillRect(x + 6 * PIX, y + 2 * PIX, PIX, PIX);
-  ctx.fillRect(x + 4 * PIX, y + 7 * PIX, PIX, PIX);
-  ctx.fillRect(x + 8 * PIX, y + 6 * PIX, PIX, PIX);
+  // Dotted texture pattern (like the reference screenshot)
+  const darker = "#5ea838";
+  P(ctx, x, y, 1, 2, 1, 1, darker);
+  P(ctx, x, y, 4, 1, 1, 1, darker);
+  P(ctx, x, y, 7, 3, 1, 1, darker);
+  P(ctx, x, y, 2, 5, 1, 1, darker);
+  P(ctx, x, y, 5, 6, 1, 1, darker);
+  P(ctx, x, y, 8, 7, 1, 1, darker);
+  P(ctx, x, y, 0, 8, 1, 1, darker);
+  // Occasional brighter highlight for depth
+  P(ctx, x, y, 3, 3, 1, 1, "#98d868");
+  P(ctx, x, y, 6, 8, 1, 1, "#98d868");
 };
 
 const drawGrassTuft = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
   drawGrass(ctx, x, y);
-  ctx.fillStyle = "#3a8a3a";
-  ctx.fillRect(x + 3 * PIX, y + 4 * PIX, 2 * PIX, 2 * PIX);
-  ctx.fillStyle = "#2f722f";
-  ctx.fillRect(x + 3 * PIX, y + 5 * PIX, 2 * PIX, PIX);
+  // A small clump of taller blades
+  P(ctx, x, y, 3, 4, 1, 3, "#387028");
+  P(ctx, x, y, 4, 3, 1, 4, "#387028");
+  P(ctx, x, y, 5, 4, 1, 3, "#387028");
+  P(ctx, x, y, 4, 3, 1, 1, "#58a840");
 };
 
 const drawTallGrass = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
-  ctx.fillStyle = "#3a8a3a";
+  // Darker, denser grass field (encounter zone)
+  ctx.fillStyle = "#487830";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  // Vertical stripes suggesting tall blades
-  ctx.fillStyle = "#4ea54e";
+  // Vertical blade shapes suggesting height
+  const blade = "#68a848";
+  const bladeDark = "#305818";
   for (let i = 0; i < 5; i++) {
-    ctx.fillRect(x + (i * 2) * PIX, y + 2 * PIX, PIX, 6 * PIX);
+    P(ctx, x, y, i * 2, 2, 1, 6, blade);
+    P(ctx, x, y, i * 2, 7, 1, 1, bladeDark);
   }
-  ctx.fillStyle = "#2b6d2b";
   for (let i = 0; i < 4; i++) {
-    ctx.fillRect(x + (1 + i * 2) * PIX, y + 3 * PIX, PIX, 6 * PIX);
+    P(ctx, x, y, 1 + i * 2, 3, 1, 5, bladeDark);
+    P(ctx, x, y, 1 + i * 2, 3, 1, 1, blade);
   }
-  ctx.fillStyle = "#5cbf5c";
-  ctx.fillRect(x + 2 * PIX, y, PIX, PIX);
-  ctx.fillRect(x + 6 * PIX, y, PIX, PIX);
+  // Top edge highlight
+  P(ctx, x, y, 0, 0, 10, 1, "#5a9038");
+  P(ctx, x, y, 1, 0, 1, 1, "#78b850");
+  P(ctx, x, y, 5, 0, 1, 1, "#78b850");
 };
 
+// ============ PATH / WATER ============
+
 const drawPath = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
-  ctx.fillStyle = "#d9c48a";
+  ctx.fillStyle = "#e8c878";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  ctx.fillStyle = "#c2ac70";
-  ctx.fillRect(x + 2 * PIX, y + 6 * PIX, PIX, PIX);
-  ctx.fillRect(x + 6 * PIX, y + 3 * PIX, PIX, PIX);
-  ctx.fillStyle = "#b89b5a";
-  ctx.fillRect(x + 4 * PIX, y + 8 * PIX, PIX, PIX);
+  P(ctx, x, y, 2, 3, 1, 1, "#c8a858");
+  P(ctx, x, y, 6, 6, 1, 1, "#c8a858");
+  P(ctx, x, y, 5, 2, 1, 1, "#f0d888");
+  P(ctx, x, y, 8, 5, 1, 1, "#f0d888");
+};
+
+const drawDoorStep = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+  drawGrass(ctx, x, y);
+  // Warm-glow doorstep like in the reference
+  P(ctx, x, y, 3, 3, 4, 4, "#f8e0a0");
+  P(ctx, x, y, 3, 3, 4, 1, "#f0c878");
+  P(ctx, x, y, 3, 6, 4, 1, "#d0a860");
 };
 
 const drawWater = (
@@ -73,67 +95,139 @@ const drawWater = (
   y: number,
   animFrame: number
 ) => {
-  ctx.fillStyle = "#3b82c4";
+  ctx.fillStyle = "#3878c8";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  const off = animFrame === 0 ? 0 : PIX;
-  ctx.fillStyle = "#5aa0e0";
-  ctx.fillRect(x + PIX + off, y + 2 * PIX, 3 * PIX, PIX);
-  ctx.fillRect(x + 5 * PIX + off, y + 6 * PIX, 3 * PIX, PIX);
-  ctx.fillStyle = "#84c1f0";
-  ctx.fillRect(x + 2 * PIX + off, y + 2 * PIX, PIX, PIX);
+  const off = animFrame === 0 ? 0 : 1;
+  P(ctx, x, y, 1 + off, 2, 3, 1, "#5090d8");
+  P(ctx, x, y, 5 + off, 6, 3, 1, "#5090d8");
+  P(ctx, x, y, 2 + off, 2, 1, 1, "#a0c8f0");
+  P(ctx, x, y, 6 + off, 6, 1, 1, "#a0c8f0");
 };
+
+// ============ TREES ============
 
 const drawTree = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
   drawGrass(ctx, x, y);
-  ctx.fillStyle = "#1f5f2a";
-  ctx.fillRect(x + PIX, y, 8 * PIX, 7 * PIX);
-  ctx.fillStyle = "#2b7d3a";
-  ctx.fillRect(x + 2 * PIX, y + PIX, 6 * PIX, 5 * PIX);
-  ctx.fillStyle = "#3a9a4d";
-  ctx.fillRect(x + 3 * PIX, y + 2 * PIX, 2 * PIX, PIX);
-  ctx.fillStyle = "#6b3f1e";
-  ctx.fillRect(x + 4 * PIX, y + 7 * PIX, 2 * PIX, 2 * PIX);
+  // Round bushy canopy — top-down view like the reference
+  const dark = "#204818";
+  const mid = "#386828";
+  const light = "#588838";
+  const highlight = "#78a848";
+
+  // Outline
+  P(ctx, x, y, 1, 1, 8, 8, dark);
+  // Main body
+  P(ctx, x, y, 2, 1, 6, 8, mid);
+  P(ctx, x, y, 1, 2, 8, 6, mid);
+  // Lighter fill
+  P(ctx, x, y, 2, 2, 6, 6, light);
+  // Top-left highlight cluster
+  P(ctx, x, y, 3, 2, 3, 2, highlight);
+  P(ctx, x, y, 2, 3, 2, 2, highlight);
+  // Small dark speckles suggesting leaf gaps
+  P(ctx, x, y, 5, 5, 1, 1, mid);
+  P(ctx, x, y, 6, 3, 1, 1, mid);
+  P(ctx, x, y, 3, 6, 1, 1, mid);
+  P(ctx, x, y, 7, 6, 1, 1, dark);
 };
+
+// ============ FLOWERS ============
 
 const drawFlower = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
   drawGrass(ctx, x, y);
-  ctx.fillStyle = "#e64980";
-  ctx.fillRect(x + 3 * PIX, y + 3 * PIX, 3 * PIX, 3 * PIX);
-  ctx.fillStyle = "#fabb6d";
-  ctx.fillRect(x + 4 * PIX, y + 4 * PIX, PIX, PIX);
-  ctx.fillStyle = "#3a8a3a";
-  ctx.fillRect(x + 4 * PIX, y + 6 * PIX, PIX, 3 * PIX);
+  // Red flower cluster like the reference screenshot
+  const petal = "#e04848";
+  const petalDark = "#a02020";
+  const center = "#f8d038";
+  // Small cross of red petals
+  P(ctx, x, y, 4, 3, 2, 1, petal);
+  P(ctx, x, y, 3, 4, 4, 2, petal);
+  P(ctx, x, y, 4, 6, 2, 1, petal);
+  // Dark accents
+  P(ctx, x, y, 3, 4, 1, 1, petalDark);
+  P(ctx, x, y, 6, 5, 1, 1, petalDark);
+  // Yellow center
+  P(ctx, x, y, 4, 4, 2, 2, center);
+  P(ctx, x, y, 4, 4, 1, 1, "#ffe870");
+  // Stem hint
+  P(ctx, x, y, 4, 7, 2, 1, "#387028");
 };
+
+// ============ MAILBOX SIGN ============
 
 const drawSign = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
   drawGrass(ctx, x, y);
-  ctx.fillStyle = "#8b5a2b";
-  ctx.fillRect(x + 4 * PIX, y + 4 * PIX, PIX, 5 * PIX);
-  ctx.fillStyle = "#b0763a";
-  ctx.fillRect(x + PIX, y + PIX, 8 * PIX, 4 * PIX);
-  ctx.fillStyle = "#6b4423";
-  ctx.fillRect(x + PIX, y + PIX, 8 * PIX, PIX);
-  ctx.fillRect(x + PIX, y + 4 * PIX, 8 * PIX, PIX);
+  // Post
+  P(ctx, x, y, 4, 6, 2, 3, "#584038");
+  // Sign box — cool blue-grey like the mailboxes in the reference
+  P(ctx, x, y, 2, 2, 6, 5, "#9098b8");
+  P(ctx, x, y, 2, 2, 6, 1, "#585878");
+  P(ctx, x, y, 2, 6, 6, 1, "#585878");
+  P(ctx, x, y, 2, 2, 1, 5, "#585878");
+  P(ctx, x, y, 7, 2, 1, 5, "#585878");
+  // Envelope icon on the front
+  P(ctx, x, y, 3, 3, 4, 3, "#f0f0f8");
+  P(ctx, x, y, 3, 3, 4, 1, "#c8c8d0");
+  P(ctx, x, y, 3, 3, 2, 2, "#c8c8d0");
+  P(ctx, x, y, 5, 3, 2, 2, "#c8c8d0");
+  P(ctx, x, y, 4, 4, 2, 1, "#585878");
 };
 
-const drawBuildingRoof = (
+// ============ BUILDINGS ============
+
+const drawBuildingRoofTop = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
   roof: string,
-  accent: string
+  shadow: string
 ) => {
   ctx.fillStyle = roof;
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  ctx.fillStyle = accent;
-  ctx.fillRect(x, y, TILE_SIZE, PIX);
-  ctx.fillRect(x, y + 8 * PIX, TILE_SIZE, PIX);
-  // Shingle pattern
-  ctx.fillStyle = accent;
+  // Dark outline on top
+  P(ctx, x, y, 0, 0, 10, 1, shadow);
+  // Ridge tiles across the top (Pokemon-house style horizontal cap)
+  P(ctx, x, y, 0, 1, 10, 2, shadow);
+  P(ctx, x, y, 1, 2, 8, 1, roof);
+  // Small highlight along the top
+  P(ctx, x, y, 2, 1, 2, 1, "#f8b878");
+  P(ctx, x, y, 6, 1, 2, 1, "#f8b878");
+  // Tile texture below the ridge
+  P(ctx, x, y, 0, 6, 10, 1, shadow);
   for (let i = 0; i < 5; i++) {
-    ctx.fillRect(x + (i * 2) * PIX, y + 4 * PIX, PIX, PIX);
-    ctx.fillRect(x + (1 + i * 2) * PIX, y + 6 * PIX, PIX, PIX);
+    P(ctx, x, y, i * 2, 5, 1, 1, shadow);
   }
+  for (let i = 0; i < 4; i++) {
+    P(ctx, x, y, 1 + i * 2, 8, 1, 1, shadow);
+  }
+};
+
+const drawBuildingRoofBase = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  roof: string,
+  shadow: string
+) => {
+  ctx.fillStyle = roof;
+  ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+  // Shingle rows
+  const rowShade = shadow;
+  P(ctx, x, y, 0, 1, 10, 1, rowShade);
+  for (let i = 0; i < 5; i++) {
+    P(ctx, x, y, i * 2, 0, 1, 1, rowShade);
+  }
+  P(ctx, x, y, 0, 4, 10, 1, rowShade);
+  for (let i = 0; i < 4; i++) {
+    P(ctx, x, y, 1 + i * 2, 3, 1, 1, rowShade);
+  }
+  P(ctx, x, y, 0, 7, 10, 1, rowShade);
+  for (let i = 0; i < 5; i++) {
+    P(ctx, x, y, i * 2, 6, 1, 1, rowShade);
+  }
+  // Bottom edge overhang
+  P(ctx, x, y, 0, 9, 10, 1, "#4a2818");
+  P(ctx, x, y, 0, 8, 10, 1, rowShade);
 };
 
 const drawBuildingWall = (
@@ -141,13 +235,19 @@ const drawBuildingWall = (
   x: number,
   y: number,
   wall: string,
-  accent: string
+  shadow: string
 ) => {
   ctx.fillStyle = wall;
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-  ctx.fillStyle = accent;
-  ctx.fillRect(x, y, PIX / 2, TILE_SIZE);
-  ctx.fillRect(x + TILE_SIZE - PIX / 2, y, PIX / 2, TILE_SIZE);
+  // Top strip (cornice under the roof)
+  P(ctx, x, y, 0, 0, 10, 1, shadow);
+  // Foundation stones at the bottom
+  P(ctx, x, y, 0, 8, 10, 2, "#787868");
+  P(ctx, x, y, 0, 8, 10, 1, "#a8a898");
+  // Stone segments
+  for (let i = 0; i < 5; i++) {
+    P(ctx, x, y, i * 2, 9, 1, 1, "#585848");
+  }
 };
 
 const drawBuildingWindow = (
@@ -155,19 +255,20 @@ const drawBuildingWindow = (
   x: number,
   y: number,
   wall: string,
-  accent: string
+  shadow: string
 ) => {
-  drawBuildingWall(ctx, x, y, wall, accent);
-  ctx.fillStyle = accent;
-  ctx.fillRect(x + 2 * PIX, y + 3 * PIX, 6 * PIX, 4 * PIX);
-  ctx.fillStyle = "#a5c9e8";
-  ctx.fillRect(x + 3 * PIX, y + 4 * PIX, 4 * PIX, 3 * PIX);
-  ctx.fillStyle = "#c6dcf0";
-  ctx.fillRect(x + 3 * PIX, y + 4 * PIX, 2 * PIX, PIX);
-  // Window frame cross
-  ctx.fillStyle = accent;
-  ctx.fillRect(x + 5 * PIX, y + 4 * PIX, PIX / 2, 3 * PIX);
-  ctx.fillRect(x + 3 * PIX, y + 5 * PIX, 4 * PIX, PIX / 2);
+  drawBuildingWall(ctx, x, y, wall, shadow);
+  // Window frame
+  P(ctx, x, y, 1, 2, 8, 5, "#403830");
+  P(ctx, x, y, 2, 3, 6, 3, "#68a0d8");
+  // Glass highlights
+  P(ctx, x, y, 2, 3, 3, 1, "#a8c8f0");
+  P(ctx, x, y, 2, 3, 1, 2, "#a8c8f0");
+  // Muntin cross
+  P(ctx, x, y, 4, 3, 1, 3, "#403830");
+  P(ctx, x, y, 2, 4, 6, 1, "#403830");
+  // Sill
+  P(ctx, x, y, 1, 6, 8, 1, "#585048");
 };
 
 const drawBuildingDoor = (
@@ -175,17 +276,24 @@ const drawBuildingDoor = (
   x: number,
   y: number,
   wall: string,
-  accent: string
+  shadow: string
 ) => {
-  drawBuildingWall(ctx, x, y, wall, accent);
-  ctx.fillStyle = "#4a2b16";
-  ctx.fillRect(x + 3 * PIX, y + 2 * PIX, 4 * PIX, 7 * PIX);
-  ctx.fillStyle = "#6b3f1e";
-  ctx.fillRect(x + 3 * PIX + PIX / 2, y + 3 * PIX, 3 * PIX, 6 * PIX);
-  // Door knob
-  ctx.fillStyle = "#fbbf24";
-  ctx.fillRect(x + 5 * PIX + PIX / 2, y + 6 * PIX, PIX / 2, PIX / 2);
+  drawBuildingWall(ctx, x, y, wall, shadow);
+  // Door frame (darker wood)
+  P(ctx, x, y, 2, 1, 6, 7, "#3a2010");
+  // Door panel (lighter wood)
+  P(ctx, x, y, 3, 2, 4, 6, "#8a5828");
+  P(ctx, x, y, 3, 2, 4, 1, "#a87038");
+  // Wood grain lines
+  P(ctx, x, y, 3, 4, 4, 1, "#6a4018");
+  P(ctx, x, y, 3, 6, 4, 1, "#6a4018");
+  // Doorknob
+  P(ctx, x, y, 6, 5, 1, 1, "#f0d060");
+  // Doorstep on top of foundation
+  P(ctx, x, y, 2, 8, 6, 1, "#a89078");
 };
+
+// ============ DISPATCH ============
 
 export const drawTile = (
   ctx: CanvasRenderingContext2D,
@@ -214,7 +322,10 @@ export const drawTile = (
       return drawSign(ctx, x, y);
     case "tallGrass":
       return drawTallGrass(ctx, x, y);
-    case "buildingRoof":
+    case "doorStep":
+      return drawDoorStep(ctx, x, y);
+    case "buildingRoofTop":
+    case "buildingRoofBase":
     case "buildingWall":
     case "buildingWindow":
     case "buildingDoor": {
@@ -222,14 +333,19 @@ export const drawTile = (
         buildingLookup && tx !== undefined && ty !== undefined
           ? buildingLookup(tx, ty)
           : undefined;
-      const wall = b?.wallColor ?? "#e6d3b3";
-      const roof = b?.roofColor ?? "#8b3a3a";
-      const accent = b?.accentColor ?? "#5b2323";
-      if (tile === "buildingRoof") return drawBuildingRoof(ctx, x, y, roof, accent);
-      if (tile === "buildingWall") return drawBuildingWall(ctx, x, y, wall, accent);
+      const wall = b?.wallColor ?? "#f0dcb4";
+      const wallShadow = b?.wallShadow ?? "#a88860";
+      const roof = b?.roofColor ?? "#e88a4a";
+      const roofShadow = b?.roofShadow ?? "#a85220";
+      if (tile === "buildingRoofTop")
+        return drawBuildingRoofTop(ctx, x, y, roof, roofShadow);
+      if (tile === "buildingRoofBase")
+        return drawBuildingRoofBase(ctx, x, y, roof, roofShadow);
+      if (tile === "buildingWall")
+        return drawBuildingWall(ctx, x, y, wall, wallShadow);
       if (tile === "buildingWindow")
-        return drawBuildingWindow(ctx, x, y, wall, accent);
-      return drawBuildingDoor(ctx, x, y, wall, accent);
+        return drawBuildingWindow(ctx, x, y, wall, wallShadow);
+      return drawBuildingDoor(ctx, x, y, wall, wallShadow);
     }
   }
 };
@@ -244,18 +360,16 @@ export const drawCharacter = (
   hairColor: string,
   direction: number,
   walkFrame: number,
-  accessory?: "resume" | "clipboard" | null
+  accessory?: "resume" | null
 ) => {
   const bob = walkFrame === 1 ? PIX / 2 : 0;
   const cy = y + bob;
 
-  // Shadow
-  ctx.fillStyle = "rgba(0,0,0,0.25)";
+  ctx.fillStyle = "rgba(0,0,0,0.28)";
   ctx.fillRect(x + 2 * PIX, y + 9 * PIX, 6 * PIX, PIX / 2);
 
   // Head
-  ctx.fillStyle = "#f4c9a3";
-  ctx.fillRect(x + 3 * PIX, cy + PIX, 4 * PIX, 4 * PIX);
+  P(ctx, x, cy, 3, 1, 4, 4, "#f4c9a3");
 
   // Hair
   ctx.fillStyle = hairColor;
@@ -267,7 +381,6 @@ export const drawCharacter = (
     if (direction === 3) ctx.fillRect(x + 6 * PIX, cy + PIX, PIX, 3 * PIX);
   }
 
-  // Eyes
   if (direction !== 1) {
     ctx.fillStyle = "#1e293b";
     if (direction === 0) {
@@ -280,7 +393,7 @@ export const drawCharacter = (
     }
   }
 
-  // Shirt/torso
+  // Shirt
   ctx.fillStyle = shirtColor;
   ctx.fillRect(x + 2.5 * PIX, cy + 5 * PIX, 5 * PIX, 3 * PIX);
   ctx.fillStyle = shade(shirtColor, -25);
@@ -301,15 +414,14 @@ export const drawCharacter = (
     ctx.fillRect(x + 6.5 * PIX, cy + 8 * PIX, PIX, 2 * PIX);
   }
 
-  // Accessory (item held / bobbing above head)
   if (accessory === "resume") {
-    // Paper icon above head
+    const bobOffset = Math.sin(Date.now() / 300) * 1;
     ctx.fillStyle = "#fefefe";
-    ctx.fillRect(x + 4 * PIX, y - 2 * PIX + Math.sin(Date.now() / 300) * 1, 3 * PIX, 4 * PIX);
+    ctx.fillRect(x + 4 * PIX, y - 2 * PIX + bobOffset, 3 * PIX, 4 * PIX);
     ctx.fillStyle = "#1e293b";
-    ctx.fillRect(x + 4.5 * PIX, y - PIX + Math.sin(Date.now() / 300) * 1, 2 * PIX, PIX / 2);
-    ctx.fillRect(x + 4.5 * PIX, y + Math.sin(Date.now() / 300) * 1, 2 * PIX, PIX / 2);
-    ctx.fillRect(x + 4.5 * PIX, y + PIX + Math.sin(Date.now() / 300) * 1, PIX, PIX / 2);
+    ctx.fillRect(x + 4.5 * PIX, y - PIX + bobOffset, 2 * PIX, PIX / 2);
+    ctx.fillRect(x + 4.5 * PIX, y + bobOffset, 2 * PIX, PIX / 2);
+    ctx.fillRect(x + 4.5 * PIX, y + PIX + bobOffset, PIX, PIX / 2);
   }
 };
 
@@ -322,13 +434,11 @@ export const drawPokemon = (
   size: number,
   species: PokemonSpecies
 ) => {
-  // "size" is the pokemon's rendered box (square).
   const p = size / 10;
-  const P = (gx: number, gy: number, w: number, h: number, c: string) => {
+  const Q = (gx: number, gy: number, w: number, h: number, c: string) => {
     ctx.fillStyle = c;
     ctx.fillRect(x + gx * p, y + gy * p, w * p, h * p);
   };
-  // Shadow
   ctx.fillStyle = "rgba(0,0,0,0.28)";
   ctx.beginPath();
   ctx.ellipse(x + size / 2, y + size - p, size / 3, p / 1.5, 0, 0, Math.PI * 2);
@@ -338,90 +448,81 @@ export const drawPokemon = (
 
   switch (shape) {
     case "blob":
-      P(2, 3, 6, 6, primary);
-      P(2, 3, 6, 2, secondary);
-      P(3, 5, PIX, PIX, "#fff");
-      P(3, 5, 1, 1, "#fff");
-      P(6, 5, 1, 1, "#fff");
-      P(3, 5, 0.5, 0.5, "#000");
-      P(6.5, 5, 0.5, 0.5, "#000");
-      P(4, 7, 2, 1, secondary);
+      Q(2, 3, 6, 6, primary);
+      Q(2, 3, 6, 2, secondary);
+      Q(3, 5, 1, 1, "#fff");
+      Q(6, 5, 1, 1, "#fff");
+      Q(3.3, 5.3, 0.5, 0.5, "#000");
+      Q(6.3, 5.3, 0.5, 0.5, "#000");
+      Q(4, 7, 2, 1, secondary);
       break;
     case "bug":
-      P(1, 4, 8, 4, primary);
-      P(3, 3, 4, 2, primary);
-      P(0, 3, 2, 3, secondary); // left wing
-      P(8, 3, 2, 3, secondary); // right wing
-      P(3, 4, 1, 1, "#fff");
-      P(6, 4, 1, 1, "#fff");
-      P(3.3, 4.3, 0.4, 0.4, "#000");
-      P(6.3, 4.3, 0.4, 0.4, "#000");
-      P(2, 8, 1, 1, secondary);
-      P(7, 8, 1, 1, secondary);
+      Q(1, 4, 8, 4, primary);
+      Q(3, 3, 4, 2, primary);
+      Q(0, 3, 2, 3, secondary);
+      Q(8, 3, 2, 3, secondary);
+      Q(3, 4, 1, 1, "#fff");
+      Q(6, 4, 1, 1, "#fff");
+      Q(3.3, 4.3, 0.4, 0.4, "#000");
+      Q(6.3, 4.3, 0.4, 0.4, "#000");
+      Q(2, 8, 1, 1, secondary);
+      Q(7, 8, 1, 1, secondary);
       break;
     case "sparky":
-      P(2, 3, 6, 5, primary);
-      P(3, 8, 1, 1, primary);
-      P(6, 8, 1, 1, primary);
-      // Zigzag pattern
-      P(4, 5, 2, 1, secondary);
-      P(3, 6, 1, 1, secondary);
-      P(6, 6, 1, 1, secondary);
-      // Eyes
-      P(3.5, 4, 0.6, 0.6, "#000");
-      P(5.9, 4, 0.6, 0.6, "#000");
-      // Bolt tail
-      P(8, 4, 1, 1, "#fde047");
-      P(8.5, 5, 1, 1, "#fde047");
-      P(9, 6, 1, 1, "#fde047");
+      Q(2, 3, 6, 5, primary);
+      Q(3, 8, 1, 1, primary);
+      Q(6, 8, 1, 1, primary);
+      Q(4, 5, 2, 1, secondary);
+      Q(3, 6, 1, 1, secondary);
+      Q(6, 6, 1, 1, secondary);
+      Q(3.5, 4, 0.6, 0.6, "#000");
+      Q(5.9, 4, 0.6, 0.6, "#000");
+      Q(8, 4, 1, 1, "#fde047");
+      Q(8.5, 5, 1, 1, "#fde047");
+      Q(9, 6, 1, 1, "#fde047");
       break;
     case "aqua":
-      P(2, 4, 6, 5, primary);
-      P(2, 3, 6, 2, secondary);
-      P(4, 2, 2, 2, primary); // fin
-      P(3.5, 5, 0.6, 0.6, "#fff");
-      P(5.9, 5, 0.6, 0.6, "#fff");
-      P(3.7, 5.2, 0.4, 0.4, "#000");
-      P(6.1, 5.2, 0.4, 0.4, "#000");
-      P(4, 7, 2, 1, secondary);
-      // Water drops
-      P(1, 6, 1, 1, "#7dd3fc");
-      P(8, 6, 1, 1, "#7dd3fc");
+      Q(2, 4, 6, 5, primary);
+      Q(2, 3, 6, 2, secondary);
+      Q(4, 2, 2, 2, primary);
+      Q(3.5, 5, 0.6, 0.6, "#fff");
+      Q(5.9, 5, 0.6, 0.6, "#fff");
+      Q(3.7, 5.2, 0.4, 0.4, "#000");
+      Q(6.1, 5.2, 0.4, 0.4, "#000");
+      Q(4, 7, 2, 1, secondary);
+      Q(1, 6, 1, 1, "#7dd3fc");
+      Q(8, 6, 1, 1, "#7dd3fc");
       break;
     case "brick":
-      // Rocky boxy body
-      P(1, 3, 8, 6, primary);
-      P(1, 3, 8, 1, secondary);
-      P(1, 8, 8, 1, secondary);
-      P(1, 3, 1, 6, secondary);
-      P(8, 3, 1, 6, secondary);
-      // Brick lines
-      P(1, 5, 8, 0.4, secondary);
-      P(4, 3, 0.4, 2, secondary);
-      P(6, 5.5, 0.4, 2, secondary);
-      // Eyes
-      P(2.5, 6, 1, 1, "#fff");
-      P(6.5, 6, 1, 1, "#fff");
-      P(2.9, 6.3, 0.5, 0.5, "#000");
-      P(6.9, 6.3, 0.5, 0.5, "#000");
+      Q(1, 3, 8, 6, primary);
+      Q(1, 3, 8, 1, secondary);
+      Q(1, 8, 8, 1, secondary);
+      Q(1, 3, 1, 6, secondary);
+      Q(8, 3, 1, 6, secondary);
+      Q(1, 5, 8, 0.4, secondary);
+      Q(4, 3, 0.4, 2, secondary);
+      Q(6, 5.5, 0.4, 2, secondary);
+      Q(2.5, 6, 1, 1, "#fff");
+      Q(6.5, 6, 1, 1, "#fff");
+      Q(2.9, 6.3, 0.5, 0.5, "#000");
+      Q(6.9, 6.3, 0.5, 0.5, "#000");
       break;
     case "leaf":
-      P(2, 4, 6, 5, primary);
-      // Leaf on top
-      P(4, 1, 2, 3, secondary);
-      P(3, 2, 1, 2, secondary);
-      P(6, 2, 1, 2, secondary);
-      // Eyes
-      P(3.5, 5.5, 0.6, 0.6, "#000");
-      P(5.9, 5.5, 0.6, 0.6, "#000");
-      P(4, 7, 2, 0.6, secondary);
-      P(2, 8, 1, 1, primary);
-      P(7, 8, 1, 1, primary);
+      Q(2, 4, 6, 5, primary);
+      Q(4, 1, 2, 3, secondary);
+      Q(3, 2, 1, 2, secondary);
+      Q(6, 2, 1, 2, secondary);
+      Q(3.5, 5.5, 0.6, 0.6, "#000");
+      Q(5.9, 5.5, 0.6, 0.6, "#000");
+      Q(4, 7, 2, 0.6, secondary);
+      Q(2, 8, 1, 1, primary);
+      Q(7, 8, 1, 1, primary);
       break;
   }
 };
 
-// Building label draw (called after tiles so labels sit on top of roof)
+// ============ BUILDING LABEL ============
+
 export const drawBuildingLabel = (
   ctx: CanvasRenderingContext2D,
   b: Building,
@@ -433,7 +534,6 @@ export const drawBuildingLabel = (
   ctx.font = "bold 12px monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "bottom";
-  // Sign background
   const textWidth = ctx.measureText(b.label).width;
   ctx.fillStyle = "rgba(15,23,42,0.85)";
   ctx.fillRect(cx - textWidth / 2 - 6, cy - 14, textWidth + 12, 16);

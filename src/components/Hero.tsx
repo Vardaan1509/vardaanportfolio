@@ -104,7 +104,7 @@ const Hero = () => {
                 className="inline-flex items-center justify-center px-5 py-2.5 border border-primary/40 bg-primary/5 rounded-lg text-primary hover:bg-primary/10 transition-all duration-200 text-sm font-medium hover:-translate-y-0.5"
               >
                 <Gamepad2 className="mr-2 h-4 w-4" />
-                Play the game
+                See my portfolio the fun way
               </Link>
             </div>
           </div>
