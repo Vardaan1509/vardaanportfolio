@@ -21,6 +21,7 @@ const NPC_OUTFITS: Record<string, OutfitStyle> = {
   bharatDenim: "officeCoat",
   hackathon: "casual",
   resumeGuy: "trainer",
+  devRoom: "casual",
 };
 import {
   makePokemon,
@@ -228,6 +229,16 @@ const ExploreGame = () => {
       const option = state.npc.choice.options[optionIndex];
       sounds.select();
       if (option.action === "giveResume") downloadResume();
+      if (option.action === "givePokemon" && option.pokemonId) {
+        const npc = state.npc;
+        if (!giftGiven.current.has(npc.id)) {
+          giftGiven.current.add(npc.id);
+          const pk = makePokemon(option.pokemonId);
+          setTeam((prev) => [...prev, pk]);
+          sounds.give();
+          showToast(`Got ${pk.species.name} (Lv ${pk.level})!`);
+        }
+      }
       setDialogue({
         ...state,
         line: 0,
@@ -235,7 +246,7 @@ const ExploreGame = () => {
         choiceShown: false, // hide the choice UI now
       });
     },
-    [downloadResume]
+    [downloadResume, showToast]
   );
 
   const interact = useCallback(() => {

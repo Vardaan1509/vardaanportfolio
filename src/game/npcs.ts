@@ -1,12 +1,13 @@
 // NPC definitions with dialogue, gift-pokemon, and special actions.
 
-export type SpecialAction = "giveResume";
+export type SpecialAction = "giveResume" | "givePokemon";
 
 export interface NPCChoice {
   question: string;
   options: {
     label: string;
     action?: SpecialAction;
+    pokemonId?: string; // when action === "givePokemon"
     responseLines: string[];
   }[];
 }
@@ -58,7 +59,6 @@ export const npcs: NPC[] = [
     y: 8,
     color: "#eab308",
     hair: "#78350f",
-    givesPokemon: "codeling",
     dialogue: [
       "Vardaan Mehandiratta. Computer Engineering, class of 2030.",
       "He received three scholarships coming in.",
@@ -66,12 +66,45 @@ export const npcs: NPC[] = [
       "Bright student. Data structures, algorithms, digital systems, linear algebra.",
       "First year and he's already shipping production code at APi Group.",
       "Most students take a term to find their footing. Vardaan was ready on day one.",
-      "Take a Codeling. Every engineer starts with one.",
+      "Now, before you head out, take one of these Pokemon with you.",
+      "Every developer starts with one. Choose the one that speaks to you.",
     ],
     dialogueRepeat: [
       "Ah, back again.",
       "Vardaan's still doing well. As expected.",
     ],
+    choice: {
+      question: "Pick your starter",
+      options: [
+        {
+          label: "Reactle",
+          action: "givePokemon",
+          pokemonId: "reactle",
+          responseLines: [
+            "Reactle. Front-end path. Fast, responsive, always re-rendering.",
+            "A fine choice. Take good care of it.",
+          ],
+        },
+        {
+          label: "Nodemin",
+          action: "givePokemon",
+          pokemonId: "nodemin",
+          responseLines: [
+            "Nodemin. Back-end path. Async and reliable.",
+            "A fine choice. Take good care of it.",
+          ],
+        },
+        {
+          label: "Cloudpup",
+          action: "givePokemon",
+          pokemonId: "cloudpup",
+          responseLines: [
+            "Cloudpup. Cloud path. Scales up when the traffic hits.",
+            "A fine choice. Take good care of it.",
+          ],
+        },
+      ],
+    },
   },
   {
     id: "bharatDenim",
@@ -117,6 +150,33 @@ export const npcs: NPC[] = [
     dialogueRepeat: [
       "You back for more war stories?",
       "Vardaan's got more projects cooking. Keep an eye out.",
+    ],
+  },
+  {
+    id: "devRoom",
+    name: "Kiro",
+    role: "AI pair programmer",
+    x: 35,
+    y: 28,
+    color: "#a855f7",
+    hair: "#e5e7eb",
+    givesPokemon: "bytebit",
+    dialogue: [
+      "Whoa. You found the dev room.",
+      "I'm Kiro. I pair-program with Vardaan.",
+      "Wanna know what he's building with these days?",
+      "Frontend: React, Next.js, TypeScript, Tailwind CSS.",
+      "Backend: Node.js, Express, FastAPI, .NET, C#, Go.",
+      "AI and ML: PyTorch, Gemini API, ElevenLabs, Claude API.",
+      "Databases: PostgreSQL, MySQL, DynamoDB, MongoDB, Supabase.",
+      "Cloud and infra: AWS, Azure, Docker, Vercel, DigitalOcean, CI/CD.",
+      "Languages he uses regularly: TypeScript, Python, C#, C++, C, SQL, Go.",
+      "He picks tools based on the problem, not the hype. That's the whole trick.",
+      "Since you found this place, take Bytebit. Fair reward for the curiosity.",
+    ],
+    dialogueRepeat: [
+      "Welcome back to the dev room.",
+      "Vardaan's still shipping. He'll always be shipping.",
     ],
   },
   {

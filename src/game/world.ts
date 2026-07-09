@@ -197,6 +197,22 @@ function generate(): TileType[][] {
   if (map[15][10] === "grass") map[15][10] = "sign";
   if (map[15][30] === "grass") map[15][30] = "sign";
 
+  // ============ HIDDEN DEV ROOM ============
+  // A small enclosed clearing in the SE corner accessed by finding one lone
+  // tall-grass tile amid the regular grass south of the SE encounter zone.
+  const setTile = (x: number, y: number, t: TileType) => {
+    if (map[y]?.[x] !== undefined) map[y][x] = t;
+  };
+  // Frame trees around the entrance and room
+  setTile(33, 26, "tree");
+  setTile(37, 26, "tree");
+  setTile(34, 27, "tree");
+  setTile(36, 27, "tree");
+  setTile(33, 28, "tree");
+  setTile(37, 28, "tree");
+  // The hidden path — a single tall-grass tile that keeps going south
+  setTile(35, 27, "tallGrass");
+
   return map;
 }
 

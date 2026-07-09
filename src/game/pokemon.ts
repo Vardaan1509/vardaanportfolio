@@ -21,6 +21,32 @@ export interface Pokemon {
 }
 
 export const SPECIES: Record<string, PokemonSpecies> = {
+  // Starters offered by Prof. Chen — pick one when you meet her
+  reactle: {
+    id: "reactle",
+    name: "Reactle",
+    type: "tech",
+    primary: "#22d3ee",
+    secondary: "#0e7490",
+    shape: "blob",
+  },
+  nodemin: {
+    id: "nodemin",
+    name: "Nodemin",
+    type: "grass",
+    primary: "#84cc16",
+    secondary: "#365314",
+    shape: "sparky",
+  },
+  cloudpup: {
+    id: "cloudpup",
+    name: "Cloudpup",
+    type: "water",
+    primary: "#94a3b8",
+    secondary: "#475569",
+    shape: "aqua",
+  },
+
   // NPC-gift pokemon — themed to each contact
   codeling: {
     id: "codeling",
@@ -52,6 +78,14 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     type: "rock",
     primary: "#a3a3a3",
     secondary: "#3f3f46",
+    shape: "brick",
+  },
+  bytebit: {
+    id: "bytebit",
+    name: "Bytebit",
+    type: "tech",
+    primary: "#e879f9",
+    secondary: "#86198f",
     shape: "brick",
   },
 
@@ -104,6 +138,7 @@ export const WILD_POOL: string[] = [
   "aquapaw",
   "sparkbee",
   "weedie",
+  "codeling", // now a wild-only species since Prof. Chen offers a starter choice
 ];
 
 let uidCounter = 1;
