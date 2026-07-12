@@ -47,7 +47,7 @@ const DIRS: Record<Direction, { dx: number; dy: number }> = {
 
 const MOVE_MS = 160;
 const CUSTOM_NPC_MOVE_MS = 260;
-const RESUME_URL = "/Resume_VardaanMehandiratta (4).pdf";
+const RESUME_URL = "/Vardaan_Resume.pdf";
 const ENCOUNTER_CHANCE = 0.28;
 const REPELLENT_MS = 30_000;
 const CUSTOM_NPC_SPAWN = { x: 18, y: 12 };
