@@ -1,168 +1,125 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Code, Wrench, Users, Layers, Package } from "lucide-react";
+import { Code, Layers, Wrench, Package } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useState } from "react";
+
+interface SkillCategory {
+  icon: typeof Code;
+  title: string;
+  skills: string[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    icon: Code,
+    title: "Languages",
+    skills: ["JavaScript", "TypeScript", "Python", "C#", "Go", "C++", "C", "SQL"],
+  },
+  {
+    icon: Layers,
+    title: "Frameworks",
+    skills: ["React", "Next.js", "Node.js", "Express.js", ".NET", "FastAPI", "Tailwind CSS"],
+  },
+  {
+    icon: Wrench,
+    title: "DevOps & Tools",
+    skills: ["AWS", "Azure", "Docker", "Git", "CI/CD", "MongoDB", "Supabase", "Vercel", "DigitalOcean", "Jest", "Postman"],
+  },
+  {
+    icon: Package,
+    title: "Libraries",
+    skills: ["PyTorch", "pandas", "NumPy", "ElevenLabs API", "Gemini API", "Claude API"],
+  },
+];
 
 const Skills = () => {
   const [sectionRef, isSectionVisible] = useScrollAnimation();
   const [titleRef, isTitleVisible] = useScrollAnimation({ threshold: 0.3 });
-  const [skillsRef, isSkillsVisible] = useScrollAnimation({ threshold: 0.2 });
-
-  const skillCategories = [
-    {
-      icon: Code,
-      title: "Languages",
-      skills: [
-        { name: "JavaScript", level: 90, description: "Modern web development and ES6+" },
-        { name: "HTML/CSS", level: 90, description: "Responsive web design and styling" },
-        { name: "TypeScript", level: 85, description: "Type-safe JavaScript development" },
-        { name: "Python", level: 85, description: "Scripting, automation, and ML" },
-        { name: "C++", level: 80, description: "Systems programming and OOP" },
-        { name: "C", level: 75, description: "Low-level systems programming" },
-        { name: "SQL/MySQL", level: 80, description: "Database queries and data manipulation" }
-      ]
-    },
-    {
-      icon: Layers,
-      title: "Frameworks",
-      skills: [
-        { name: "React", level: 90, description: "Component-based UI development" },
-        { name: "Next.js", level: 85, description: "Full-stack React framework" },
-        { name: "Node.js", level: 85, description: "Server-side JavaScript runtime" },
-        { name: "Express.js", level: 80, description: "Minimal Node.js web framework" },
-        { name: "Deno.js", level: 75, description: "Modern JavaScript/TypeScript runtime" },
-        { name: "Tailwind CSS", level: 90, description: "Utility-first CSS framework" }
-      ]
-    },
-    {
-      icon: Wrench,
-      title: "DevOps / Tools",
-      skills: [
-        { name: "Git", level: 90, description: "Version control and collaboration" },
-        { name: "GitHub", level: 90, description: "Code hosting and CI/CD workflows" },
-        { name: "VS Code", level: 90, description: "Primary code editor and extensions" },
-        { name: "Supabase", level: 85, description: "Backend-as-a-service platform" },
-        { name: "Vercel", level: 85, description: "Frontend deployment and hosting" },
-        { name: "DigitalOcean", level: 75, description: "Cloud infrastructure and hosting" },
-        { name: "Postman", level: 80, description: "API testing and documentation" },
-        { name: "MongoDB", level: 75, description: "NoSQL document database" },
-        { name: "Cloudinary", level: 75, description: "Media management and optimization" }
-      ]
-    },
-    {
-      icon: Package,
-      title: "Libraries",
-      skills: [
-        { name: "pandas", level: 80, description: "Data manipulation and analysis" },
-        { name: "NumPy", level: 80, description: "Numerical computing and arrays" },
-        { name: "Tkinter", level: 80, description: "GUI development for Python applications" },
-        { name: "PyTorch", level: 75, description: "Deep learning and neural networks" }
-      ]
-    }
-  ];
+  const [gridRef, isGridVisible] = useScrollAnimation({ threshold: 0.2 });
 
   return (
-    <section 
-      id="skills" 
+    <section
+      id="skills"
       ref={sectionRef}
-      className={`py-16 bg-background transition-opacity duration-700 ${
-        isSectionVisible ? 'opacity-100' : 'opacity-0'
+      className={`py-24 bg-background relative transition-opacity duration-700 ${
+        isSectionVisible ? "opacity-100" : "opacity-0"
       }`}
     >
-      <div className="container mx-auto px-6">
-        <div 
+      {/* Background accent */}
+      <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/3 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+
+      <div className="container mx-auto px-6 max-w-5xl relative">
+        {/* Header */}
+        <div
           ref={titleRef}
-          className={`text-center mb-12 transition-all duration-700 delay-100 ${
-            isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          className={`mb-14 transition-all duration-700 delay-100 ${
+            isTitleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 font-serif">
-            Technical Skills & Expertise
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
+            Technical Skills
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive skill set spanning programming languages, development tools, and core computer science concepts
+          <p className="mt-3 text-muted-foreground text-lg">
+            Technologies I use to build things.
           </p>
         </div>
 
-        <div 
-          ref={skillsRef}
-          className={`grid lg:grid-cols-2 gap-8 transition-all duration-700 delay-200 ${
-            isSkillsVisible ? 'opacity-100' : 'opacity-0'
+        {/* Skill Grid */}
+        <div
+          ref={gridRef}
+          className={`grid md:grid-cols-2 gap-6 transition-all duration-700 delay-200 ${
+            isGridVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          {skillCategories.map((category, categoryIndex) => {
-            const IconComponent = category.icon;
-            return (
-              <Card 
-                key={categoryIndex} 
-                className={`bg-card shadow-card border-0 hover:shadow-elegant transition-all duration-300 ${
-                  isSkillsVisible ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                <CardHeader className="pb-6">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    <CardTitle className="text-xl text-foreground">
-                      {category.title}
-                    </CardTitle>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <div className="space-y-6">
-                    {category.skills.map((skill, skillIndex) => (
-                      <div key={skillIndex} className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-medium text-foreground">
-                            {skill.name}
-                          </h4>
-                          <span className="text-xs text-muted-foreground">
-                            {skill.level}%
-                          </span>
-                        </div>
-                        <Progress 
-                          value={skill.level} 
-                          className="h-2"
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          {skill.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Quick Stats */}
-        <div 
-          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 transition-all duration-700 delay-300 ${
-            isSkillsVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">7</div>
-            <div className="text-sm text-muted-foreground">Languages</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">6</div>
-            <div className="text-sm text-muted-foreground">Frameworks</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">9</div>
-            <div className="text-sm text-muted-foreground">DevOps / Tools</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">4</div>
-            <div className="text-sm text-muted-foreground">Libraries</div>
-          </div>
+          {skillCategories.map((category, i) => (
+            <SkillCard key={i} category={category} index={i} />
+          ))}
         </div>
       </div>
     </section>
+  );
+};
+
+interface SkillCardProps {
+  category: SkillCategory;
+  index: number;
+}
+
+const SkillCard = ({ category, index }: SkillCardProps) => {
+  const [ref, isVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const Icon = category.icon;
+
+  return (
+    <div
+      ref={ref}
+      className={`group bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-0.5 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+          <Icon className="w-4 h-4 text-primary" />
+        </div>
+        <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {category.skills.map((skill, j) => (
+          <span
+            key={j}
+            onMouseEnter={() => setHoveredSkill(skill)}
+            onMouseLeave={() => setHoveredSkill(null)}
+            className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-all duration-200 cursor-default ${
+              hoveredSkill === skill
+                ? "bg-primary text-primary-foreground scale-105 shadow-md"
+                : "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary"
+            }`}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 };
 
