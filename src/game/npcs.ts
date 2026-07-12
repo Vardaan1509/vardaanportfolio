@@ -162,7 +162,7 @@ export const npcs: NPC[] = [
   },
   {
     id: "devRoom",
-    name: "Kiro",
+    name: "Claudius",
     role: "AI pair programmer",
     x: 35,
     y: 28,
@@ -171,7 +171,7 @@ export const npcs: NPC[] = [
     givesPokemon: "bytebit",
     dialogue: [
       "Whoa. You found the dev room.",
-      "I'm Kiro. I pair-program with Vardaan.",
+      "I'm Claudius. I pair-program with Vardaan.",
       "Wanna know what he's building with these days?",
       "Frontend: React, Next.js, TypeScript, Tailwind CSS.",
       "Backend: Node.js, Express, FastAPI, .NET, C#, Go.",
