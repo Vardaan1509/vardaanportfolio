@@ -12,7 +12,7 @@ import {
   SPAWN,
   type Building,
 } from "./world";
-import { drawTile, drawCharacter, drawBuildingLabel } from "./sprites";
+import { drawTileCached, drawCharacter, drawBuildingLabel } from "./sprites";
 import type { OutfitStyle } from "./sprites";
 import { npcs, findNPCAt, type NPC } from "./npcs";
 import {
@@ -445,7 +445,9 @@ const ExploreGame = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1.5 — the art is chunky pixel art, so higher density just
+      // burns fill-rate and causes choppiness on mobile with no visual gain.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
@@ -570,8 +572,10 @@ const ExploreGame = () => {
       camY = Math.max(0, Math.min(MAP_HEIGHT - viewTilesH, camY));
       if (MAP_WIDTH < viewTilesW) camX = (MAP_WIDTH - viewTilesW) / 2;
       if (MAP_HEIGHT < viewTilesH) camY = (MAP_HEIGHT - viewTilesH) / 2;
-      const camPxX = camX * TILE_SIZE;
-      const camPxY = camY * TILE_SIZE;
+      // Round the camera offset so the tile grid stays pixel-aligned (avoids
+      // seams between blitted tiles) while the player still glides smoothly.
+      const camPxX = Math.round(camX * TILE_SIZE);
+      const camPxY = Math.round(camY * TILE_SIZE);
 
       ctx.fillStyle = "#0f172a";
       ctx.fillRect(0, 0, logicalW, logicalH);
@@ -585,16 +589,9 @@ const ExploreGame = () => {
         for (let tx = startTx; tx < endTx; tx++) {
           const px = tx * TILE_SIZE - camPxX;
           const py = ty * TILE_SIZE - camPxY;
-          drawTile(
-            ctx,
-            worldMap[ty][tx],
-            px,
-            py,
-            animFrameRef.current,
-            buildingAt,
-            tx,
-            ty
-          );
+          const tile = worldMap[ty][tx];
+          const b = tile.startsWith("building") ? buildingAt(tx, ty) : undefined;
+          drawTileCached(ctx, tile, px, py, animFrameRef.current, b);
         }
       }
 
@@ -874,9 +871,9 @@ const ExploreGame = () => {
 
       {showNamePrompt && <NamePromptModal onSubmit={handleNameSubmit} />}
 
-      {/* On-screen controls for touch devices. Hidden during battle / name entry
-          (those screens have their own touch-friendly UI). */}
-      {isTouch && !battle && !showNamePrompt && (
+      {/* On-screen controls for touch devices. Hidden during battle, name entry,
+          and dialogue (those have their own UI; tap the dialogue box to advance). */}
+      {isTouch && !battle && !showNamePrompt && !dialogue && (
         <TouchControls
           onPress={pressDir}
           onRelease={releaseDir}

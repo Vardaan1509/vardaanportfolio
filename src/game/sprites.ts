@@ -350,6 +350,52 @@ export const drawTile = (
   }
 };
 
+// ============ TILE CACHE ============
+// Rendering each tile with dozens of fillRect calls every frame is expensive
+// (thousands of calls per frame on mobile → choppy). Instead we render each
+// unique tile once into a small offscreen canvas and blit it with drawImage,
+// which is dramatically faster.
+const tileCache = new Map<string, HTMLCanvasElement>();
+
+const getTileCanvas = (
+  tile: TileType,
+  animFrame: number,
+  building?: Building
+): HTMLCanvasElement => {
+  const isBuilding = tile.startsWith("building");
+  const key = isBuilding
+    ? `${tile}|${building?.roofColor ?? ""}|${building?.wallColor ?? ""}`
+    : `${tile}|${tile === "water" ? animFrame : 0}`;
+
+  let c = tileCache.get(key);
+  if (!c) {
+    c = document.createElement("canvas");
+    c.width = TILE_SIZE;
+    c.height = TILE_SIZE;
+    const g = c.getContext("2d");
+    if (g) {
+      g.imageSmoothingEnabled = false;
+      // Reuse the existing draw dispatch; building tiles get a constant lookup.
+      drawTile(g, tile, 0, 0, animFrame, building ? () => building : undefined, 0, 0);
+    }
+    tileCache.set(key, c);
+  }
+  return c;
+};
+
+// Fast path used by the game loop: blit a cached tile image.
+export const drawTileCached = (
+  ctx: CanvasRenderingContext2D,
+  tile: TileType,
+  x: number,
+  y: number,
+  animFrame: number,
+  building?: Building
+) => {
+  const c = getTileCanvas(tile, animFrame, building);
+  ctx.drawImage(c, x, y);
+};
+
 // ============ CHARACTER ============
 // Detailed RSE-style character drawn on a 20x20 sub-pixel grid (half-PIX cells)
 // with saturated palette, multi-tone shading, and centered single-color eyes.
