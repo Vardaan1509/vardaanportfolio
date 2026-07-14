@@ -26,6 +26,7 @@ import { sounds } from "./sounds";
 import BattleScreen from "./BattleScreen";
 import PokemonHUD from "./PokemonHUD";
 import NamePromptModal from "./NamePromptModal";
+import TouchControls, { type TouchDir } from "./TouchControls";
 
 // Per-static-NPC outfit
 const NPC_OUTFITS: Record<string, OutfitStyle> = {
@@ -100,6 +101,7 @@ const ExploreGame = () => {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [customNPCs, setCustomNPCs] = useState<CustomNPC[]>([]);
   const [legendaryReviewed, setLegendaryReviewed] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   const talkedTo = useRef<Set<string>>(new Set());
   const giftGiven = useRef<Set<string>>(new Set());
@@ -134,6 +136,39 @@ const ExploreGame = () => {
   legendaryReviewedRef.current = legendaryReviewed;
   const showNamePromptRef = useRef(false);
   showNamePromptRef.current = showNamePrompt;
+
+  // Detect touch-capable devices to show on-screen controls.
+  useEffect(() => {
+    const coarse =
+      typeof window !== "undefined" &&
+      (window.matchMedia?.("(pointer: coarse)").matches || "ontouchstart" in window);
+    setIsTouch(!!coarse);
+  }, []);
+
+  // Map a touch direction to the same key the movement loop already listens for.
+  const TOUCH_KEY: Record<TouchDir, string> = {
+    up: "arrowup",
+    down: "arrowdown",
+    left: "arrowleft",
+    right: "arrowright",
+  };
+  const pressDir = useCallback((dir: TouchDir) => {
+    keysRef.current.add(TOUCH_KEY[dir]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const releaseDir = useCallback((dir: TouchDir) => {
+    keysRef.current.delete(TOUCH_KEY[dir]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // If a battle or name prompt begins while a D-pad direction is held, the touch
+  // controls unmount before their pointer-up fires. Clear any held keys so the
+  // player doesn't keep walking after returning to the map.
+  useEffect(() => {
+    if (battle || showNamePrompt) {
+      keysRef.current.clear();
+    }
+  }, [battle, showNamePrompt]);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg);
@@ -801,13 +836,15 @@ const ExploreGame = () => {
         onTradeForRepellent={handleTradeForRepellent}
       />
 
-      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1 text-slate-400 text-xs bg-slate-900/70 border border-slate-700 rounded-lg px-3 py-2 backdrop-blur-sm">
-        <div className="inline-flex items-center gap-1.5 text-slate-200">
-          <Keyboard className="w-3.5 h-3.5" /> Controls
+      {!isTouch && (
+        <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1 text-slate-400 text-xs bg-slate-900/70 border border-slate-700 rounded-lg px-3 py-2 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-1.5 text-slate-200">
+            <Keyboard className="w-3.5 h-3.5" /> Controls
+          </div>
+          <div>WASD / Arrows — move</div>
+          <div>Space / E — talk &amp; advance</div>
         </div>
-        <div>WASD / Arrows — move</div>
-        <div>Space / E — talk & advance</div>
-      </div>
+      )}
 
       {fainted && (
         <div className="absolute inset-0 z-20 bg-red-600/40 pointer-events-none animate-pulse" />
@@ -836,6 +873,16 @@ const ExploreGame = () => {
       )}
 
       {showNamePrompt && <NamePromptModal onSubmit={handleNameSubmit} />}
+
+      {/* On-screen controls for touch devices. Hidden during battle / name entry
+          (those screens have their own touch-friendly UI). */}
+      {isTouch && !battle && !showNamePrompt && (
+        <TouchControls
+          onPress={pressDir}
+          onRelease={releaseDir}
+          onAction={interact}
+        />
+      )}
     </div>
   );
 };
