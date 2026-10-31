@@ -54,7 +54,7 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     shape: "aqua",
   },
 
-  // NPC-gift pokemon
+  // Wild-only (was a gift before the starter choice existed)
   codeling: {
     id: "codeling",
     name: "Codeling",

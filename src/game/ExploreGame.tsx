@@ -65,7 +65,18 @@ interface DialogueState {
   choiceShown: boolean;
   finished: boolean;
   isLegendaryReview?: boolean;
+  isRepeat?: boolean; // extraLines are the NPC's repeat dialogue
+  openedAt?: number; // used to ignore the tap that opened the dialogue
 }
+
+// The choice shows at the end of the first conversation, or at the end of the
+// repeat conversation for NPCs that re-offer it (e.g. the resume).
+const choiceAvailable = (s: DialogueState): boolean =>
+  !!s.npc.choice && (!s.extraLines || (!!s.isRepeat && !!s.npc.repeatOffersChoice));
+
+// A tap on the A button opens a dialogue, and on mobile the trailing click can
+// land on the dialogue box and skip the first line. Ignore advances this soon.
+const OPEN_GUARD_MS = 350;
 
 interface CustomNPC {
   id: string;
@@ -94,7 +105,7 @@ const ExploreGame = () => {
   const [dialogue, setDialogue] = useState<DialogueState | null>(null);
   const [team, setTeam] = useState<Pokemon[]>([]);
   const [battle, setBattle] = useState<{ team: Pokemon[]; wild: Pokemon } | null>(null);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(() => sounds.isMuted());
   const [toast, setToast] = useState<string | null>(null);
   const [fainted, setFainted] = useState(false);
   const [repellentExpires, setRepellentExpires] = useState<number | null>(null);
@@ -143,6 +154,15 @@ const ExploreGame = () => {
       typeof window !== "undefined" &&
       (window.matchMedia?.("(pointer: coarse)").matches || "ontouchstart" in window);
     setIsTouch(!!coarse);
+  }, []);
+
+  // Unlock audio on the first real user gesture. pointerup/touchend/keydown
+  // count as user activation on mobile; pointerdown from a finger does not.
+  useEffect(() => {
+    const unlock = () => sounds.unlock();
+    const events = ["pointerup", "touchend", "keydown", "click"] as const;
+    events.forEach((ev) => window.addEventListener(ev, unlock, { passive: true }));
+    return () => events.forEach((ev) => window.removeEventListener(ev, unlock));
   }, []);
 
   // Map a touch direction to the same key the movement loop already listens for.
@@ -273,6 +293,7 @@ const ExploreGame = () => {
   const advanceDialogue = useCallback(() => {
     const state = dialogueRef.current;
     if (!state) return;
+    if (state.openedAt && performance.now() - state.openedAt < OPEN_GUARD_MS) return;
 
     const currentLines = state.extraLines ?? state.npc.dialogue;
     const isLast = state.line >= currentLines.length - 1;
@@ -283,7 +304,7 @@ const ExploreGame = () => {
       return;
     }
 
-    if (!state.extraLines && state.npc.choice && !state.choiceShown) {
+    if (choiceAvailable(state) && !state.choiceShown) {
       setDialogue({ ...state, choiceShown: true });
       return;
     }
@@ -324,6 +345,7 @@ const ExploreGame = () => {
         line: 0,
         extraLines: option.responseLines,
         choiceShown: false,
+        isRepeat: false,
       });
     },
     [downloadResume, showToast]
@@ -340,7 +362,7 @@ const ExploreGame = () => {
       hair: custom.hair,
       dialogue: [
         `Hey! I'm ${custom.name}.`,
-        "Prof. Chen registered me after I caught a legendary too. Small world.",
+        "Prof. Chen added me to the trainer registry after I caught a Compileon.",
         "Good luck out there.",
       ],
     };
@@ -351,6 +373,7 @@ const ExploreGame = () => {
       extraLines: null,
       choiceShown: false,
       finished: false,
+      openedAt: performance.now(),
     });
   }, []);
 
@@ -384,6 +407,7 @@ const ExploreGame = () => {
           choiceShown: false,
           finished: false,
           isLegendaryReview: true,
+          openedAt: performance.now(),
         });
         return;
       }
@@ -394,6 +418,8 @@ const ExploreGame = () => {
         extraLines: useRepeat ? npc.dialogueRepeat! : null,
         choiceShown: false,
         finished: false,
+        isRepeat: useRepeat,
+        openedAt: performance.now(),
       });
       return;
     }
@@ -407,6 +433,16 @@ const ExploreGame = () => {
   // Keyboard
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      // Let text fields (the trainer-name input) receive keys normally.
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
       const k = e.key.toLowerCase();
       if (
         [
@@ -496,7 +532,9 @@ const ExploreGame = () => {
           !customNPCsRef.current.some(
             (o) => o !== c && o.tileX === nx && o.tileY === ny
           ) &&
-          !(player.tileX === nx && player.tileY === ny);
+          !(player.tileX === nx && player.tileY === ny) &&
+          // Keep the spawn tile free so a respawning player never overlaps them.
+          !(nx === SPAWN.x && ny === SPAWN.y);
         if (validTile) {
           c.fromX = c.tileX;
           c.fromY = c.tileY;
@@ -740,12 +778,18 @@ const ExploreGame = () => {
   const handleBattleEnd = useCallback(
     (r: "win" | "lose") => {
       if (r === "win" && battle) {
+        const name = battle.wild.species.name;
+        const existing = teamRef.current.find(
+          (p) => p.species.id === battle.wild.species.id
+        );
         setTeam((prev) => addToTeam(prev, battle.wild));
         const legendaryNote = battle.wild.species.isLegendary
           ? " Show it to Prof. Chen!"
           : "";
         showToast(
-          `Caught ${battle.wild.species.name} (Lv ${battle.wild.level})!${legendaryNote}`
+          existing
+            ? `Caught another ${name}! Your ${name} is now Lv ${Math.min(99, existing.level + battle.wild.level)}.${legendaryNote}`
+            : `Caught ${name} (Lv ${battle.wild.level})!${legendaryNote}`
         );
       } else if (r === "lose") {
         showToast("You lost the battle. Returning to spawn.");
@@ -760,6 +804,11 @@ const ExploreGame = () => {
     (traded: Pokemon) => {
       if (traded.species.isLegendary) {
         showToast("You can't trade a legendary!");
+        return;
+      }
+      // Gifts are one-time, so an empty team could never get a Pokemon again.
+      if (teamRef.current.length <= 1) {
+        showToast("You can't trade your last Pokemon!");
         return;
       }
       setTeam((prev) => prev.filter((p) => p.uid !== traded.uid));
@@ -838,8 +887,8 @@ const ExploreGame = () => {
           <div className="inline-flex items-center gap-1.5 text-slate-200">
             <Keyboard className="w-3.5 h-3.5" /> Controls
           </div>
-          <div>WASD / Arrows — move</div>
-          <div>Space / E — talk &amp; advance</div>
+          <div>WASD / Arrows: move</div>
+          <div>Space / E: talk &amp; advance</div>
         </div>
       )}
 
@@ -933,7 +982,7 @@ interface DialogueBoxProps {
 const DialogueBox = ({ state, onAdvance, onChoose }: DialogueBoxProps) => {
   const currentLines = state.extraLines ?? state.npc.dialogue;
   const isLast = state.line >= currentLines.length - 1;
-  const hasChoice = !!state.npc.choice && !state.extraLines;
+  const hasChoice = choiceAvailable(state);
   const showingChoices = state.choiceShown;
 
   return (
@@ -950,7 +999,7 @@ const DialogueBox = ({ state, onAdvance, onChoose }: DialogueBoxProps) => {
             style={{ backgroundColor: state.npc.color }}
           />
           <span className="text-white font-bold text-sm">{state.npc.name}</span>
-          <span className="text-slate-500 text-xs">— {state.npc.role}</span>
+          <span className="text-slate-500 text-xs">· {state.npc.role}</span>
         </div>
         <p className="text-slate-100 text-base leading-relaxed min-h-[3rem]">
           {currentLines[state.line]}

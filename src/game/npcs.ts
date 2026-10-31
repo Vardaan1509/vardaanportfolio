@@ -24,6 +24,7 @@ export interface NPC {
   dialogueRepeat?: string[]; // shorter dialogue shown after the first full conversation
   legendaryReview?: string[]; // special path when player brings a legendary
   choice?: NPCChoice;
+  repeatOffersChoice?: boolean; // show the choice again after the repeat dialogue
   givesPokemon?: string;
   accessory?: "resume" | null;
 }
@@ -41,7 +42,7 @@ export const npcs: NPC[] = [
     dialogue: [
       "Hey. You looking for Vardaan?",
       "He's our Full Stack Dev. Started April 2026 and hit the ground running.",
-      "First project was our field reporting platform. Next.js, C#, .NET, AWS, DynamoDB. Tracks over 1,000 site assets across the country now.",
+      "First project was our field reporting platform. Next.js, C#, .NET, AWS, DynamoDB. It covers over 1,000 site assets.",
       "Cut manual coordination by 90 percent. Field ops actually likes engineering now, which never happens.",
       "Then he architected our whole payroll system. 500 employees, multi-stage approvals, Azure auth, batch processing. Replaced years of spreadsheets.",
       "Oh, and there's the AI docs tool. Claude API, web scraping, auto screenshots. Cut our release documentation effort by 75 percent.",
@@ -125,8 +126,8 @@ export const npcs: NPC[] = [
     givesPokemon: "datamouse",
     dialogue: [
       "Vardaan? Yeah, worked with him last summer. May through August 2025.",
-      "First real internship. Kid walked in green, walked out with commit access to production.",
-      "Built backend features for our inventory system. 10,000 customers hit that thing every day.",
+      "His first internship, and he picked things up fast.",
+      "Built backend features for our inventory system. It serves over 10,000 customers.",
       "Refactored our MySQL and PostgreSQL schemas. Normalized tables, added indexes, tightened constraints. 15 percent faster processing after his changes shipped.",
       "Also drove Git workflow for a backend team of five. Kept us out of merge hell all summer.",
       "Solid engineer. Solid kid. Take Datamouse. It handles data like Vardaan does.",
@@ -151,7 +152,7 @@ export const npcs: NPC[] = [
       "Custom CNN in PyTorch, 80 percent classification accuracy on chest X-rays. Row-level auth in Postgres for patient data. Nuts.",
       "AInterview at McHacks 13. AI-driven interview simulator with Gemini Pro and ElevenLabs.",
       "Real-time dashboard tracking 11 performance metrics. 88 percent speech-to-text success. Built in 24 hours flat.",
-      "AI Netflix Recommendation Engine at 92 percent accuracy on personalized picks. Not a hackathon. Just a weekend.",
+      "AI Netflix Recommendation Engine with 92 percent recommendation accuracy on personalized picks.",
       "UW Login Helper Chrome extension for daily student productivity. Small ship, still ships.",
       "Kid ships constantly. Reach him at vmehandi@uwaterloo.ca. Take Buildo, he'll help you make things.",
     ],
@@ -203,8 +204,9 @@ export const npcs: NPC[] = [
     ],
     dialogueRepeat: [
       "Hey again.",
-      "Have a look around. Talk to people, catch some Pokemon.",
+      "Still want a copy of my resume?",
     ],
+    repeatOffersChoice: true,
     choice: {
       question: "Take resume?",
       options: [

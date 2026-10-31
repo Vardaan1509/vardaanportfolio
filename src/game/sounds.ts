@@ -18,6 +18,12 @@ class SoundEngine {
     return this.ctx;
   }
 
+  // Must be called from inside a user gesture (tap/click/key) so mobile
+  // browsers allow the AudioContext to start.
+  unlock() {
+    this.ensure();
+  }
+
   setMuted(m: boolean) {
     this.muted = m;
   }

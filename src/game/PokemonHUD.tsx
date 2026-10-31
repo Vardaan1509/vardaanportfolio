@@ -69,10 +69,11 @@ const PokemonHUD = ({ team, repellentExpires, onTradeForRepellent }: PokemonHUDP
                 ))}
                 <button
                   onClick={() => setShowTrade(true)}
-                  disabled={repellentActive}
+                  disabled={repellentActive || team.length <= 1}
+                  title={team.length <= 1 ? "You need at least 2 Pokemon to trade one" : undefined}
                   className="w-full mt-2 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-emerald-900 hover:bg-emerald-800 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-emerald-100 rounded transition-colors"
                 >
-                  Trade for Repel Spray
+                  {team.length <= 1 ? "Need 2+ Pokemon to trade" : "Trade for Repel Spray"}
                 </button>
               </div>
             )}
